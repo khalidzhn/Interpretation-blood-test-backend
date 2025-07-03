@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Copy requirements (create requirements.txt if you don't have one)
 COPY requirements.txt .
-
+COPY panel/ panel/
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
