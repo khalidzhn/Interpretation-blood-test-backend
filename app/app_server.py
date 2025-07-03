@@ -49,20 +49,23 @@ def get_all_analysis_results():
     db = SessionLocal()
     results = db.query(AnalysisResult).order_by(desc(AnalysisResult.id)).all()
     db.close()
-    # Only include selected fields
-    results_list = [
-        {
+    results_list = []
+    for r in results:
+        analysis = r.analysis
+        if isinstance(analysis, str):
+            try:
+                analysis = json.loads(analysis)
+            except Exception:
+                analysis = {}
+        results_list.append({
             "patient_id": r.patient_id,
             "pdf_filename": r.pdf_filename,
-            "DoctorInterpretation": r.analysis.get("DoctorInterpretation") if r.analysis else None,
-            "AutoReferralBlock": r.analysis.get("AutoReferralBlock") if r.analysis else None,
-            "IntelligenceHubCard": r.analysis.get("IntelligenceHubCard") if r.analysis else None,
-            "keyFindings": r.analysis.get("keyFindings") if r.analysis else None
-        }
-        for r in results
-    ]
+            "DoctorInterpretation": analysis.get("DoctorInterpretation"),
+            "AutoReferralBlock": analysis.get("AutoReferralBlock"),
+            "IntelligenceHubCard": analysis.get("IntelligenceHubCard"),
+            "keyFindings": analysis.get("keyFindings"),
+        })
     return JSONResponse(content=results_list)
-
 @app.post("/upload-pdf/")
 async def upload_pdf(file: UploadFile = File(...)):
     print("UPLOAD ENDPOINT CALLED")
