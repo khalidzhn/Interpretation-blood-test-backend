@@ -83,8 +83,8 @@ async def upload_pdf(file: UploadFile = File(...)):
 
 
     # Read your text file as CSV
-    df = pd.read_csv("panel\labPanels.txt")  # Use ',' as default separator
-
+    panel_path = os.path.join("panel", "labPanels.txt")
+    df = pd.read_csv(panel_path)
     # Convert to list of dicts
     panel_dictionary = df.to_dict(orient="records")
     prompt = information.build_prompt_from_raw_data(raw_data, panel_dictionary)
