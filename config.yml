@@ -1,0 +1,12 @@
+gemini:
+  key: AIzaSyB3Pn3A6F2NSVdbsnNsnyQveBsvpfhXAAg
+openai:
+  key: sk-  -z3E13IpJ9gZdVVezqlY4x0xAgHToBKYFNGUqCQ6txd5pRL9LnrlwGHY5Vdc1zLUBHEf6Vd009KT3BlbkFJ5s6z0ao6zDkBD6qIm5PE9H7pP1OavpsBx69HN8vsY3_uDk7d9r58ON_hf-_vmYag6y6Dh7ocAA
+
+
+patient_Name: ??
+age: 19
+job: ??
+
+results:
+  en: ../results/result.md
