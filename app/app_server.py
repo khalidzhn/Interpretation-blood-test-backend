@@ -81,10 +81,11 @@ async def upload_pdf(file: UploadFile = File(...)):
     raw_data = get_data_from_user(pdf_path)
     print("Extracted raw data:", raw_data[:200])  # Print first 200 chars
 
-    # Read your Excel file (update the path as needed)
-    df = pd.read_excel("assets\panel\Lab Test Panels - Explanations.xlsx")
 
-    # Convert to a list of dicts (for easy use in prompt)
+    # Read your text file as CSV
+    df = pd.read_csv("assets/panel/panel_dictionary.txt")  # Use ',' as default separator
+
+    # Convert to list of dicts
     panel_dictionary = df.to_dict(orient="records")
     prompt = information.build_prompt_from_raw_data(raw_data, panel_dictionary)
     print("Prompt built.")  # Print first 200 chars of the prompt")
