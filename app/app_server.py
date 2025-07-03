@@ -83,7 +83,7 @@ async def upload_pdf(file: UploadFile = File(...)):
 
 
     # Read your text file as CSV
-    df = pd.read_csv("assets/panel/panel_dictionary.txt")  # Use ',' as default separator
+    df = pd.read_csv("assets/panel/labPanels.txt")  # Use ',' as default separator
 
     # Convert to list of dicts
     panel_dictionary = df.to_dict(orient="records")
