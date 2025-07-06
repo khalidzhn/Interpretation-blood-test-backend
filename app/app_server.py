@@ -100,12 +100,16 @@ async def upload_pdf(file: UploadFile = File(...)):
     
     if isinstance(analysis, str):
         try:
-            analysis = json.loads(analysis)
+            # Keep decoding until it's a dict (handles double-encoded JSON)
+            while isinstance(analysis, str):
+                analysis = json.loads(analysis)
         except Exception:
-            pass  # If it's already a dict, do nothing
-    if not analysis:
+            db.close()
+            return JSONResponse(status_code=400, content={"error": "Analysis could not be generated or parsed as JSON."})
+
+    if not analysis or not isinstance(analysis, dict):
         db.close()
-        return JSONResponse(status_code=400, content={"error": "Analysis could not be generated or parsed as JSON."})
+        return JSONResponse(status_code=400, content={"error": "Analysis is empty or not a valid JSON object."})
 
     db_result = AnalysisResult(
         pdf_filename=pdf_name,
@@ -129,6 +133,14 @@ def get_lab_report_json(labResultId: str):
     if not result:
         raise HTTPException(status_code=404, detail="Result not found")
     analysis = result.analysis
+    # Parse if it's a string (even if it's double-encoded)
+    if isinstance(analysis, str):
+        try:
+            # Try to decode until it's a dict
+            while isinstance(analysis, str):
+                analysis = json.loads(analysis)
+        except Exception:
+            raise HTTPException(status_code=500, detail="Analysis could not be parsed as JSON")
     if not analysis:
         raise HTTPException(status_code=404, detail="Analysis not found")
     return analysis
