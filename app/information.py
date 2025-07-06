@@ -60,15 +60,19 @@ You must synthesize plausible clinical context and referral details for demo pur
 OBJECTIVES:
 1. Parse raw_lab_text into a structured analyte list: {{ testName, value, units, refRange? }}
 2. Classify each test as Normal, Borderline, High, or Critical.
-3. Synthesize a 1-sentence HPI + PMH based on age/gender clues in the lab text (if absent, assume 45-year-old male, routine screen).
+3. Create Clinical Context: Create a one-sentence synthetic clinical note describing the patient profile (e.g., "45-year-old male, BMI 31 kg/m², smoker...").
 4. Determine holistic RiskLevel and AI Confidence.
-5. Referral Logic (Demo): Choose the most relevant specialty for the worst abnormality. Auto-generate a fake appointment:
+5. Create Result-Linked Analysis: For the top 3-4 most significant abnormal results, generate a concise, one-line clinical analysis linking the result to established guidelines (e.g., LDL 160 mg/dL → "ASCVD 10-yr risk now ≥ 15%. Intensify lipid-lowering therapy.").
+6. Generate Evidence-Based Recommendations: Create a numbered list of 3-5 specific, evidence-based clinical recommendations intended for a physician. These should be scientific and actionable (e.g., "Start high-intensity statin; target LDL < 70 mg/dL.", "Initiate metformin 500 mg BID after nephrology clearance.").
+7. Generate Doctor's Summary: Write a high-level summary paragraph explaining the findings for a patient, as if a doctor were speaking. This will populate the "What do these results mean for me?" section.
+8. Create a separate, simplified Patient Action Plan with 3-5 motivational, easy-to-understand bullets for the patient.
+9. Referral Logic (Demo): Choose the most relevant specialty for the worst abnormality. Auto-generate a fake appointment:
    - Date: 7-10 days after today at 10:00 AM
    - Location: “King Faisal Specialist Hospital, Clinic B” (if renal), “King Fahad Medical City, Endocrine Center” (if endocrine), etc.
    - Physician: “Dr. Demo Surname (Specialty)”
-6. DoctorInterpretation: ≤150 words, guideline language, cite synthesized clinical note.
-7. PatientStory: ≤90 words in English and Arabic, using panel_dictionary phrases.
-8. Return JSON in the exact schema below.
+10. DoctorInterpretation: ≤150 words, guideline language, cite synthesized clinical note.
+11. PatientStory: greeting the pationt with his name  ≤90 words in English and Arabic, using panel_dictionary phrases.
+12. Return JSON in the exact schema below.
 
 OUTPUT SCHEMA (return JSON only):
 {{
@@ -80,17 +84,69 @@ OUTPUT SCHEMA (return JSON only):
    "bookedStatus": "Booked",
    "suggestedDate": "<ISO-date 10:00 AM>"
  }},
+  "AI_ClinicalInterpretation": {{
+    "integratedClinicalContext": "<The synthetic clinical note string goes here>",
+    "resultLinkedAnalysis": [
+      {{ "finding": "HbA1c 6.2%", "analysis": "Consistent with ADA 'pre-diabetes' criteria; aligns with prior fasting glucose (112 mg/dL)." }},
+      {{ "finding": "LDL 160 mg/dL", "analysis": "ASCVD 10-yr risk now ≥ 15%. Intensify lipid-lowering therapy." }},
+      {{ "finding": "Creatinine 2.4 mg/dL", "analysis": "eGFR ≈ 32 mL/min/1.73 m² (CKD-3b). Possible diabetic nephropathy." }}
+    ],
+    "evidenceBasedRecommendations": [
+      "Start high-intensity statin; target LDL < 70 mg/dL.",
+      "Initiate metformin 500 mg BID after nephrology clearance.",
+      "Refer to Nephrology (auto-booked below) for renal work-up + ACE inhibitor optimization.",
+      "Lifestyle: DASH diet, smoking cessation, 150 min/week moderate exercise."
+    ]
+  }},
  "DoctorInterpretation": "<HTML>",
- "keyFindings:": "A list of top three findings or less, if no findings return emty list  > String[]"
+ "keyFindings:": ["A list of top three findings or less, if no findings return emty list]"
  "PatientStoryTelling": {{ "english":"<HTML>", "arabic":"<HTML>" }},
  "LabReportJSON": {{
    "header": {{ "patientID":"DEMO-{{randomID}}", "generated":"<ISO-now>" }},
-   "demographics": {{ "name":"Ahmed Al-Mansouri", "age":"45", "gender":"Male", "mrn":"MRN-DEMO-{{random}}" }},
+   "demographics": {{ "name": pationt name from the report , "age":pationt age from thee report, "gender":gender, "mrn":"MRN-DEMO-{{random}}" }},
    "results": [ …parsed tests… ],
    "aiInterpretationEN": "<copy DoctorInterpretation>",
    "referral": {{ …same as AutoReferralBlock }},
    "patientSummary": {{ "en":"<copy>", "ar":"<copy>" }}
- }}
+ }},
+  // High-level summary for the patient
+  "DoctorSummaryForPatient": "<The paragraph for 'What do these results mean for me?' goes here. These findings place the patient at high cardiometabolic risk...>",
+
+  // The complete, personalized patient-facing report
+  "IntelligentPatientReport": {{
+    "introEN": "<Friendly intro in English>",
+    "introAR": "<Friendly intro in Arabic>",
+    // repeats for all other abnormal tests
+    "abnormalTests": [
+      {{
+        "testNameEN": "Blood Sugar (HbA1c)",
+        "testNameAR": "السكر التراكمي",
+        "resultDisplay": "6.2%",
+        "status": "High",
+        "emoji": "🩸",
+        "storyEN": "<Personalized story for HbA1c...>",
+        "storyAR": "<...قصة مخصصة للسكر التراكمي>"
+      }}
+      
+    ],
+    "patientActionPlan": [ // Simplified plan for the patient
+      "Stop smoking - this is the #1 priority for your health.",
+      "Follow the DASH diet meal plan we're preparing for you.",
+      "Walk 30 minutes every day.",
+      "Your doctor will discuss new medications with you.",
+      "Attend your kidney specialist visit on July 11th at 10:00 AM."
+    ]
+  }},
+
+  // Supporting Data for UI elements like referral blocks
+  "AutoReferralBlock": {{
+    "needed": true,
+    "specialty": "Nephrology",
+    "urgency": "Soon",
+    "bookedStatus": "Booked",
+    // Set appointment 7-10 days from today (July 4, 2025) -> e.g., July 11-14
+    "suggestedDate": "2025-07-11T10:00:00"
+  }}
 }}
 
 RULES:
