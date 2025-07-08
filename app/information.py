@@ -130,11 +130,16 @@ OUTPUT SCHEMA (return JSON only):
       
     ],
     "patientActionPlan": [ // Simplified plan for the patient
-      "Stop smoking - this is the #1 priority for your health.",
-      "Follow the DASH diet meal plan we're preparing for you.",
-      "Walk 30 minutes every day.",
-      "Your doctor will discuss new medications with you.",
-      "Attend your kidney specialist visit on July 11th at 10:00 AM."
+      {{"actionEn":"(emoji) <b>Stop smoking</b> - this is the #1 priority for your health.",
+        "actionAr":"(emoji) <b>توقف عن التدخين</b> - هذه هي الأولوية الأولى لصحتك."}},
+      {{"actionEn":"(emoji) <b>Follow the DASH</b> - diet meal plan we're preparing for you.",
+        "actionAr":"(emoji) <b>اتباع نظام DASH</b> - خطة الوجبات الغذائية التي نقوم بإعدادها لك."}},
+      {{"actionEn":"(emoji) <b>Walk 30 minutes every day</b> - start with 10 minutes if needed.",
+        "actionAr":"(emoji) <b>المشي 30 دقيقة كل يوم</b> - ابدأ بـ 10 دقائق إذا لزم الأمر."}},
+      {{"actionEn":"(emoji) <b>New medications</b> - your doctor will discuss new medications with you.",
+        "actionAr":"(emoji) <b>المشي 30 دقيقة كل يوم</b> - ابدأ بـ 10 دقائق إذا لزم الأمر."}},
+      {{"actionEn":"(emoji) Attend your kidney specialist visit on July 11th at 10:00 AM.",
+        "actionAr":"(emoji) احضر زيارة أخصائي الكلى في 11 يوليو الساعة 10:00 صباحًا."}}
     ]
   }},
 

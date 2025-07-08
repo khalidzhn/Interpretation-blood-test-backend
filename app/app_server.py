@@ -47,7 +47,7 @@ def read_root():
 @app.get("/analysis-results")
 def get_all_analysis_results():
     db = SessionLocal()
-    results = db.query(AnalysisResult).order_by(desc(AnalysisResult.id)).all()
+    results = db.query(AnalysisResult).order_by(desc(AnalysisResult.id)).limit(10).all()
     db.close()
     results_list = []
     for r in results:
@@ -57,9 +57,16 @@ def get_all_analysis_results():
                 analysis = json.loads(analysis)
             except Exception:
                 analysis = {}
+        # Safely get patient name if present
+        patient_name = None
+        try:
+            patient_name = analysis.get("LabReportJSON", {}).get("demographics", {}).get("name")
+        except Exception:
+            patient_name = None
         results_list.append({
             "patient_id": r.patient_id,
             "pdf_filename": r.pdf_filename,
+            "patient_name": patient_name,
             "DoctorInterpretation": analysis.get("DoctorInterpretation"),
             "AutoReferralBlock": analysis.get("AutoReferralBlock"),
             "IntelligenceHubCard": analysis.get("IntelligenceHubCard"),
