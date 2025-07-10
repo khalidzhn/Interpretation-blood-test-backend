@@ -151,3 +151,12 @@ def get_lab_report_json(labResultId: str):
     if not analysis:
         raise HTTPException(status_code=404, detail="Analysis not found")
     return analysis
+@app.delete("/analysis-results/")
+def delete_all_analysis_results():
+    db = SessionLocal()
+    try:
+        num_deleted = db.query(AnalysisResult).delete()
+        db.commit()
+        return {"message": f"Deleted {num_deleted} analysis results."}
+    finally:
+        db.close()
