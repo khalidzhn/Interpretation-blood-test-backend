@@ -1,0 +1,11 @@
+/app/myenv/
+/app/__pycache__
+/app/database.db
+/assets
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+venv/
+
+    

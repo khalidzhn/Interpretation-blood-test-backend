@@ -15,6 +15,16 @@ from sqlalchemy.dialects.postgresql import JSON
 import pandas as pd
 from fastapi import HTTPException
 from sqlalchemy import desc
+from passlib.context import CryptContext
+from jose import JWTError, jwt
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from datetime import datetime, timedelta
+from fastapi import Depends
+from fastapi import Body
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+
+
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://user:password@localhost:5432/mydatabase")
 
@@ -24,6 +34,34 @@ Base = declarative_base()
 
 app = FastAPI()
 
+
+SECRET_KEY = "your-secret-key"  # Change this!
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+def get_current_user(token: str = Depends(oauth2_scheme)):
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+    db = SessionLocal()
+    user = db.query(User).filter(User.email == email).first()
+    db.close()
+    if user is None:
+        raise credentials_exception
+    return user
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Or specify your frontend URL instead of "*"
@@ -31,33 +69,51 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+
+def get_password_hash(password):
+    return pwd_context.hash(password)
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
+
+
 class AnalysisResult(Base):
     __tablename__ = "analysis_results"
     id = Column(Integer, primary_key=True, index=True)
-    pdf_filename = Column(String, nullable=False)      # Path to saved PDF
-    raw_data = Column(Text, nullable=False)            # Extracted text from PDF
+    pdf_filename = Column(String, nullable=False)
+    raw_data = Column(Text, nullable=False)
     analysis = Column(JSON, nullable=False)
-    patient_id = Column(String(36), unique=True, index=True, nullable=False, default=lambda: str(uuid.uuid4()))
-
+    patient_id = Column(String(10), unique=True, index=True, nullable=False)  # 10-digit patient ID
+    assigned_doctor_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    assigned_doctor = relationship("User")
+    
 Base.metadata.create_all(bind=engine)
-@app.get("/")
+@app.get("/", dependencies=[Depends(get_current_user)])
 def read_root():
     return {"status": "ok"}
-@app.get("/analysis-results/")
-@app.get("/analysis-results")
+@app.get("/analysis-results/", dependencies=[Depends(get_current_user)])
+@app.get("/analysis-results", dependencies=[Depends(get_current_user)])
 def get_all_analysis_results():
     db = SessionLocal()
     results = db.query(AnalysisResult).order_by(desc(AnalysisResult.id)).limit(10).all()
-    db.close()
     results_list = []
     for r in results:
+        doctor = db.query(User).filter(User.id == r.assigned_doctor_id).first()
+        doctor_email = doctor.email if doctor else None
         analysis = r.analysis
         if isinstance(analysis, str):
             try:
                 analysis = json.loads(analysis)
             except Exception:
                 analysis = {}
-        # Safely get patient name if present
         patient_name = None
         try:
             patient_name = analysis.get("LabReportJSON", {}).get("demographics", {}).get("name")
@@ -65,6 +121,7 @@ def get_all_analysis_results():
             patient_name = None
         results_list.append({
             "patient_id": r.patient_id,
+            "assigned_doctor_email": doctor_email,
             "pdf_filename": r.pdf_filename,
             "patient_name": patient_name,
             "DoctorInterpretation": analysis.get("DoctorInterpretation"),
@@ -72,9 +129,27 @@ def get_all_analysis_results():
             "IntelligenceHubCard": analysis.get("IntelligenceHubCard"),
             "keyFindings": analysis.get("keyFindings"),
         })
+    db.close()
     return JSONResponse(content=results_list)
+
 @app.post("/upload-pdf/")
-async def upload_pdf(file: UploadFile = File(...)):
+@app.post("/upload-pdf/")
+async def upload_pdf(
+    file: UploadFile = File(...),
+    patient_id: str = Form(...),
+    assigned_doctor_id: int = Form(...)
+):
+        # Validate patient_id is 10 digits
+    if not (patient_id.isdigit() and len(patient_id) == 10):
+        return JSONResponse(status_code=400, content={"error": "patient_id must be a 10-digit number."})
+
+    db = SessionLocal()
+    # Validate doctor exists
+    doctor = db.query(User).filter(User.id == assigned_doctor_id).first()
+    if not doctor:
+        db.close()
+        return JSONResponse(status_code=400, content={"error": "Assigned doctor not found."})
+
     print("UPLOAD ENDPOINT CALLED")
     print("Received file:", file.filename)
     pdf_dir = "uploaded_pdfs"
@@ -102,7 +177,6 @@ async def upload_pdf(file: UploadFile = File(...)):
 
     analysis = information.RESULTـOFـWHITEـBLOODـCELLS(key, prompt)
     print("Raw analysis result:", analysis)    
-    patient_id = str(uuid.uuid4())
     db = SessionLocal()
     
     if isinstance(analysis, str):
@@ -122,16 +196,17 @@ async def upload_pdf(file: UploadFile = File(...)):
         pdf_filename=pdf_name,
         raw_data=raw_data,
         analysis=analysis,  # Save as dict
-        patient_id=patient_id
-
+        patient_id=patient_id,
+        assigned_doctor_id=assigned_doctor_id
     )
     db.add(db_result)
     db.commit()
     db.refresh(db_result)
     db.close()
     print("Saved to DB.")
-
     return {"message": "PDF processed and data stored.", "id": db_result.id}
+
+
 @app.get("/lab-result/{labResultId}")
 def get_lab_report_json(labResultId: str):
     db = SessionLocal()
@@ -160,3 +235,37 @@ def delete_all_analysis_results():
         return {"message": f"Deleted {num_deleted} analysis results."}
     finally:
         db.close()
+
+
+
+
+def create_access_token(data: dict, expires_delta: timedelta = None):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=15))
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+
+@app.post("/register")
+def register(email: str = Body(...), password: str = Body(...)):
+    db = SessionLocal()
+    user = db.query(User).filter(User.email == email).first()
+    if user:
+        db.close()
+        raise HTTPException(status_code=400, detail="Email already registered")
+    hashed_password = get_password_hash(password)
+    new_user = User(email=email, hashed_password=hashed_password)
+    db.add(new_user)
+    db.commit()
+    db.close()
+    return {"msg": "User registered successfully"}
+
+@app.post("/token")
+def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    db = SessionLocal()
+    user = db.query(User).filter(User.email == form_data.username).first()
+    db.close()
+    if not user or not verify_password(form_data.password, user.hashed_password):
+        raise HTTPException(status_code=401, detail="Incorrect username or password")
+    access_token = create_access_token(data={"sub": user.email})
+    return {"access_token": access_token, "token_type": "bearer"}
