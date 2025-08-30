@@ -2,6 +2,7 @@ from fastapi import FastAPI, File, UploadFile
 from sqlalchemy import create_engine, Column, Integer, String, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from fastapi import Form
 import shutil
 from .main import get_data_from_user
 import app.information as information  # Import your analysis logic
@@ -23,7 +24,9 @@ from fastapi import Depends
 from fastapi import Body
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
-
+from enum import Enum
+from sqlalchemy import Boolean
+from typing import Optional, List
 
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://user:password@localhost:5432/mydatabase")
@@ -70,19 +73,52 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class UserRole(str, Enum):
+    admin = "admin"
+    hospital_admin = "hospital_admin"
+    clinic_admin = "clinic_admin"
+    doctor = "doctor"
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
+    uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
+    full_name = Column(String, nullable=True)  
+    title = Column(String, nullable=True) 
+    clinic_id = Column(Integer, ForeignKey("clinics.id"), nullable=True)  
+    clinic = relationship("Clinic", back_populates="users")
+    role = Column(String, nullable=False, default="doctor") 
+    clinic = relationship("Clinic", back_populates="users")
+    is_active = Column(Boolean, nullable=False, default=True)  # <-- Use Boolean for status
+
 
 def get_password_hash(password):
     return pwd_context.hash(password)
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
+
+
+class Hospital(Base):
+    __tablename__ = "hospitals"
+    id = Column(Integer, primary_key=True, index=True)
+    uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
+    name = Column(String, unique=True, nullable=False)
+    max_users = Column(Integer, nullable=False)
+    max_reports = Column(Integer, nullable=False)
+    clinic = relationship("Clinic", uselist=False, back_populates="hospital")
+
+class Clinic(Base):
+    __tablename__ = "clinics"
+    id = Column(Integer, primary_key=True, index=True)
+    uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
+    name = Column(String, nullable=False)
+    hospital_id = Column(Integer, ForeignKey("hospitals.id"), nullable=False)
+    hospital = relationship("Hospital", back_populates="clinic")
+    users = relationship("User", back_populates="clinic")
 
 
 class AnalysisResult(Base):
@@ -241,7 +277,7 @@ def delete_all_analysis_results():
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
-    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=15))
+    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=2000))
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
@@ -250,22 +286,254 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
 def register(email: str = Body(...), password: str = Body(...)):
     db = SessionLocal()
     user = db.query(User).filter(User.email == email).first()
-    if user:
+    if not user:
         db.close()
-        raise HTTPException(status_code=400, detail="Email already registered")
+        raise HTTPException(status_code=404, detail="No invitation found for this email")
+    if user.is_active:
+        db.close()
+        raise HTTPException(status_code=400, detail="User already registered and active")
     hashed_password = get_password_hash(password)
-    new_user = User(email=email, hashed_password=hashed_password)
-    db.add(new_user)
+    user.hashed_password = hashed_password
+    user.is_active = True
     db.commit()
     db.close()
-    return {"msg": "User registered successfully"}
+    return {"msg": "User registered and activated successfully"}
+
 
 @app.post("/token")
 def login(form_data: OAuth2PasswordRequestForm = Depends()):
     db = SessionLocal()
     user = db.query(User).filter(User.email == form_data.username).first()
-    db.close()
     if not user or not verify_password(form_data.password, user.hashed_password):
+        db.close()
         raise HTTPException(status_code=401, detail="Incorrect username or password")
-    access_token = create_access_token(data={"sub": user.email})
+    # Get related clinic and hospital IDs (if any)
+    clinic_id = user.clinic_id
+    hospital_id = None
+    if user.clinic and user.clinic.hospital_id:
+        hospital_id = user.clinic.hospital_id
+    # Add role, email, clinic_id, hospital_id to token
+    access_token = create_access_token(data={
+        "sub": user.email,
+        "role": user.role,
+        "clinic_id": clinic_id,
+        "hospital_id": hospital_id,
+        "full_name": user.full_name,
+        "title": user.title
+    })
+    db.close()
     return {"access_token": access_token, "token_type": "bearer"}
+from fastapi import Query
+
+
+
+@app.post("/invite")
+def invite_user(
+    email: str = Body(...),
+    role: str = Body(...),
+    assigned_hospital_uuid: str = Body(None),
+    assigned_clinic_uuid: str = Body(None)
+):
+    db = SessionLocal()
+    # Check if user already exists
+    user = db.query(User).filter(User.email == email).first()
+    if user:
+        db.close()
+        raise HTTPException(status_code=400, detail="Email already invited or registered")
+    clinic_id = None
+    if assigned_clinic_uuid:
+        clinic = db.query(Clinic).filter(Clinic.uuid == assigned_clinic_uuid).first()
+        if not clinic:
+            db.close()
+            raise HTTPException(status_code=404, detail="Clinic not found")
+        clinic_id = clinic.id
+    # (Optional) You can also check hospital UUID if needed
+    new_user = User(
+        email=email,
+        hashed_password="",  # No password yet, will be set on registration
+        role=role,
+        is_active=False,
+        clinic_id=clinic_id
+    )
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    user_uuid = str(new_user.uuid)
+    db.close()
+    return {
+        "msg": "Invitation created. Email will be sent to complete registration.",
+        "id": user_uuid
+    }
+
+@app.get("/users/", dependencies=[Depends(get_current_user)])
+def list_users(current_user: User = Depends(get_current_user)):
+    db = SessionLocal()
+    users_query = db.query(User)
+    # Admin: see all users
+    if current_user.role == UserRole.admin:
+        users = users_query.all()
+    # Hospital admin: users in clinics of their hospital
+    elif current_user.role == UserRole.hospital_admin:
+        if not current_user.clinic or not current_user.clinic.hospital_id:
+            db.close()
+            return []
+        hospital_id = current_user.clinic.hospital_id
+        clinic_ids = [c.id for c in db.query(Clinic).filter(Clinic.hospital_id == hospital_id).all()]
+        users = users_query.filter(User.clinic_id.in_(clinic_ids)).all()
+    # Clinic admin: users in their clinic
+    elif current_user.role == UserRole.clinic_admin:
+        if not current_user.clinic_id:
+            db.close()
+            return []
+        users = users_query.filter(User.clinic_id == current_user.clinic_id).all()
+    # Doctor: cannot see users
+    else:
+        db.close()
+        raise HTTPException(status_code=403, detail="Doctors cannot view users list")
+
+    result = []
+    for u in users:
+        clinic_name = u.clinic.name if u.clinic else "-"
+        hospital_name = u.clinic.hospital.name if u.clinic and u.clinic.hospital else "-"
+        result.append({
+            "id": u.id,
+            "uuid": str(u.uuid),
+            "email": u.email,
+            "role": u.role,
+            "clinic": clinic_name,
+            "hospital": hospital_name,
+            "is_active": u.is_active
+        })
+    db.close()
+    return result
+from fastapi import Path
+
+@app.patch("/users/{user_id}", dependencies=[Depends(get_current_user)])
+def toggle_user_active(
+    user_id: str = Path(...),  # Accept UUID as string
+):
+    db = SessionLocal()
+    user = db.query(User).filter(User.uuid == user_id).first()
+    if not user:
+        db.close()
+        raise HTTPException(status_code=404, detail="User not found")
+    # Toggle is_active status
+    user.is_active = not user.is_active
+    db.commit()
+    is_active = user.is_active
+    db.close()
+    return {"id": user_id, "active": is_active}
+@app.post("/hospitals/", dependencies=[Depends(get_current_user)])
+def create_hospital(
+    name: str = Body(...),
+    max_users: int = Body(...),
+    clinics: Optional[List[str]] = Body(None)
+):
+    db = SessionLocal()
+    # Check if hospital name already exists
+    existing = db.query(Hospital).filter(Hospital.name == name).first()
+    if existing:
+        db.close()
+        raise HTTPException(status_code=400, detail="Hospital name already exists")
+    # Create hospital
+    new_hospital = Hospital(
+        name=name,
+        max_users=max_users,
+        max_reports=0  # or set a default or accept as input
+    )
+    db.add(new_hospital)
+    db.flush()  # Get new_hospital.id before adding clinics
+
+    created_clinics = []
+    if clinics:
+        for clinic_name in clinics:
+            new_clinic = Clinic(
+                name=clinic_name,
+                hospital_id=new_hospital.id
+            )
+            db.add(new_clinic)
+            db.flush()
+            created_clinics.append({
+                "uuid": str(new_clinic.uuid),
+                "name": new_clinic.name
+            })
+    db.commit()
+    # Read attributes before closing session
+    hospital_id = new_hospital.id
+    hospital_uuid = str(new_hospital.uuid)
+    hospital_name = new_hospital.name
+    hospital_max_users = new_hospital.max_users
+    db.close()
+    return {
+        "msg": "Hospital created successfully",
+        "hospital": {
+            "id": hospital_id,
+            "uuid": hospital_uuid,
+            "name": hospital_name,
+            "max_users": hospital_max_users
+        },
+        "clinics": created_clinics
+    }
+
+
+@app.get("/hospitals/", dependencies=[Depends(get_current_user)])
+def list_hospitals():
+    db = SessionLocal()
+    hospitals = db.query(Hospital).all()
+    result = []
+    for h in hospitals:
+        clinics = db.query(Clinic).filter(Clinic.hospital_id == h.id).all()
+        # Get all clinic ids for this hospital
+        clinic_ids = [c.id for c in clinics]
+        # Count users in all clinics of this hospital
+        num_users = db.query(User).filter(User.clinic_id.in_(clinic_ids)).count() if clinic_ids else 0
+        result.append({
+            "id": h.id,
+            "name": h.name,
+            "uuid": str(h.uuid),
+            "max_users": h.max_users,
+            "max_reports": h.max_reports,
+            "num_users": num_users,  # <-- Add this line
+            "clinics": [
+                {
+                    "id": c.id,
+                    "name": c.name,
+                    "uuid": str(c.uuid)
+                } for c in clinics
+            ]
+        })
+    db.close()
+    return result
+
+@app.post("/clinics/", dependencies=[Depends(get_current_user)])
+def add_clinics(
+    hospital_uuid: str = Body(...),
+    clinics: Optional[List[str]] = Body(None),
+    max_users: int = Body(None)
+):
+    db = SessionLocal()
+    hospital = db.query(Hospital).filter(Hospital.uuid == hospital_uuid).first()
+    if not hospital:
+        db.close()
+        raise HTTPException(status_code=404, detail="Hospital not found")
+    created_clinics = []
+    if clinics:
+        for clinic_name in clinics:
+            new_clinic = Clinic(
+                name=clinic_name,
+                hospital_id=hospital.id
+            )
+            db.add(new_clinic)
+            db.flush()
+            created_clinics.append({
+                "uuid": str(new_clinic.uuid),
+                "name": new_clinic.name
+            })
+    if max_users is not None:
+        hospital.max_users = max_users
+    db.commit()
+    db.close()
+    return {
+        "msg": "Clinics created successfully" if created_clinics else "No clinics added",
+        "clinics": created_clinics
+    }
