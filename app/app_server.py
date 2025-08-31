@@ -128,8 +128,8 @@ class AnalysisResult(Base):
     raw_data = Column(Text, nullable=False)
     analysis = Column(JSON, nullable=False)
     patient_id = Column(String(10), unique=True, index=True, nullable=False)  # 10-digit patient ID
-    assigned_doctor_id = Column(Integer, ForeignKey("users.id"), nullable=True)
-    assigned_doctor = relationship("User")
+    #assigned_doctor_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    #assigned_doctor = relationship("User")
     
 Base.metadata.create_all(bind=engine)
 @app.get("/")
