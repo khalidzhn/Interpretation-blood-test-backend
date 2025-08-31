@@ -164,7 +164,7 @@ def get_all_analysis_results(current_user: User = Depends(get_current_user)):
             patient_name = None
         results_list.append({
             "patient_id": r.patient_id,
-            "assigned_doctor_email": doctor_email,
+            "assigned_doctor_email": None,  # Temporarily None
             "pdf_filename": r.pdf_filename,
             "patient_name": patient_name,
             "DoctorInterpretation": analysis.get("DoctorInterpretation"),
