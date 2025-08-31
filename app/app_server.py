@@ -281,6 +281,58 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
+@app.post("/admin-register")
+def admin_register(
+    email: str = Body(...),
+    password: str = Body(...),
+    role: str = Body("doctor"),
+    full_name: str = Body(None),
+    title: str = Body(None),
+    clinic_uuid: str = Body(None),
+    is_active: bool = Body(True)
+):
+    db = SessionLocal()
+    
+    clinic_id = None
+    if clinic_uuid:
+        clinic = db.query(Clinic).filter(Clinic.uuid == clinic_uuid).first()
+        if clinic:
+            clinic_id = clinic.id
+    
+    hashed_password = get_password_hash(password)
+    
+    new_user = User(
+        email=email,
+        hashed_password=hashed_password,
+        role=role,
+        full_name=full_name,
+        title=title,
+        clinic_id=clinic_id,
+        is_active=is_active
+    )
+    
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    
+    user_uuid = str(new_user.uuid)
+    user_id = new_user.id
+    
+    db.close()
+    
+    return {
+        "msg": "User created successfully",
+        "user": {
+            "id": user_id,
+            "uuid": user_uuid,
+            "email": email,
+            "role": role,
+            "full_name": full_name,
+            "title": title,
+            "is_active": is_active
+        }
+    }
+
 
 @app.post("/register")
 def register(email: str = Body(...), password: str = Body(...)):
