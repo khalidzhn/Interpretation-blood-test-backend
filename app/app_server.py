@@ -141,7 +141,7 @@ def get_all_analysis_results(current_user: User = Depends(get_current_user)):
     db = SessionLocal()
     
     # if current_user.role == UserRole.admin:
-        results = db.query(AnalysisResult).order_by(desc(AnalysisResult.id)).limit(10).all()
+    results = db.query(AnalysisResult).order_by(desc(AnalysisResult.id)).limit(10).all()
     # else:
     #     results = db.query(AnalysisResult).filter(
     #         AnalysisResult.assigned_doctor_id == current_user.id
