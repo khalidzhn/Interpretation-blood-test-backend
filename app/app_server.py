@@ -120,6 +120,22 @@ class Clinic(Base):
     hospital = relationship("Hospital", back_populates="clinic")
     users = relationship("User", back_populates="clinic")
 
+def remove_patient_id_unique_constraint():
+    """Remove unique constraint from patient_id column"""
+    try:
+        with engine.connect() as connection:
+            # Drop the unique constraint
+            connection.execute(text("ALTER TABLE analysis_results DROP CONSTRAINT IF EXISTS ix_analysis_results_patient_id;"))
+            # Recreate as regular index (not unique)
+            connection.execute(text("CREATE INDEX IF NOT EXISTS ix_analysis_results_patient_id ON analysis_results (patient_id);"))
+            connection.commit()
+            print("✅ Removed unique constraint from patient_id")
+    except Exception as e:
+        print(f"Error removing constraint: {e}")
+
+# Call this after Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
+remove_patient_id_unique_constraint()
 
 class AnalysisResult(Base):
     __tablename__ = "analysis_results"
@@ -127,7 +143,7 @@ class AnalysisResult(Base):
     pdf_filename = Column(String, nullable=False)
     raw_data = Column(Text, nullable=False)
     analysis = Column(JSON, nullable=False)
-    patient_id = Column(String(10), unique=True, index=True, nullable=False)  # 10-digit patient ID
+    patient_id = Column(String(10),  index=True, nullable=False)  # 10-digit patient ID
     #assigned_doctor_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     #assigned_doctor = relationship("User")
     
@@ -182,10 +198,8 @@ async def upload_pdf(
     patient_id: str = Form(...),
     assigned_doctor_id: int = Form(...)
 ):
-        # Validate patient_id is 10 digits
-    if not (patient_id.isdigit() and len(patient_id) == 10):
-        return JSONResponse(status_code=400, content={"error": "patient_id must be a 10-digit number."})
-
+    
+    
     db = SessionLocal()
     # Validate doctor exists
     doctor = db.query(User).filter(User.id == assigned_doctor_id).first()
