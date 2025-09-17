@@ -65,12 +65,17 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     return user
 
 
+origins = [
+"https://0204f88fc672417fab454e7b172a58a1-839fa329-6a1f-464a-a7ed-9976a8.fly.dev",
+"http://localhost:8080",
+"http://interpretation-frontend-dev-bucket.s3-website-us-west-2.amazonaws.com",
+]
 app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Or specify your frontend URL instead of "*"
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+CORSMiddleware,
+allow_origins=origins,
+allow_credentials=True,
+allow_methods=[""],
+allow_headers=[""],
 )
 
 class UserRole(str, Enum):
