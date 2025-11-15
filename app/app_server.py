@@ -1,5 +1,5 @@
 from fastapi import FastAPI, File, UploadFile
-from sqlalchemy import create_engine, Column, Integer, String, Text
+from sqlalchemy import create_engine, Column, Integer, String, Text, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from fastapi import Form
@@ -64,18 +64,22 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
         raise credentials_exception
     return user
 
+# Configure CORS origins explicitly. When credentials are allowed,
+# Access-Control-Allow-Origin must NOT be "*". Use the environment
+# variable `ALLOWED_ORIGINS` to list comma-separated origins (for example:
+# "http://localhost:3000,http://127.0.0.1:3000,http://interpretation-frontend-dev-bucket.s3-website-us-west-2.amazonaws.com").
+allowed_origins_env = os.getenv(
+    "ALLOWED_ORIGINS",
+    "http://localhost:3000,http://127.0.0.1:3000,http://interpretation-frontend-dev-bucket.s3-website-us-west-2.amazonaws.com",
+)
+allowed_origins = [o.strip() for o in allowed_origins_env.split(",") if o.strip()]
 
-origins = [
-"https://0204f88fc672417fab454e7b172a58a1-839fa329-6a1f-464a-a7ed-9976a8.fly.dev",
-"http://localhost:8080",
-"http://interpretation-frontend-dev-bucket.s3-website-us-west-2.amazonaws.com",
-]
 app.add_middleware(
-CORSMiddleware,
-allow_origins=origins,
-allow_credentials=True,
-allow_methods=[""],
-allow_headers=[""],
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],
 )
 
 class UserRole(str, Enum):
@@ -98,6 +102,43 @@ class User(Base):
     role = Column(String, nullable=False, default="doctor") 
     clinic = relationship("Clinic", back_populates="users")
     is_active = Column(Boolean, nullable=False, default=True)  # <-- Use Boolean for status
+
+import requests
+
+def get_access_token(client_id, client_secret, token_url):
+    data = {
+        'grant_type': 'client_credentials',
+        'client_id': 'a5d28321-20bd-4479-81ee-80ee4066e415',
+        'client_secret': 'UTCSecret6eTUOTGAHkN46ZOgIsQVH4UvnXjoA-xF',
+    }
+    response = requests.post(token_url, data=data)
+    response.raise_for_status()
+    return response.json()['access_token']
+
+def get_patient_data(fhir_base_url, access_token, patient_id):
+    headers = {"Accept": "application/fhir+json"}
+    url = f"https://fhir-open.cerner.com/r4/ec2458f2-1e24-41c8-b71b-0e701af7583d/Observation?patient=12724066"
+    response = requests.get(url, headers=headers)
+    print("Request URL:", url)
+    print("Response Status:", response.status_code)
+    print("Response Content:", response.text)
+    response.raise_for_status()
+    return response.json()
+
+def get_lab_results(fhir_base_url, access_token, patient_id):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    url = f"{fhir_base_url}/Observation?patient={patient_id}&category=laboratory"
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+
+@app.get("/oracle/patient/{patient_id}")
+def fetch_oracle_patient(patient_id: str):
+    get_patient_data('https://fhir-open.cerner.com/r4/ec2458f2-1e24-41c8-b71b-0e701af7583d', 'your_access_token', patient_id)
+   
+   
+    return {"msg": "Fetched and stored patient data"}
 
 
 def get_password_hash(password):
@@ -269,6 +310,226 @@ async def upload_pdf(
     return {"message": "PDF processed and data stored.", "id": db_result.id}
 
 
+@app.post("/filter-excel/")
+async def filter_excel(file: UploadFile = File(...)):
+    """Accept an Excel file, apply column filters, and write filtered-in and filtered-out records
+    into the `.result` directory as separate .txt files. Returns counts and file paths.
+    """
+    import pandas as pd
+    from pathlib import Path
+
+    # Ensure result directory
+    result_dir = Path(".result")
+    result_dir.mkdir(parents=True, exist_ok=True)
+
+    # Read uploaded file into a DataFrame
+    contents = await file.read()
+    try:
+        df = pd.read_excel(contents, engine="openpyxl")
+    except Exception:
+        # fallback: try reading from bytes via BytesIO
+        from io import BytesIO
+        df = pd.read_excel(BytesIO(contents), engine="openpyxl")
+
+    # Columns and filter logic
+    group1 = [
+        "Local_Hom", "Local_Het", "AC", "AC_hom", "ExAC_AC", "Kaviar_AC",
+    ]
+
+    group2 = [
+        "1000g2015aug_all", "LocalFreq", "NHLBI ESP AF", "ExAC_ALL", "GME_AF",
+        "gnomAD_exome_AF", "gnomAD_genome_ALL", "Kaviar_AF",
+    ]
+
+    allowed_refgene = {"exonic", "exonic;splicing", "splicing"}
+
+    def find_column(df, name):
+        for c in df.columns:
+            if c == name:
+                return c
+        lname = name.lower()
+        for c in df.columns:
+            if str(c).lower() == lname:
+                return c
+        return None
+
+    # Map requested names to actual columns or None
+    g1_cols_map = {c: find_column(df, c) for c in group1}
+    g2_cols_map = {c: find_column(df, c) for c in group2}
+    # additional annotation columns we will use
+    sift_col = find_column(df, "SIFT_score") or find_column(df, "SIFT")
+    polyphen_col = find_column(df, "Polyphen2_HDIV_score") or find_column(df, "Polyphen2") or find_column(df, "PolyPhen2_HDIV_score")
+    cadd_col = find_column(df, "CADD_phred_41a") or find_column(df, "CADD_phred") or find_column(df, "CADD_phred_41")
+    # two refGene-related columns: high-level function and exonic-specific function
+    ref_col = find_column(df, "refGene") or find_column(df, "refGene function") or find_column(df, "refgene")
+    exonic_func_col = find_column(df, "refGene exonic function") or find_column(df, "refGene_exonic_function") or find_column(df, "refgene exonic function")
+
+    # Track completely missing expected columns (for appending to filtered_in file)
+    missing_columns = [name for name, col in {**g1_cols_map, **g2_cols_map}.items() if col is None]
+    if ref_col is None:
+        missing_columns.append("refGene")
+
+    # Prepare working dataframe with reason columns
+    df_work = df.copy()
+    df_work["MissingFields"] = ""
+    df_work["FilterReasons"] = ""
+    # Also track a column for rule-based forced inclusion
+    df_work["ForceIncludeReason"] = ""
+
+    # Evaluate row-by-row so we can record missing values vs failing checks
+    for idx in df_work.index:
+        missing = []
+        reasons = []
+
+        # Group1 checks: > 5
+        for logical_name, col in g1_cols_map.items():
+            if col is None:
+                # column missing entirely; don't mark per-row missing here (global list added later)
+                continue
+            val = df_work.at[idx, col]
+            if pd.isna(val) or (str(val).strip() == ""):
+                missing.append(col)
+            else:
+                try:
+                    num = float(val)
+                except Exception:
+                    missing.append(col)
+                    num = None
+                if num is not None and not (num > 5):
+                    reasons.append(f"{col}<=5")
+
+        # Group2 checks: > 0.001
+        for logical_name, col in g2_cols_map.items():
+            if col is None:
+                continue
+            val = df_work.at[idx, col]
+            if pd.isna(val) or (str(val).strip() == ""):
+                missing.append(col)
+            else:
+                try:
+                    num = float(val)
+                except Exception:
+                    missing.append(col)
+                    num = None
+                if num is not None and not (num > 0.001):
+                    reasons.append(f"{col}<=0.001")
+
+        # refGene check - apply ONLY after group1/group2 checks (initial filtering)
+        variant_match = False
+        variant_reasons = []
+        if ref_col is not None:
+            val = df_work.at[idx, ref_col]
+            if pd.isna(val) or (str(val).strip() == ""):
+                missing.append(ref_col)
+                # if missing high-level ref, treat as not allowed (record reason)
+                reasons.append(f"{ref_col}=MISSING")
+            else:
+                txt = str(val).lower().strip()
+                # If high-level function not in allowed set, record reason now (this is part of initial filtering)
+                if txt not in allowed_refgene:
+                    reasons.append(f"{ref_col}={val}")
+
+                # Only evaluate variant-specific rules if the row passed group1/group2 and high-level allowed_refgene
+                initial_pass = len(reasons) == 0
+                if initial_pass:
+                    # exonic-specific text
+                    exonic_txt = None
+                    if exonic_func_col is not None:
+                        ex_val = df_work.at[idx, exonic_func_col]
+                        if not (pd.isna(ex_val) or str(ex_val).strip() == ""):
+                            exonic_txt = str(ex_val).lower().strip()
+                        else:
+                            # missing exonic-specific annotation shouldn't auto-filter; flag it
+                            missing.append(exonic_func_col)
+
+                    # Rule 1: exonic or exonic;splicing and exonic function contains frameshift or nonsynonymous
+                    if txt in {"exonic", "exonic;splicing"} and exonic_txt and ("frameshift" in exonic_txt or "nonsynonymous" in exonic_txt):
+                        variant_match = True
+                        variant_reasons.append("exonic_frameshift_or_nonsynonymous")
+
+                    # Rule 2: synonymous SNV in exonic function -> check SIFT/PolyPhen/CADD
+                    if exonic_txt and "synonymous" in exonic_txt:
+                        s_val = None
+                        p_val = None
+                        c_val = None
+                        if sift_col is not None:
+                            try:
+                                s_val = float(df_work.at[idx, sift_col])
+                            except Exception:
+                                missing.append(sift_col)
+                        if polyphen_col is not None:
+                            try:
+                                p_val = float(df_work.at[idx, polyphen_col])
+                            except Exception:
+                                missing.append(polyphen_col)
+                        if cadd_col is not None:
+                            try:
+                                c_val = float(df_work.at[idx, cadd_col])
+                            except Exception:
+                                missing.append(cadd_col)
+                        if (s_val is not None and s_val < 0.5) or (p_val is not None and p_val >= 0.5) or (c_val is not None and c_val > 20):
+                            variant_match = True
+                            variant_reasons.append("synonymous_predicted_damaging_or_CADD")
+
+                    # Rule 3: splicing or exonic;splicing -> check SIFT >= 0.5
+                    if "splicing" in txt:
+                        s_val = None
+                        if sift_col is not None:
+                            try:
+                                s_val = float(df_work.at[idx, sift_col])
+                            except Exception:
+                                missing.append(sift_col)
+                        if s_val is not None and s_val >= 0.5:
+                            variant_match = True
+                            variant_reasons.append("splicing_sift_high")
+
+                    # If initial passed but no variant rule matched, mark as failing variant-level filter
+                    if not variant_match:
+                        reasons.append("refGene_rules_not_met")
+                    else:
+                        # record variant match reasons into ForceIncludeReason for output
+                        df_work.at[idx, "ForceIncludeReason"] = ";".join(sorted(set(variant_reasons)))
+
+        df_work.at[idx, "MissingFields"] = ";".join(sorted(set(missing)))
+        df_work.at[idx, "FilterReasons"] = ";".join(sorted(set(reasons)))
+        # If ForceIncludeReason present, clear FilterReasons so row is included (and ForceIncludeReason will be written to output)
+        if df_work.at[idx, "ForceIncludeReason"]:
+            df_work.at[idx, "FilterReasons"] = ""
+
+    # Rows with any FilterReasons are filtered out; rows with no reasons are filtered in
+    mask_in = df_work["FilterReasons"].astype(str) == ""
+    df_in = df_work[mask_in].copy()
+    df_out = df_work[~mask_in].copy()
+
+    # Helper to stringify rows
+    def rows_to_txt_with_reasons(df_rows: pd.DataFrame) -> str:
+        if df_rows.empty:
+            return ""
+        # include MissingFields and FilterReasons columns in output
+        return df_rows.to_csv(sep="\t", index=False)
+
+    in_path = result_dir / f"{Path(file.filename).stem}_filtered_in.txt"
+    out_path = result_dir / f"{Path(file.filename).stem}_filtered_out.txt"
+
+    # Write filtered-in rows
+    content_in = rows_to_txt_with_reasons(df_in)
+    if missing_columns:
+        content_in += "\n\nMissing columns in uploaded file: " + ", ".join(sorted(set(missing_columns))) + "\n"
+    in_path.write_text(content_in, encoding="utf-8")
+
+    # Write filtered-out rows (with FilterReasons appended as a column)
+    content_out = rows_to_txt_with_reasons(df_out)
+    # Additionally, for clarity append a short footer describing why rows were filtered
+    out_path.write_text(content_out, encoding="utf-8")
+
+    return {
+        "filtered_in_count": len(df_in),
+        "filtered_out_count": len(df_out),
+        "filtered_in_path": str(in_path),
+        "filtered_out_path": str(out_path),
+    }
+
+
 @app.get("/lab-result/{labResultId}")
 def get_lab_report_json(labResultId: str):
     db = SessionLocal()
@@ -321,7 +582,12 @@ def admin_register(
     
     clinic_id = None
     if clinic_uuid:
-        clinic = db.query(Clinic).filter(Clinic.uuid == clinic_uuid).first()
+        try:
+            parsed_clinic_uuid = uuid.UUID(clinic_uuid)
+        except (ValueError, TypeError):
+            db.close()
+            raise HTTPException(status_code=400, detail="Invalid clinic_uuid format")
+        clinic = db.query(Clinic).filter(Clinic.uuid == parsed_clinic_uuid).first()
         if clinic:
             clinic_id = clinic.id
     
@@ -420,7 +686,12 @@ def invite_user(
         raise HTTPException(status_code=400, detail="Email already invited or registered")
     clinic_id = None
     if assigned_clinic_uuid:
-        clinic = db.query(Clinic).filter(Clinic.uuid == assigned_clinic_uuid).first()
+        try:
+            parsed_assigned_clinic_uuid = uuid.UUID(assigned_clinic_uuid)
+        except (ValueError, TypeError):
+            db.close()
+            raise HTTPException(status_code=400, detail="Invalid assigned_clinic_uuid format")
+        clinic = db.query(Clinic).filter(Clinic.uuid == parsed_assigned_clinic_uuid).first()
         if not clinic:
             db.close()
             raise HTTPException(status_code=404, detail="Clinic not found")

@@ -56,7 +56,7 @@ def RESULTـOFـWHITEـBLOODـCELLS(KEY, prompt):
         }
         
         print("🔄 Sending request to Poe API...")
-        response = requests.post(url, headers=headers, json=payload, timeout=60)
+        response = requests.post(url, headers=headers, json=payload, timeout=1000)
         print(f"📡 API Response status: {response.status_code}")
         
         if response.status_code == 200:
