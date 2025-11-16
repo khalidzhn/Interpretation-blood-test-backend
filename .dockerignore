@@ -1,0 +1,24 @@
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+
+# Virtual environment
+venv/
+env/
+
+# Git
+.git/
+.gitignore
+
+# Local logs
+*.log
+
+# Node / panel / large folders if not needed
+node_modules/
+panel/node_modules/
+
+# Docker files themselves (optional)
+.dockerignore
