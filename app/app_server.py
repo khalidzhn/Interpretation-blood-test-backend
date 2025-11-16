@@ -30,7 +30,7 @@ from typing import Optional, List
 
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://user:password@localhost:5432/mydatabase")
-port = int(os.getenv("PORT", 5000))
+port = int(os.getenv("PORT", 8080))
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
