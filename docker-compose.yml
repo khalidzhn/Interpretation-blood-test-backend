@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgresql+psycopg2://dev_user:fkdopeif32@database-1.c5mswemmu8to.us-west-2.rds.amazonaws.com:5432/database-1
+      DATABASE_URL: postgresql+psycopg2://user:password@localhost:5432/mydatabase"
     ports:
       - "8080:8080"
     command: >
