@@ -31,7 +31,7 @@ from typing import Optional, List
 
 DATABASE_URL = os.getenv("postgresql+psycopg2://DB_dev:jdow!242F@database-1.c5mswemmu8to.us-west-2.rds.amazonaws.com:5432/database-1")
 port = int(os.getenv("PORT", 8080))
-engine = create_engine("postgresql+psycopg2://DB_dev:jdow!242F@database-1.c5mswemmu8to.us-west-2.rds.amazonaws.com:5432/database-1")
+engine = create_engine("postgresql+psycopg2://DB_dev:Ala.zoby!108@database-1.c5mswemmu8to.us-west-2.rds.amazonaws.com:5432/database-1")
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
