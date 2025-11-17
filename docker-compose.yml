@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   db:
     image: postgres:16
@@ -5,8 +7,6 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mydatabase
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -19,9 +19,9 @@ services:
     environment:
       DATABASE_URL: postgresql+psycopg2://user:password@db:5432/mydatabase
     ports:
-      - "80:8000"
-    volumes:
-      - .:/app
+      - "8080:8080"
+    command: >
+      uvicorn app.app_server:app --host 0.0.0.0 --port 8080
 
 volumes:
   postgres_data:
