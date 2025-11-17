@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgresql+psycopg2://user:password@db:5432/mydatabase
+      DATABASE_URL: ${DATABASE_URL}
     ports:
       - "8080:8080"
     command: >

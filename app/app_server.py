@@ -29,7 +29,7 @@ from sqlalchemy import Boolean
 from typing import Optional, List
 
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://DB_dev:jdow!242F@database-1.c5mswemmu8to.us-west-2.rds.amazonaws.com:5432/database-1")
+DATABASE_URL = os.getenv("DATABASE_URL")
 port = int(os.getenv("PORT", 8080))
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
