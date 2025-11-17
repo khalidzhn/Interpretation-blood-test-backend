@@ -41,7 +41,7 @@ env/
 
 # macOS
 .DS_Store
-
+.github/
 
 uploaded_pdfs/
 .result/
