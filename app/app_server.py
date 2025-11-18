@@ -27,7 +27,9 @@ from sqlalchemy.orm import relationship
 from enum import Enum
 from sqlalchemy import Boolean
 from typing import Optional, List
+from fastapi import Request
 
+import asyncio
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://user:password@localhost:5432/mydatabase")
 port = int(os.getenv("PORT", 8080))
@@ -144,6 +146,23 @@ def fetch_oracle_patient(patient_id: str):
    
     return {"msg": "Fetched and stored patient data"}
 
+@app.on_event("startup")
+async def startup_db_and_create_tables():
+    max_retries = int(os.getenv("DB_STARTUP_RETRIES", "30"))
+    delay = float(os.getenv("DB_STARTUP_DELAY", "1"))
+    for attempt in range(1, max_retries + 1):
+        try:
+            # Try a quick connect and create tables
+            with engine.begin() as conn:
+                Base.metadata.create_all(bind=engine)
+            print("Database connected and tables ensured")
+            return
+        except Exception as e:
+            print(f"DB not ready (attempt {attempt}/{max_retries}): {e}")
+            await asyncio.sleep(delay)
+    # If you prefer not to abort the app, change this to a warning instead of raising
+    raise RuntimeError("Could not connect to the database after retries")
+# ...existing code...
 
 def get_password_hash(password):
     return pwd_context.hash(password)
@@ -240,80 +259,239 @@ def get_all_analysis_results(current_user: User = Depends(get_current_user)):
         })
     db.close()
     return JSONResponse(content=results_list)
+CONFIG_YML = {}
+# @app.post("/upload-pdf/")
+# @app.post("/upload-pdf/")
+# async def upload_pdf(
+#     request: Request,
+#     file: UploadFile = File(...),
+#     patient_id: str = Form(...),
+#     assigned_doctor_id: str = Form(...),
+#     ):
 
+#       # Debug: log headers and form keys
+#     try:
+#         print("=== /upload-pdf request headers ===")
+#         for k, v in request.headers.items():
+#             print(f"{k}: {v}")
+#         form = await request.form()
+#         print("=== /upload-pdf form keys ===", list(form.keys()))
+#     except Exception as e:
+#         print("Failed to read request.form():", e)
+
+#     # Basic validation with clear messages
+#     if not file or not getattr(file, "filename", None):
+#         raise HTTPException(status_code=400, detail="Missing file or filename")
+
+#     print("Uploaded file:", file.filename, "content_type:", file.content_type)
+
+#     try:
+#         assigned_doctor_id_int = int(assigned_doctor_id)
+#     except Exception:
+#         raise HTTPException(status_code=400, detail="assigned_doctor_id must be an integer")
+
+#     # Optional: check patient_id numeric if you expect integer
+#     try:
+#         patient_id_int = int(patient_id)
+#     except Exception:
+#         patient_id_int = None
+#         print("patient_id not integer, received:", patient_id)
+
+#     # Continue with existing processing (save, analysis, DB)
+#     try:
+#         # ...existing code that handles file saving and processing...
+#         pass
+#     except Exception as e:
+#         print("Error in upload processing:", e)
+#         raise HTTPException(status_code=500, detail="Internal server error while processing upload")
+# # ...existing code...
+
+#     db = SessionLocal()
+#     # Validate doctor exists
+#     doctor = db.query(User).filter(User.id == assigned_doctor_id).first()
+#     if not doctor:
+#         db.close()
+#         return JSONResponse(status_code=400, content={"error": "Assigned doctor not found."})
+
+#     print("UPLOAD ENDPOINT CALLED")
+#     print("Received file:", file.filename)
+#     pdf_dir = "uploaded_pdfs"
+#     os.makedirs(pdf_dir, exist_ok=True)
+#     pdf_path = os.path.join(pdf_dir, file.filename)
+#     pdf_name = file.filename
+#     with open(pdf_path, "wb") as buffer:
+#         shutil.copyfileobj(file.file, buffer)
+#     print("Saved PDF to:", pdf_path)
+
+#     raw_data = get_data_from_user(pdf_path)
+#     print("Extracted raw data:", raw_data[:200])  # Print first 200 chars
+
+
+#     # Read your text file as CSV
+#     panel_path = os.path.join("panel", "labPanels.txt")
+#     df = pd.read_csv(panel_path)
+#     # Convert to list of dicts
+#     panel_dictionary = df.to_dict(orient="records")
+#     prompt = information.build_prompt_from_raw_data(raw_data, panel_dictionary)
+#     print("Prompt built.")  # Print first 200 chars of the prompt")
+
+#     key = information.CONFIG(information.CONFIG_YML).get("gemini").get("key")
+
+#     print("Gemini key loaded.")
+
+#     analysis = information.RESULTـOFـWHITEـBLOODـCELLS(key, prompt)
+#     print("Raw analysis result:", analysis)    
+#     db = SessionLocal()
+    
+#     if isinstance(analysis, str):
+#         try:
+#             # Keep decoding until it's a dict (handles double-encoded JSON)
+#             while isinstance(analysis, str):
+#                 analysis = json.loads(analysis)
+#         except Exception:
+#             db.close()
+#             return JSONResponse(status_code=400, content={"error": "Analysis could not be generated or parsed as JSON."})
+
+#     if not analysis or not isinstance(analysis, dict):
+#         db.close()
+#         return JSONResponse(status_code=400, content={"error": "Analysis is empty or not a valid JSON object."})
+
+#     db_result = AnalysisResult(
+#         pdf_filename=pdf_name,
+#         raw_data=raw_data,
+#         analysis=analysis,  # Save as dict
+#         patient_id=patient_id,
+#         #assigned_doctor_id=assigned_doctor_id
+#     )
+#     db.add(db_result)
+#     db.commit()
+#     db.refresh(db_result)
+#     db.close()
+#     print("Saved to DB.")
+#     return {"message": "PDF processed and data stored.", "id": db_result.id}
+
+
+# ...existing code...
+@app.post("/upload-pdf/")
 @app.post("/upload-pdf/")
 @app.post("/upload-pdf/")
 async def upload_pdf(
+    request: Request,
     file: UploadFile = File(...),
     patient_id: str = Form(...),
-    assigned_doctor_id: int = Form(...)
+    assigned_doctor_id: str = Form(...),
 ):
-    
-    
+    # Debug: log headers and form keys
+    try:
+        print("=== /upload-pdf request headers ===")
+        for k, v in request.headers.items():
+            print(f"{k}: {v}")
+        form = await request.form()
+        print("=== /upload-pdf form keys ===", list(form.keys()))
+    except Exception as e:
+        print("Failed to read request.form():", e)
+
+    # Basic validation
+    if not file or not getattr(file, "filename", None):
+        raise HTTPException(status_code=400, detail="Missing file or filename")
+
+    print("Uploaded file:", file.filename, "content_type:", file.content_type)
+
+    try:
+        assigned_doctor_id_int = int(assigned_doctor_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="assigned_doctor_id must be an integer")
+
+    try:
+        patient_id_int = int(patient_id)
+    except Exception:
+        patient_id_int = None
+        print("patient_id not integer, received:", patient_id)
+
     db = SessionLocal()
-    # Validate doctor exists
-    doctor = db.query(User).filter(User.id == assigned_doctor_id).first()
-    if not doctor:
-        db.close()
-        return JSONResponse(status_code=400, content={"error": "Assigned doctor not found."})
+    try:
+        # Validate doctor exists
+        doctor = db.query(User).filter(User.id == assigned_doctor_id_int).first()
+        if not doctor:
+            print(f"Warning: assigned doctor {assigned_doctor_id_int} not found — proceeding without doctor assignment")
+            doctor = None
+        print("UPLOAD ENDPOINT CALLED")
+        print("Received file:", file.filename)
+        pdf_dir = "uploaded_pdfs"
+        os.makedirs(pdf_dir, exist_ok=True)
+        pdf_path = os.path.join(pdf_dir, file.filename)
+        pdf_name = file.filename
+        with open(pdf_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        print("Saved PDF to:", pdf_path)
 
-    print("UPLOAD ENDPOINT CALLED")
-    print("Received file:", file.filename)
-    pdf_dir = "uploaded_pdfs"
-    os.makedirs(pdf_dir, exist_ok=True)
-    pdf_path = os.path.join(pdf_dir, file.filename)
-    pdf_name = file.filename
-    with open(pdf_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-    print("Saved PDF to:", pdf_path)
+        raw_data = get_data_from_user(pdf_path)
+        print("Extracted raw data (truncated):", (raw_data or "")[:200])
 
-    raw_data = get_data_from_user(pdf_path)
-    print("Extracted raw data:", raw_data[:200])  # Print first 200 chars
-
-
-    # Read your text file as CSV
-    panel_path = os.path.join("panel", "labPanels.txt")
-    df = pd.read_csv(panel_path)
-    # Convert to list of dicts
-    panel_dictionary = df.to_dict(orient="records")
-    prompt = information.build_prompt_from_raw_data(raw_data, panel_dictionary)
-    print("Prompt built.")  # Print first 200 chars of the prompt")
-
-    key = information.CONFIG(information.CONFIG_YML).get("gemini").get("key")
-
-    print("Gemini key loaded.")
-
-    analysis = information.RESULTـOFـWHITEـBLOODـCELLS(key, prompt)
-    print("Raw analysis result:", analysis)    
-    db = SessionLocal()
-    
-    if isinstance(analysis, str):
+        # Read panel dictionary
+        panel_path = os.path.join("panel", "labPanels.txt")
         try:
-            # Keep decoding until it's a dict (handles double-encoded JSON)
-            while isinstance(analysis, str):
-                analysis = json.loads(analysis)
-        except Exception:
+            df = pd.read_csv(panel_path)
+            panel_dictionary = df.to_dict(orient="records")
+        except Exception as e:
+            print("Failed to read panel file:", e)
+            panel_dictionary = None
+
+        prompt = information.build_prompt_from_raw_data(raw_data, panel_dictionary)
+        print("Prompt built (truncated):", prompt[:200])
+
+        key = None
+        try:
+            key = information.CONFIG(information.CONFIG_YML).get("gemini").get("key")
+        except Exception as e:
+            print("Warning: could not load gemini key from config:", e)
+
+        analysis = None
+        try:
+            analysis = information.RESULTـOFـWHITEـBLOODـCELLS(key, prompt)
+        except Exception as e:
+            print("Analysis call failed:", e)
+            analysis = None
+
+        print("Raw analysis result (truncated):", str(analysis)[:200])
+
+        if isinstance(analysis, str):
+            try:
+                while isinstance(analysis, str):
+                    analysis = json.loads(analysis)
+            except Exception:
+                db.close()
+                return JSONResponse(status_code=400, content={"error": "Analysis could not be parsed as JSON."})
+
+        if not analysis or not isinstance(analysis, dict):
             db.close()
-            return JSONResponse(status_code=400, content={"error": "Analysis could not be generated or parsed as JSON."})
+            return JSONResponse(status_code=400, content={"error": "Analysis is empty or not a valid JSON object."})
 
-    if not analysis or not isinstance(analysis, dict):
+        db_result = AnalysisResult(
+            pdf_filename=pdf_name,
+            raw_data=raw_data,
+            analysis=analysis,
+            patient_id=patient_id,
+        )
+        db.add(db_result)
+        db.commit()
+        db.refresh(db_result)
+        print("Saved to DB, id:", db_result.id)
+        return {"message": "PDF processed and data stored.", "id": db_result.id}
+
+    except HTTPException:
         db.close()
-        return JSONResponse(status_code=400, content={"error": "Analysis is empty or not a valid JSON object."})
-
-    db_result = AnalysisResult(
-        pdf_filename=pdf_name,
-        raw_data=raw_data,
-        analysis=analysis,  # Save as dict
-        patient_id=patient_id,
-        #assigned_doctor_id=assigned_doctor_id
-    )
-    db.add(db_result)
-    db.commit()
-    db.refresh(db_result)
-    db.close()
-    print("Saved to DB.")
-    return {"message": "PDF processed and data stored.", "id": db_result.id}
-
+        raise
+    except Exception as e:
+        print("Error in upload processing:", e)
+        db.close()
+        raise HTTPException(status_code=500, detail="Internal server error while processing upload")
+    finally:
+        try:
+            db.close()
+        except Exception:
+            pass
+# ...existing code...
 
 @app.post("/filter-excel/")
 async def filter_excel(file: UploadFile = File(...)):

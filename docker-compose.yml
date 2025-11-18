@@ -3,6 +3,8 @@ version: "3.8"
 services:
   db:
     image: postgres:16
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
@@ -25,6 +27,7 @@ services:
       DATABASE_URL: postgresql+psycopg2://user:password@db:5432/mydatabase
       DB_HOST: db
       DB_PORT: 5432
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
     ports:
       - "80:8080"
     command: >

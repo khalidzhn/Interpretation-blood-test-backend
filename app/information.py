@@ -18,18 +18,36 @@ def WRITE_DATA(DATA, HANDLE):
         f.write(f"{HANDLE}")
 
 def CONFIG(CONFIG_YML):
-    with open("./config.yml") as stream:
-        try:
-            CONFIG_YML = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(f"parse data from config.yml have error {exc}")
-    return CONFIG_YML
+    # try to load config.yml only if present (non-sensitive fallback)
+    try:
+        with open("./config.yml") as stream:
+            return json.load(stream) if stream else {}
+    except Exception:
+        return {}
 
 
 
+def get_api_key(name: str, fallback_path: str = None):
+    """Return env var for key name, fallback to config.yml if present."""
+    val = os.getenv(name)
+    if val:
+        return val
+    conf = CONFIG(CONFIG_YML)
+    # optional: support nested keys like conf.get("gemini", {}).get("key")
+    if fallback_path:
+        parts = fallback_path.split(".")
+        cur = conf
+        for p in parts:
+            if isinstance(cur, dict):
+                cur = cur.get(p)
+            else:
+                cur = None
+        return cur
+    return None
 
 def RESULTـOFـWHITEـBLOODـCELLS(KEY, prompt):
-    genai.configure(api_key=KEY)
+    api_key = get_api_key("GEMINI_API_KEY", "gemini.key") or KEY
+    genai.configure(api_key=api_key)
     model = genai.GenerativeModel('gemini-2.5-flash')
     response = model.generate_content(prompt)
     text = response.text.strip()
