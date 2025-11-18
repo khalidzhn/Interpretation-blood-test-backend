@@ -70,18 +70,22 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 # "http://localhost:3000,http://127.0.0.1:3000,http://interpretation-frontend-dev-bucket.s3-website-us-west-2.amazonaws.com").
 allowed_origins_env = os.getenv(
     "ALLOWED_ORIGINS",
-    "http://localhost:3000,http://127.0.0.1:3000,http://interpretation-frontend-dev-bucket.s3-website-us-west-2.amazonaws.com",
+    "https://baseerah-ai.com,http://localhost:3000,http://127.0.0.1:3000,http://interpretation-frontend-dev-bucket.s3-website-us-west-2.amazonaws.com",
 )
 allowed_origins = [o.strip() for o in allowed_origins_env.split(",") if o.strip()]
 
+# If wildcard is explicitly present, use it but disallow credentials.
+use_wildcard = len(allowed_origins) == 1 and allowed_origins[0] == "*"
+allow_credentials = False if use_wildcard else True
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows any domain
-    allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods (GET, POST, PUT, DELETE, etc.)
-    allow_headers=["*"],
+    allow_origins = allowed_origins if not use_wildcard else ["*"],
+    allow_credentials = allow_credentials,
+    allow_methods = ["*"],
+    allow_headers = ["*"],
 )
-
+#
 class UserRole(str, Enum):
     admin = "admin"
     hospital_admin = "hospital_admin"
