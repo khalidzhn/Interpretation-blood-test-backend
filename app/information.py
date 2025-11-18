@@ -29,80 +29,21 @@ def CONFIG(CONFIG_YML):
 
 
 def RESULTـOFـWHITEـBLOODـCELLS(KEY, prompt):
-    """
-    Send prompt to Poe API using requests instead of OpenAI client
-    """
+    genai.configure(api_key=KEY)
+    model = genai.GenerativeModel('gemini-2.5-flash')
+    response = model.generate_content(prompt)
+    text = response.text.strip()
+    # Remove markdown code block if present
+    if text.startswith("```"):
+        # Remove the first line (```json or ```)
+        text = re.sub(r"^```[a-zA-Z]*\n?", "", text)
+        # Remove the last line (```)
+        text = re.sub(r"\n?```$", "", text)
     try:
-        url = "https://api.poe.com/v1/chat/completions"
-        headers = {
-            "Authorization": f"Bearer {KEY}",
-            "Content-Type": "application/json"
-        }
-        
-        payload = {
-            "model": "GPT-OSS-120B-T",
-            "messages": [
-                {
-                    "role": "system", 
-                    "content": "You are Baseerah AI. Always respond with valid JSON only. No markdown formatting or code blocks."
-                },
-                {
-                    "role": "user", 
-                    "content": prompt
-                }
-            ],
-            "temperature": 0.3,  # Lower temperature for more consistent JSON
-            "max_tokens": 4000
-        }
-        
-        print("🔄 Sending request to Poe API...")
-        response = requests.post(url, headers=headers, json=payload, timeout=1000)
-        print(f"📡 API Response status: {response.status_code}")
-        
-        if response.status_code == 200:
-            response_data = response.json()
-            response_text = response_data["choices"][0]["message"]["content"].strip()
-            print(f"✅ Received response: {len(response_text)} characters")
-            
-            # More aggressive cleaning of the response
-            response_text = response_text.strip()
-            
-            # Remove markdown code blocks
-            if response_text.startswith("```"):
-                response_text = re.sub(r"^```[a-zA-Z]*\n?", "", response_text)
-                response_text = re.sub(r"\n?```$", "", response_text)
-            
-            # Remove any text before the first {
-            if not response_text.startswith("{"):
-                first_brace = response_text.find("{")
-                if first_brace != -1:
-                    response_text = response_text[first_brace:]
-            
-            # Remove any text after the last }
-            if not response_text.endswith("}"):
-                last_brace = response_text.rfind("}")
-                if last_brace != -1:
-                    response_text = response_text[:last_brace + 1]
-            
-            print(f"🧹 Cleaned response first 200 chars: {response_text[:200]}...")
-            
-            try:
-                parsed_response = json.loads(response_text)
-                print("✅ Successfully parsed JSON response from Poe API")
-                return parsed_response
-            except json.JSONDecodeError as e:
-                print(f"❌ JSON parse error: {e}")
-                print(f"Raw response: {response_text[:500]}...")
-                return None
-                
-        else:
-            print(f"❌ API request failed: {response.status_code}")
-            print(f"Response: {response.text}")
-            return None
-            
+        return json.loads(text)
     except Exception as e:
-        print(f"❌ Error calling Poe API: {e}")
-        print(f"Error type: {type(e).__name__}")
+        print("Error parsing Gemini response as JSON:", e)
+        print("Raw Gemini response:", response.text)
         return None
 
 
@@ -110,7 +51,7 @@ def RESULTـOFـWHITEـBLOODـCELLS(KEY, prompt):
 
 def build_prompt_from_raw_data(raw_lab_text, panel_dictionary=None):
     """
-    Build the prompt for Poe API based on the extracted raw lab text and optional panel dictionary.
+    Build the prompt for Gemini based on the extracted raw lab text and optional panel dictionary.
     """
     prompt = f"""
 You are "Baseerah AI," an evidence-based clinical reasoning engine.
@@ -155,24 +96,27 @@ OUTPUT SCHEMA (return valid JSON only):
    "bookedStatus": "Booked",
    "suggestedDate": "2025-09-13T10:00:00"
  }},
- "AI_ClinicalInterpretation": {{
-   "integratedClinicalContext": "<The synthetic clinical note string goes here>",
-   "resultLinkedAnalysis": [
-     {{ "finding": "HbA1c 6.2%", "analysis": "Consistent with ADA 'pre-diabetes' criteria; aligns with prior fasting glucose (112 mg/dL)." }},
-     {{ "finding": "LDL 160 mg/dL", "analysis": "ASCVD 10-yr risk now ≥ 15%. Intensify lipid-lowering therapy." }}
-   ],
-   "evidenceBasedRecommendations": [
-     "Start high-intensity statin; target LDL < 70 mg/dL.",
-     "Initiate metformin 500 mg BID after nephrology clearance."
-   ]
- }},
+  "AI_ClinicalInterpretation": {{
+    "integratedClinicalContext": "<The synthetic clinical note string goes here>",
+    "resultLinkedAnalysis": [
+      {{ "finding": "HbA1c 6.2%", "analysis": "Consistent with ADA 'pre-diabetes' criteria; aligns with prior fasting glucose (112 mg/dL)." }},
+      {{ "finding": "LDL 160 mg/dL", "analysis": "ASCVD 10-yr risk now ≥ 15%. Intensify lipid-lowering therapy." }},
+      {{ "finding": "Creatinine 2.4 mg/dL", "analysis": "eGFR ≈ 32 mL/min/1.73 m² (CKD-3b). Possible diabetic nephropathy." }}
+    ],
+    "evidenceBasedRecommendations": [
+      "Start high-intensity statin; target LDL < 70 mg/dL.",
+      "Initiate metformin 500 mg BID after nephrology clearance.",
+      "Refer to Nephrology (auto-booked below) for renal work-up + ACE inhibitor optimization.",
+      "Lifestyle: DASH diet, smoking cessation, 150 min/week moderate exercise."
+    ]
+  }},
  "DoctorInterpretation": "<HTML>",
- "keyFindings": ["List of top findings"],
+ "keyFindings:": ["A list of top three findings or less, if no findings return emty list]"
  "PatientStoryTelling": {{ "english":"<HTML>", "arabic":"<HTML>" }},
  "LabReportJSON": {{
-   "header": {{ "patientID":"DEMO-12345", "generated":"2025-09-06T10:00:00Z" }},
-   "demographics": {{ "name": "Demo Patient", "age": "45", "gender": "Male", "mrn":"MRN-DEMO-67890" }},
-   "results": [],
+   "header": {{ "patientID":"DEMO-{{randomID}}", "generated":"<ISO-now>" }},
+   "demographics": {{ "name": pationt name from the report , "age":pationt age from thee report, "gender":gender, "mrn":"MRN-DEMO-{{random}}" }},
+   "results": [ …parsed tests… ],
    "aiInterpretationEN": "<copy DoctorInterpretation>",
    "referral": {{
      "needed": true,
@@ -183,25 +127,49 @@ OUTPUT SCHEMA (return valid JSON only):
    }},
    "patientSummary": {{ "en":"<copy>", "ar":"<copy>" }}
  }},
- "DoctorSummaryForPatient": "<The paragraph for 'What do these results mean for me?' goes here>",
- "IntelligentPatientReport": {{
-   "introEN": "<Friendly intro in English>",
-   "introAR": "<Friendly intro in Arabic>",
-   "abnormalTests": [
-     {{
-       "testNameEN": "Blood Sugar (HbA1c)",
-       "testNameAR": "السكر التراكمي",
-       "resultDisplay": "6.2%",
-       "status": "High",
-       "emoji": "🩸",
-       "storyEN": "<Personalized story for HbA1c...>",
-       "storyAR": "<قصة مخصصة للسكر التراكمي>"
-     }}
-   ],
-   "patientActionPlan": [
-     {{"actionEn":"🚭 <b>Stop smoking</b> - this is the #1 priority for your health.", "actionAr":"🚭 <b>توقف عن التدخين</b> - هذه هي الأولوية الأولى لصحتك."}}
-   ]
- }}
+  // High-level summary for the patient
+  "DoctorSummaryForPatient": "<The paragraph for 'What do these results mean for me?' goes here. These findings place the patient at high cardiometabolic risk...>",
+
+  // The complete, personalized patient-facing report
+  "IntelligentPatientReport": {{
+    "introEN": "<Friendly intro in English>",
+    "introAR": "<Friendly intro in Arabic>",
+    // repeats for all other abnormal tests
+    "abnormalTests": [
+      {{
+        "testNameEN": "Blood Sugar (HbA1c)",
+        "testNameAR": "السكر التراكمي",
+        "resultDisplay": "6.2%",
+        "status": "High",
+        "emoji": "🩸",
+        "storyEN": "<Personalized story for HbA1c...>",
+        "storyAR": "<...قصة مخصصة للسكر التراكمي>"
+      }}
+      
+    ],
+    "patientActionPlan": [ // Simplified plan for the patient
+      {{"actionEn":"(emoji) <b>Stop smoking</b> - this is the #1 priority for your health.",
+        "actionAr":"(emoji) <b>توقف عن التدخين</b> - هذه هي الأولوية الأولى لصحتك."}},
+      {{"actionEn":"(emoji) <b>Follow the DASH</b> - diet meal plan we're preparing for you.",
+        "actionAr":"(emoji) <b>اتباع نظام DASH</b> - خطة الوجبات الغذائية التي نقوم بإعدادها لك."}},
+      {{"actionEn":"(emoji) <b>Walk 30 minutes every day</b> - start with 10 minutes if needed.",
+        "actionAr":"(emoji) <b>المشي 30 دقيقة كل يوم</b> - ابدأ بـ 10 دقائق إذا لزم الأمر."}},
+      {{"actionEn":"(emoji) <b>New medications</b> - your doctor will discuss new medications with you.",
+        "actionAr":"(emoji) <b>المشي 30 دقيقة كل يوم</b> - ابدأ بـ 10 دقائق إذا لزم الأمر."}},
+      {{"actionEn":"(emoji) Attend your kidney specialist visit on July 11th at 10:00 AM.",
+        "actionAr":"(emoji) احضر زيارة أخصائي الكلى في 11 يوليو الساعة 10:00 صباحًا."}}
+    ]
+  }},
+
+  // Supporting Data for UI elements like referral blocks
+  "AutoReferralBlock": {{
+    "needed": true,
+    "specialty": "Nephrology",
+    "urgency": "Soon",
+    "bookedStatus": "Booked",
+    // Set appointment 7-10 days from today (July 4, 2025) -> e.g., July 11-14
+    "suggestedDate": "2025-07-11T10:00:00"
+  }}
 }}
 
 RULES:

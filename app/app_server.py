@@ -279,7 +279,8 @@ async def upload_pdf(
     prompt = information.build_prompt_from_raw_data(raw_data, panel_dictionary)
     print("Prompt built.")  # Print first 200 chars of the prompt")
 
-    key = information.CONFIG(information.CONFIG_YML).get("poe").get("key")
+    key = information.CONFIG(information.CONFIG_YML).get("gemini").get("key")
+
     print("Gemini key loaded.")
 
     analysis = information.RESULTـOFـWHITEـBLOODـCELLS(key, prompt)
