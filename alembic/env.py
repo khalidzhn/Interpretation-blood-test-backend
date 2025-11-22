@@ -9,11 +9,22 @@ from alembic import context
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'app'))
-from app_server import Base
+# ensure project root is on sys.path so "from app.app_server import Base" works
+project_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, project_dir)
+
+from app.app_server import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+
+# prefer DATABASE_URL env var if provided
+env_db_url = os.getenv("DATABASE_URL")
+if env_db_url:
+    config.set_main_option("sqlalchemy.url", env_db_url)
+
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

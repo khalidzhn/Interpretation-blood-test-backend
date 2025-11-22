@@ -211,6 +211,7 @@ class AnalysisResult(Base):
     id = Column(Integer, primary_key=True, index=True)
     pdf_filename = Column(String, nullable=False)
     raw_data = Column(Text, nullable=False)
+    uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
     analysis = Column(JSON, nullable=False)
     patient_id = Column(String(10),  index=True, nullable=False)  # 10-digit patient ID
     #assigned_doctor_id = Column(Integer, ForeignKey("users.id"), nullable=True)
@@ -248,7 +249,8 @@ def get_all_analysis_results(current_user: User = Depends(get_current_user)):
         except Exception:
             patient_name = None
         results_list.append({
-            "patient_id": r.patient_id,
+            "uuid": str(r.uuid),
+            "patient_id": None,
             "assigned_doctor_email": None,  # Temporarily None
             "pdf_filename": r.pdf_filename,
             "patient_name": patient_name,
@@ -491,12 +493,13 @@ async def upload_pdf(
             db.close()
         except Exception:
             pass
-# ...existing code...
+
+
 
 @app.post("/filter-excel/")
 async def filter_excel(file: UploadFile = File(...)):
     """Accept an Excel file, apply column filters, and write filtered-in and filtered-out records
-    into the `.result` directory as separate .txt files. Returns counts and file paths.
+    into the `.result` directory as an Excel workbook with multiple sheets. Returns counts and file path.
     """
     import pandas as pd
     from pathlib import Path
@@ -514,15 +517,15 @@ async def filter_excel(file: UploadFile = File(...)):
         from io import BytesIO
         df = pd.read_excel(BytesIO(contents), engine="openpyxl")
 
-    # Columns and filter logic
+    # Columns and filter logic (unchanged)
     group1 = [
         "Local_Hom", "Local_Het", "AC", "AC_hom", "ExAC_AC", "Kaviar_AC",
-    ]
+    ] # filter in if <= 5
 
     group2 = [
         "1000g2015aug_all", "LocalFreq", "NHLBI ESP AF", "ExAC_ALL", "GME_AF",
         "gnomAD_exome_AF", "gnomAD_genome_ALL", "Kaviar_AF",
-    ]
+    ] # filter in if <= 0.001
 
     allowed_refgene = {"exonic", "exonic;splicing", "splicing"}
 
@@ -547,7 +550,7 @@ async def filter_excel(file: UploadFile = File(...)):
     ref_col = find_column(df, "refGene") or find_column(df, "refGene function") or find_column(df, "refgene")
     exonic_func_col = find_column(df, "refGene exonic function") or find_column(df, "refGene_exonic_function") or find_column(df, "refgene exonic function")
 
-    # Track completely missing expected columns (for appending to filtered_in file)
+    # Track completely missing expected columns (for appending to metadata)
     missing_columns = [name for name, col in {**g1_cols_map, **g2_cols_map}.items() if col is None]
     if ref_col is None:
         missing_columns.append("refGene")
@@ -564,7 +567,7 @@ async def filter_excel(file: UploadFile = File(...)):
         missing = []
         reasons = []
 
-        # Group1 checks: > 5
+        # Group1 checks: <= 5
         for logical_name, col in g1_cols_map.items():
             if col is None:
                 # column missing entirely; don't mark per-row missing here (global list added later)
@@ -578,10 +581,10 @@ async def filter_excel(file: UploadFile = File(...)):
                 except Exception:
                     missing.append(col)
                     num = None
-                if num is not None and not (num > 5):
-                    reasons.append(f"{col}<=5")
+                if num is not None and not (num <= 5):
+                    reasons.append(f" {col} {num}?<=5")
 
-        # Group2 checks: > 0.001
+        # Group2 checks: <= 0.001
         for logical_name, col in g2_cols_map.items():
             if col is None:
                 continue
@@ -594,8 +597,8 @@ async def filter_excel(file: UploadFile = File(...)):
                 except Exception:
                     missing.append(col)
                     num = None
-                if num is not None and not (num > 0.001):
-                    reasons.append(f"{col}<=0.001")
+                if num is not None and not (num <= 0.001):
+                    reasons.append(f" {col} {num}?<=0.001")
 
         # refGene check - apply ONLY after group1/group2 checks (initial filtering)
         variant_match = False
@@ -625,13 +628,18 @@ async def filter_excel(file: UploadFile = File(...)):
                             # missing exonic-specific annotation shouldn't auto-filter; flag it
                             missing.append(exonic_func_col)
 
-                    # Rule 1: exonic or exonic;splicing and exonic function contains frameshift or nonsynonymous
-                    if txt in {"exonic", "exonic;splicing"} and exonic_txt and ("frameshift" in exonic_txt or "nonsynonymous" in exonic_txt):
+                    # Rule 1: exonic;splicing  function contains and synonymous SNV
+                    if txt == "exonic;splicing1" and exonic_txt and ("synonymous snv" in exonic_txt):
                         variant_match = True
-                        variant_reasons.append("exonic_frameshift_or_nonsynonymous")
+                        variant_reasons.append("exonic_frameshift_or_synonymous_snv")
+                    
+                    # Rule 1.1: function contains frameshift + stopgain + startlost
+                    if exonic_txt and ("frameshift" in exonic_txt or "stopgain" in exonic_txt or "startlost" in exonic_txt):
+                        variant_match = True
+                        variant_reasons.append("frameshift_or_stopgain_or_startlost")
 
-                    # Rule 2: synonymous SNV in exonic function -> check SIFT/PolyPhen/CADD
-                    if exonic_txt and "synonymous" in exonic_txt:
+                    # Rule 2: exonic nonsynonymous SNV in exonic function -> check SIFT/PolyPhen/CADD
+                    if exonic_txt and "nonsynonymous" in exonic_txt:
                         s_val = None
                         p_val = None
                         c_val = None
@@ -650,12 +658,12 @@ async def filter_excel(file: UploadFile = File(...)):
                                 c_val = float(df_work.at[idx, cadd_col])
                             except Exception:
                                 missing.append(cadd_col)
-                        if (s_val is not None and s_val < 0.5) or (p_val is not None and p_val >= 0.5) or (c_val is not None and c_val > 20):
+                        if (s_val is not None and s_val <= 0.5) or (p_val is not None and p_val >= 0.85) or (c_val is not None and c_val > 20):
                             variant_match = True
-                            variant_reasons.append("synonymous_predicted_damaging_or_CADD")
+                            variant_reasons.append("nonsynonymous_predicted_damaging_or_CADD")
 
-                    # Rule 3: splicing or exonic;splicing -> check SIFT >= 0.5
-                    if "splicing" in txt:
+                    # Rule 3: splicing or exonic;splicing -> check Trap Score >= 0.5
+                    if "splicing" in txt or txt == "exonic;splicing":
                         s_val = None
                         if sift_col is not None:
                             try:
@@ -664,7 +672,7 @@ async def filter_excel(file: UploadFile = File(...)):
                                 missing.append(sift_col)
                         if s_val is not None and s_val >= 0.5:
                             variant_match = True
-                            variant_reasons.append("splicing_sift_high")
+                            variant_reasons.append("splicing_or_exonic;splicing_sift_high")
 
                     # If initial passed but no variant rule matched, mark as failing variant-level filter
                     if not variant_match:
@@ -684,39 +692,72 @@ async def filter_excel(file: UploadFile = File(...)):
     df_in = df_work[mask_in].copy()
     df_out = df_work[~mask_in].copy()
 
-    # Helper to stringify rows
-    def rows_to_txt_with_reasons(df_rows: pd.DataFrame) -> str:
-        if df_rows.empty:
-            return ""
-        # include MissingFields and FilterReasons columns in output
-        return df_rows.to_csv(sep="\t", index=False)
+    # Write results into an Excel workbook with two sheets
+    stem = Path(file.filename).stem
+    excel_path = result_dir / f"{stem}_filtered.xlsx"
 
-    in_path = result_dir / f"{Path(file.filename).stem}_filtered_in.txt"
-    out_path = result_dir / f"{Path(file.filename).stem}_filtered_out.txt"
+    try:
+        with pd.ExcelWriter(excel_path, engine="openpyxl") as writer:
+            # write filtered_in and filtered_out
+            df_in.to_excel(writer, sheet_name="filtered_in", index=False)
+            df_out.to_excel(writer, sheet_name="filtered_out", index=False)
 
-    # Write filtered-in rows
-    content_in = rows_to_txt_with_reasons(df_in)
-    if missing_columns:
-        content_in += "\n\nMissing columns in uploaded file: " + ", ".join(sorted(set(missing_columns))) + "\n"
-    in_path.write_text(content_in, encoding="utf-8")
+            # metadata sheet: missing columns and counts and top FilterReasons summary
+            meta = {
+                "missing_columns": ", ".join(sorted(set(missing_columns))) if missing_columns else "",
+                "filtered_in_count": len(df_in),
+                "filtered_out_count": len(df_out),
+            }
+            # create a small DataFrame for metadata
+            meta_df = pd.DataFrame([meta])
+            meta_df.to_excel(writer, sheet_name="metadata", index=False)
 
-    # Write filtered-out rows (with FilterReasons appended as a column)
-    content_out = rows_to_txt_with_reasons(df_out)
-    # Additionally, for clarity append a short footer describing why rows were filtered
-    out_path.write_text(content_out, encoding="utf-8")
+            # add a small summary of filter reasons (top 20)
+            if not df_out.empty and "FilterReasons" in df_out.columns:
+                fr = df_out["FilterReasons"].astype(str)
+                fr_counts = fr.value_counts().reset_index()
+                fr_counts.columns = ["FilterReason", "Count"]
+                fr_counts.to_excel(writer, sheet_name="filter_reason_summary", index=False)
+            # Also save filtered_in and filtered_out as separate Excel and CSV files
+        filtered_in_excel = result_dir / f"{stem}_filtered_in.xlsx"
+        filtered_out_excel = result_dir / f"{stem}_filtered_out.xlsx"
+        filtered_in_csv = result_dir / f"{stem}_filtered_in.csv"
+        filtered_out_csv = result_dir / f"{stem}_filtered_out.csv"
+        try:
+            df_in.to_excel(filtered_in_excel, index=False)
+            df_out.to_excel(filtered_out_excel, index=False)
+        except Exception as e_write_xls:
+            print("Failed to write separate Excel files:", e_write_xls)
+        try:
+            df_in.to_csv(filtered_in_csv, index=False)
+            df_out.to_csv(filtered_out_csv, index=False)
+        except Exception as e_write_csv:
+            print("Failed to write separate CSV files:", e_write_csv)
+    except Exception as e:
+        # fallback: write text files if Excel write fails
+        in_path = result_dir / f"{stem}_filtered_in.txt"
+        out_path = result_dir / f"{stem}_filtered_out.txt"
+        in_path.write_text(df_in.to_csv(sep="\t", index=False), encoding="utf-8")
+        out_path.write_text(df_out.to_csv(sep="\t", index=False), encoding="utf-8")
+        return {
+            "filtered_in_count": len(df_in),
+            "filtered_out_count": len(df_out),
+            "filtered_in_path": str(in_path),
+            "filtered_out_path": str(out_path),
+            "warning": f"Excel write failed, fallback to text files: {e}"
+        }
 
     return {
         "filtered_in_count": len(df_in),
         "filtered_out_count": len(df_out),
-        "filtered_in_path": str(in_path),
-        "filtered_out_path": str(out_path),
+        "excel_path": str(excel_path),
     }
 
 
 @app.get("/lab-result/{labResultId}")
-def get_lab_report_json(labResultId: str):
+def get_lab_report_json(labResultId: uuid.UUID):
     db = SessionLocal()
-    result = db.query(AnalysisResult).filter(AnalysisResult.patient_id == labResultId).first()
+    result = db.query(AnalysisResult).filter(AnalysisResult.uuid == labResultId).first()
     db.close()
     if not result:
         raise HTTPException(status_code=404, detail="Result not found")
@@ -732,6 +773,7 @@ def get_lab_report_json(labResultId: str):
     if not analysis:
         raise HTTPException(status_code=404, detail="Analysis not found")
     return analysis
+
 @app.delete("/analysis-results/")
 def delete_all_analysis_results():
     db = SessionLocal()
@@ -955,6 +997,8 @@ def toggle_user_active(
     is_active = user.is_active
     db.close()
     return {"id": user_id, "active": is_active}
+
+
 @app.post("/hospitals/", dependencies=[Depends(get_current_user)])
 def create_hospital(
     name: str = Body(...),
