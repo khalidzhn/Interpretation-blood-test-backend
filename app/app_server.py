@@ -32,7 +32,7 @@ from fastapi import Request
 
 import asyncio
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://user:password@localhost:5432/mydatabase")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://dev:Aa%4012345@database-1.c5mswemmu8to.us-west-2.rds.amazonaws.com:5432/database-1")
 port = int(os.getenv("PORT", 8080))
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
