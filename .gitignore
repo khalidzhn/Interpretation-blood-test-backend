@@ -9,3 +9,5 @@
 venv/
 .env
 config.yml
+docker-compose.yml
+.config/

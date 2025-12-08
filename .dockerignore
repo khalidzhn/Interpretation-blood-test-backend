@@ -23,25 +23,6 @@ panel/node_modules/
 # Docker files themselves (optional)
 .dockerignore
 
-# Ignore uploaded and generated data to keep image small
-uploaded_pdfs/
-.result/
-templates/
-*.pdf
-*.zip
-*.tar.gz
-*.xlsx
-*.xls
-data/
-tests/data/
-
-# Python virtual envs
-venv/
-env/
-
-# macOS
-.DS_Store
-.github/
 
 uploaded_pdfs/
 .result/

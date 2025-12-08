@@ -1,4 +1,7 @@
-from PyPDF2 import PdfReader
+from pdf2image import convert_from_path
+import pytesseract
+from PIL import Image
+import os
 
 DATA_PROPERTI = {}
 
@@ -24,21 +27,42 @@ QUERY_B = [
 
 
 def get_data_from_user(data_input):
+    """
+    Extract text from PDF using OCR (pdf2image + pytesseract).
+    This method preserves the visual order of text better than direct PDF text extraction.
     
+    Note: Requires poppler-utils and tesseract-ocr to be installed on the system.
+    """
     text = ""
     
-    '''
-        The data is received by pdf files in the assets section 
-        and the data is analyzed by the PDFQuery library and 
-        stored in a list and the output is published.
+    try:
+        # Convert PDF pages to images
+        # dpi=300 for better OCR accuracy, can be adjusted based on PDF quality
+        images = convert_from_path(data_input, dpi=300)
         
-    ''' 
-    with open(data_input, 'rb') as f:
-        reader = PdfReader(f)
-        for page in reader.pages:
+        # Extract text from each page image using OCR
+        for i, image in enumerate(images):
+            # Use pytesseract to extract text from the image
+            # This preserves the visual layout order
+            page_text = pytesseract.image_to_string(image, lang='eng')
+            if page_text:
+                text += page_text + "\n"
+                
+    except Exception as e:
+        print(f"Error extracting text from PDF: {e}")
+        # Fallback: try basic text extraction if OCR fails
+        try:
+            from PyPDF2 import PdfReader
+            with open(data_input, 'rb') as f:
+                reader = PdfReader(f)
+                for page in reader.pages:
                     page_text = page.extract_text()
                     if page_text:
                         text += page_text + "\n"
+        except Exception as fallback_error:
+            print(f"Fallback extraction also failed: {fallback_error}")
+            return ""
+    
     return text
     
 

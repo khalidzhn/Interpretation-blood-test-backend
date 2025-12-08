@@ -1,3 +1,4 @@
+from click import prompt
 from fastapi import FastAPI, File, UploadFile
 from sqlalchemy import create_engine, Column, Integer, String, Text, text
 from sqlalchemy.ext.declarative import declarative_base
@@ -206,6 +207,15 @@ def remove_patient_id_unique_constraint():
 Base.metadata.create_all(bind=engine)
 remove_patient_id_unique_constraint()
 
+class AnalysisStatus(str, Enum):
+    done = "done"
+    in_progress = "in_progress"
+    failed = "failed"
+
+class AnalysisType(str, Enum):
+    general = "general"
+    genomics = "genomics"
+
 class AnalysisResult(Base):
     __tablename__ = "analysis_results"
     id = Column(Integer, primary_key=True, index=True)
@@ -214,7 +224,9 @@ class AnalysisResult(Base):
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
     analysis = Column(JSON, nullable=False)
     patient_id = Column(String(10),  index=True, nullable=False)  # 10-digit patient ID
-    #assigned_doctor_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    status = Column(String(20), default="in_progress", nullable=False)
+    analysis_type = Column(String(20), default="general", nullable=False)
+       #assigned_doctor_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     #assigned_doctor = relationship("User")
     
 Base.metadata.create_all(bind=engine)
@@ -238,6 +250,7 @@ def get_all_analysis_results(current_user: User = Depends(get_current_user)):
         # doctor = db.query(User).filter(User.id == r.assigned_doctor_id).first()
         doctor_email = None
         analysis = r.analysis
+        print(r.analysis)
         if isinstance(analysis, str):
             try:
                 analysis = json.loads(analysis)
@@ -248,6 +261,9 @@ def get_all_analysis_results(current_user: User = Depends(get_current_user)):
             patient_name = analysis.get("LabReportJSON", {}).get("demographics", {}).get("name")
         except Exception:
             patient_name = None
+        # Handle both 'keyFindings' and 'keyFindings:' (with colon)
+        key_findings = analysis.get("keyFindings") or analysis.get("keyFindings:")
+        
         results_list.append({
             "uuid": str(r.uuid),
             "patient_id": None,
@@ -257,7 +273,7 @@ def get_all_analysis_results(current_user: User = Depends(get_current_user)):
             "DoctorInterpretation": analysis.get("DoctorInterpretation"),
             "AutoReferralBlock": analysis.get("AutoReferralBlock"),
             "IntelligenceHubCard": analysis.get("IntelligenceHubCard"),
-            "keyFindings": analysis.get("keyFindings"),
+            "keyFindings": key_findings,
         })
     db.close()
     return JSONResponse(content=results_list)
@@ -428,7 +444,7 @@ async def upload_pdf(
         print("Saved PDF to:", pdf_path)
 
         raw_data = get_data_from_user(pdf_path)
-        print("Extracted raw data (truncated):", (raw_data or "")[:200])
+        print("Extracted raw data (truncated):", (raw_data or "")[:2000])
 
         # Read panel dictionary
         panel_path = os.path.join("panel", "labPanels.txt")
@@ -442,15 +458,15 @@ async def upload_pdf(
         prompt = information.build_prompt_from_raw_data(raw_data, panel_dictionary)
         print("Prompt built (truncated):", prompt[:200])
 
-        key = None
-        try:
-            key = information.CONFIG(information.CONFIG_YML).get("gemini").get("key")
-        except Exception as e:
-            print("Warning: could not load gemini key from config:", e)
+        # Use get_api_key helper which checks env vars first, then config
+        key = information.get_api_key("GEMINI_API_KEY", "gemini.key")
+        if not key:
+            print("Warning: GEMINI_API_KEY not found in environment or config")
 
         analysis = None
         try:
             analysis = information.RESULTـOFـWHITEـBLOODـCELLS(key, prompt)
+        #   analysis = 'test'
         except Exception as e:
             print("Analysis call failed:", e)
             analysis = None
@@ -692,6 +708,11 @@ async def filter_excel(file: UploadFile = File(...)):
     df_in = df_work[mask_in].copy()
     df_out = df_work[~mask_in].copy()
 
+    # Convert filtered_in DataFrame to JSON object (excluding metadata columns)
+    columns_to_exclude = ['MissingFields', 'FilterReasons', 'ForceIncludeReason']
+    df_in_clean = df_in.drop(columns=[col for col in columns_to_exclude if col in df_in.columns])
+    filteredDataJson = df_in_clean.to_dict(orient='records')
+    print("Filtered data JSON:", filteredDataJson)
     # Write results into an Excel workbook with two sheets
     stem = Path(file.filename).stem
     excel_path = result_dir / f"{stem}_filtered.xlsx"
@@ -723,6 +744,7 @@ async def filter_excel(file: UploadFile = File(...)):
         filtered_out_excel = result_dir / f"{stem}_filtered_out.xlsx"
         filtered_in_csv = result_dir / f"{stem}_filtered_in.csv"
         filtered_out_csv = result_dir / f"{stem}_filtered_out.csv"
+        
         try:
             df_in.to_excel(filtered_in_excel, index=False)
             df_out.to_excel(filtered_out_excel, index=False)
@@ -739,16 +761,28 @@ async def filter_excel(file: UploadFile = File(...)):
         out_path = result_dir / f"{stem}_filtered_out.txt"
         in_path.write_text(df_in.to_csv(sep="\t", index=False), encoding="utf-8")
         out_path.write_text(df_out.to_csv(sep="\t", index=False), encoding="utf-8")
-        return {
-            "filtered_in_count": len(df_in),
-            "filtered_out_count": len(df_out),
-            "filtered_in_path": str(in_path),
-            "filtered_out_path": str(out_path),
-            "warning": f"Excel write failed, fallback to text files: {e}"
-        }
+    prompt = information.build_prompt_from_genomics(filteredDataJson)
+    print("Prompt built (truncated):", prompt[:5000])
+    key = None
+    try:
+        key = "AIzaSyDKqgmiosCLxiOa56jsdpFsfiHvUoa2R5Y"
+    except Exception as e:
+        print("Warning: could not load gemini key from config:",key, e)
+        return
+
+    analysis = None
+    try:
+        analysis = information.RESULTـOFـWHITEـBLOODـCELLS(key, prompt)
+        #analysis = "test"
+    except Exception as e:
+        print("Analysis call failed:", e)
+        analysis = None
+
+    print("Raw analysis result (truncated):", str(analysis)[:200] if analysis else None)
 
     return {
         "filtered_in_count": len(df_in),
+        "result":  str(analysis),
         "filtered_out_count": len(df_out),
         "excel_path": str(excel_path),
     }
