@@ -250,7 +250,6 @@ def get_all_analysis_results(current_user: User = Depends(get_current_user)):
         # doctor = db.query(User).filter(User.id == r.assigned_doctor_id).first()
         doctor_email = None
         analysis = r.analysis
-        print(r.analysis)
         if isinstance(analysis, str):
             try:
                 analysis = json.loads(analysis)
