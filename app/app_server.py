@@ -760,8 +760,13 @@ async def filter_excel(file: UploadFile = File(...)):
         out_path = result_dir / f"{stem}_filtered_out.txt"
         in_path.write_text(df_in.to_csv(sep="\t", index=False), encoding="utf-8")
         out_path.write_text(df_out.to_csv(sep="\t", index=False), encoding="utf-8")
-    prompt = information.build_prompt_from_genomics(filteredDataJson)
-    print("Prompt built (truncated):", prompt[:5000])
+    prompt = None
+    if filteredDataJson:
+        prompt = information.build_prompt_from_genomics(filteredDataJson)
+        print("Prompt built (truncated):", prompt[:100])
+    else:
+        print("No filtered data, skipping prompt generation")
+    
     key = None
     try:
         key = "AIzaSyDKqgmiosCLxiOa56jsdpFsfiHvUoa2R5Y"
@@ -770,12 +775,13 @@ async def filter_excel(file: UploadFile = File(...)):
         return
 
     analysis = None
-    try:
-        analysis = information.RESULTـOFـWHITEـBLOODـCELLS(key, prompt)
-        #analysis = "test"
-    except Exception as e:
-        print("Analysis call failed:", e)
-        analysis = None
+    if prompt:
+        try:
+            analysis = information.RESULTـOFـWHITEـBLOODـCELLS(key, prompt)
+            #analysis = "test"
+        except Exception as e:
+            print("Analysis call failed:", e)
+            analysis = None
 
     print("Raw analysis result (truncated):", str(analysis)[:200] if analysis else None)
 
