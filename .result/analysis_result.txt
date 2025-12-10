@@ -1,0 +1,3315 @@
+```json
+{
+  "patient_id": "123",
+  "patient_name": "UNKNOWN",
+  "patient_age": "64",
+  "overall_assessment": {
+    "key_findings": [
+      {
+        "variant_classification": "Likely_pathogenic",
+        "variant_id": "CFTR:c.350G>A (p.Arg117His)",
+        "variant_description": "Likely pathogenic missense variant in CFTR (c.350G>A, p.Arg117His) associated with Cystic fibrosis / CFTR-related disorder.",
+        "variant_gene": "CFTR",
+        "variant_gene_description": "The CFTR gene is definitively associated with Cystic fibrosis / CFTR-related disorder, typically inherited in an autosomal recessive manner.",
+        "zygosity": "heterozygous",
+        "inheritance": "Autosomal Recessive (carrier)"
+      },
+      {
+        "variant_classification": "Pathogenic",
+        "variant_id": "HBB:c.20A>T (p.Glu7Val)",
+        "variant_description": "Pathogenic missense variant in HBB (c.20A>T, p.Glu7Val) associated with Sickle cell anemia.",
+        "variant_gene": "HBB",
+        "variant_gene_description": "The HBB gene is definitively associated with Sickle cell anemia, inherited in an autosomal recessive manner.",
+        "zygosity": "homozygous",
+        "inheritance": "Autosomal Recessive"
+      },
+      {
+        "variant_classification": "Pathogenic",
+        "variant_id": "BRCA1:c.68_69delAG (p.Glu23Valfs*17)",
+        "variant_description": "Pathogenic frameshift deletion in BRCA1 (c.68_69delAG, p.Glu23Valfs*17) associated with Hereditary breast and ovarian cancer.",
+        "variant_gene": "BRCA1",
+        "variant_gene_description": "The BRCA1 gene is definitively associated with Hereditary breast and ovarian cancer, inherited in an autosomal dominant manner.",
+        "zygosity": "heterozygous",
+        "inheritance": "Autosomal Dominant"
+      },
+      {
+        "variant_classification": "Pathogenic",
+        "variant_id": "CFTR:c.3846G>A (p.Trp1282Ter)",
+        "variant_description": "Pathogenic stopgain variant in CFTR (c.3846G>A, p.Trp1282Ter) associated with Cystic fibrosis.",
+        "variant_gene": "CFTR",
+        "variant_gene_description": "The CFTR gene is definitively associated with Cystic fibrosis, typically inherited in an autosomal recessive manner.",
+        "zygosity": "heterozygous",
+        "inheritance": "Autosomal Recessive (carrier)"
+      },
+      {
+        "variant_classification": "Pathogenic",
+        "variant_id": "CFTR:c.1657C>T (p.Arg553Ter)",
+        "variant_description": "Pathogenic stopgain variant in CFTR (c.1657C>T, p.Arg553Ter) associated with Cystic fibrosis.",
+        "variant_gene": "CFTR",
+        "variant_gene_description": "The CFTR gene is definitively associated with Cystic fibrosis, typically inherited in an autosomal recessive manner.",
+        "zygosity": "heterozygous",
+        "inheritance": "Autosomal Recessive (carrier)"
+      }
+    ],
+    "diagnostic_confidence": 0.85,
+    "phenotype_concordance": "UNKNOWN",
+    "clinical_conditions": [
+      "Cystic fibrosis / CFTR-related disorder",
+      "Sickle cell anemia",
+      "Hereditary breast and ovarian cancer",
+      "MODY-related diabetes"
+    ],
+    "clinical_summary": "The patient's Whole Exome Sequencing identified several clinically significant variants. Pathogenic variants were found in HBB (p.Glu7Val, homozygous) associated with Sickle cell anemia, and in BRCA1 (p.Glu23Valfs*17, heterozygous) associated with Hereditary breast and ovarian cancer. Additionally, two distinct pathogenic stopgain variants (p.Trp1282Ter and p.Arg553Ter) and one likely pathogenic missense variant (p.Arg117His) were identified in the CFTR gene, all in a heterozygous state. Given that cystic fibrosis is an autosomal recessive condition, the presence of multiple heterozygous pathogenic variants in CFTR typically indicates carrier status for each individual variant, or potentially a CFTR-related disorder if specific combinations are present and contribute to a phenotype. Several Variants of Uncertain Significance (VUS) were also identified in genes such as GCK, ABCA1, BRCA1, BRCA2, RYR2, FTO, SLC30A8, and PRKD2. Notably, some VUS presented conflicting evidence from different databases or had inconsistencies with expected inheritance patterns or chromosomal locations, requiring careful clinical correlation and potential further investigation. The overall assessment suggests a diagnosis of Sickle Cell Anemia based on the homozygous HBB variant, and a predisposition to Hereditary Breast and Ovarian Cancer due to the heterozygous BRCA1 frameshift.",
+    "clinical_assessment": "The molecular findings indicate a likely diagnosis of Sickle Cell Anemia in this patient, given the homozygous HBB p.Glu7Val variant. The patient also harbors a pathogenic BRCA1 frameshift mutation, which confers a significantly increased lifetime risk for hereditary breast and ovarian cancer. Multiple heterozygous pathogenic/likely pathogenic CFTR variants are present, which may imply carrier status or, depending on their combination and patient phenotype, a milder CFTR-related disorder. The numerous VUS require careful evaluation in the context of the patient's full clinical picture, which was not provided. Several VUS also present significant internal inconsistencies or critical data errors, warranting caution.",
+    "medical_history": null,
+    "family_history": null,
+    "pathogenic_variants_present": true,
+    "highest_relevance_variant_ids": [
+      "HBB:c.20A>T (p.Glu7Val)",
+      "BRCA1:c.68_69delAG (p.Glu23Valfs*17)",
+      "CFTR:c.3846G>A (p.Trp1282Ter)",
+      "CFTR:c.1657C>T (p.Arg553Ter)"
+    ],
+    "recommendations_for_clinician": "Confirm clinical diagnosis of Sickle Cell Anemia. Initiate appropriate management and screening for Hereditary Breast and Ovarian Cancer given the BRCA1 pathogenic variant. Evaluate for CFTR-related disorder symptoms given the multiple heterozygous CFTR variants, and consider screening for a second, more severe CFTR variant if CF symptoms are present. Genetic counseling is recommended to discuss cancer risk, inheritance patterns, and the implications of carrier status for CFTR variants. Further clinical correlation and investigation (e.g., functional studies, segregation analysis if family available) are recommended for variants classified as VUS, especially those with conflicting evidence or flagged inconsistencies. Regular monitoring for MODY-related diabetes is prudent given the GCK and HNF1A VUS, in conjunction with clinical indicators.",
+    "recommendations_for_followup_testing": "Consider targeted sequencing or comprehensive CFTR analysis to identify a potential second CFTR pathogenic variant if a CF phenotype is present. Segregation analysis in family members (if available) for BRCA1, HBB, and relevant VUS could clarify their clinical significance and inheritance. Repeat variant calling or orthogonal confirmation for variants with 'LowQual' filter or critical data errors (e.g., HNF1A variant on chromosome Y).",
+    "limitations": "The interpretation is based solely on the provided genomic data and lacks specific patient clinical symptoms (HPO terms, detailed indication) and family history, which are crucial for definitive gene-phenotype correlation and inheritance pattern confirmation. In silico prediction tools and population frequency databases are supportive evidence and not definitive for pathogenicity. Several variants presented conflicting evidence from different sources or internal inconsistencies that could not be fully resolved without further information or experimental validation."
+  },
+  "variants": [
+    {
+      "variant_id": "CFTR:c.350G>A (p.Arg117His)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "7",
+        "start_pos": 117171029,
+        "end_pos": 117171029,
+        "ref": "G",
+        "alt": "A"
+      },
+      "gene": {
+        "symbol": "CFTR",
+        "omim_mim": "602421",
+        "omim_phenotype": "Cystic fibrosis / CFTR-related disorder",
+        "gene_disease_association": "definitive"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "het",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This missense variant results in an amino acid change from Arginine to Histidine at position 117 in the CFTR protein, potentially altering protein function."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 3.17e-06,
+          "LocalFreq": 1.765e-05,
+          "LocalFreqHom": 2.21e-06,
+          "KFSH_AF_Strict": 3.17e-06
+        },
+        "global": {
+          "gnomAD_exome_AF": 7.7e-07,
+          "gnomAD_genome_ALL": 4.334e-05,
+          "ExAC_ALL": 1.52e-06,
+          "GME_AF": 1.62e-05,
+          "Kaviar_AF": 1.479e-05
+        },
+        "other": {
+          "1000g2015aug_all": 3.3e-06,
+          "NHLBI_ESP_AF": 7.82e-06
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases (overall allele frequencies well below 0.001), consistent with a pathogenic or likely pathogenic variant allele frequency.",
+      "in_silico": {
+        "SIFT_score": 0.443,
+        "Polyphen2_HDIV_score": 0.36,
+        "Polyphen2_HVAR_score": 0.48,
+        "CADD_phred": 17.89,
+        "qualitative_summary": "mixed/uncertain",
+        "comment": "SIFT predicts 'L' (tolerated), PolyPhen-2 HDIV predicts 'D' (damaging), and PolyPhen-2 HVAR predicts 'B' (benign). CADD phred score of 17.89 provides weak support for pathogenicity."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "high",
+        "phenotype_match_score": 0.8,
+        "comment": "The CFTR gene is definitively associated with Cystic fibrosis / CFTR-related disorder, a highly relevant condition. Given the patient's male sex, a heterozygous variant is consistent with carrier status or a milder CFTR-related phenotype."
+      },
+      "literature_evidence": [],
+      "literature_summary": "Clinical records (ClinVar, InterVar) classify this as pathogenic, indicating established evidence in literature, although specific PMIDs were not retrieved by the system.",
+      "acmg": {
+        "final_classification": "Likely_pathogenic",
+        "evidence_codes": [
+          "PS3",
+          "PM1",
+          "PM2",
+          "PP3",
+          "PP5"
+        ],
+        "rationale": "This variant is considered Likely Pathogenic based on the following criteria: PS3 (well-established functional studies support damaging effect, as cited by InterVar), PM1 (located in a mutational hot spot region of a disease-causing gene), PM2 (absent or extremely low allele frequency in population databases with good coverage), PP3 (in silico prediction tools, including a CADD score of 17.89, provide some support for a deleterious effect, though SIFT/PolyPhen are mixed), and PP5 (reported as Pathogenic by ClinVar and InterVar automated classification, considered as reputable sources)."
+      },
+      "validation": {
+        "passed": true,
+        "issues": [],
+        "requires_manual_review": false
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A heterozygous missense variant, c.350G>A (p.Arg117His), was identified in the CFTR gene. This variant is classified as Likely Pathogenic and is associated with Cystic fibrosis / CFTR-related disorder. Population frequencies are very low, and the variant has been reported as Pathogenic in clinical databases with supporting functional and computational evidence. As cystic fibrosis is an autosomal recessive condition, a heterozygous state typically indicates carrier status, but can contribute to CFTR-related disorders, especially in conjunction with other CFTR variants.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط غير متماثل (c.350G>A (p.Arg117His في جين CFTR. يصنف هذا التباين على أنه 'محتمل ممرض' ويرتبط بالتليف الكيسي / اضطراب مرتبط بـ CFTR. تكراراته في المجموعات السكانية منخفضة جدًا، وقد تم الإبلاغ عنه على أنه ممرض في قواعد البيانات السريرية مع وجود أدلة وظيفية وحسابية داعمة. بما أن التليف الكيسي هو مرض وراثي متنحي، فإن الحالة غير المتماثلة تشير عادةً إلى حالة حامل، ولكن يمكن أن تساهم في اضطرابات مرتبطة بـ CFTR، خاصة بالاقتران مع تباينات CFTR أخرى.",
+        "patient_summary_en": "You have a change in a gene called CFTR, specifically a variation known as p.Arg117His. This change is considered 'Likely Pathogenic,' meaning it probably causes health problems or increases risk. The CFTR gene is responsible for Cystic Fibrosis, a condition affecting various organs, mainly the lungs and digestive system. Since you have one copy of this change (heterozygous) and Cystic Fibrosis typically requires two copies to fully develop, you are likely a carrier. This means you may not have the full disease, but could have milder symptoms or pass the gene to your children. Further discussion with your doctor is recommended.",
+        "patient_summary_ar": "لديك تغيير في جين يسمى CFTR، وتحديداً تباين يعرف باسم p.Arg117His. يعتبر هذا التغيير 'محتمل ممرض'، مما يعني أنه قد يسبب مشاكل صحية أو يزيد من المخاطر. جين CFTR مسؤول عن التليف الكيسي، وهو مرض يؤثر على أعضاء مختلفة، بشكل رئيسي الرئتين والجهاز الهضمي. بما أن لديك نسخة واحدة من هذا التغيير (غير متماثل) والتليف الكيسي يتطلب عادةً نسختين لتطوره الكامل، فمن المرجح أنك حامل للجين. هذا يعني أنك قد لا تكون مصابًا بالمرض الكامل، ولكن قد تظهر عليك أعراض أخف أو قد تنقل الجين لأطفالك. يوصى بمناقشة ذلك مع طبيبك."
+      },
+      "confidence": {
+        "overall": 0.85,
+        "frequency_data": 0.9,
+        "in_silico": 0.6,
+        "literature": 0.9,
+        "acmg": 0.85
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "HBB:c.20A>T (p.Glu7Val)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "11",
+        "start_pos": 5248232,
+        "end_pos": 5248232,
+        "ref": "A",
+        "alt": "T"
+      },
+      "gene": {
+        "symbol": "HBB",
+        "omim_mim": "141900",
+        "omim_phenotype": "Sickle cell anemia",
+        "gene_disease_association": "definitive"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "hom",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This missense variant leads to an amino acid change from Glutamic acid to Valine at position 7 in the HBB protein, causing abnormal hemoglobin (HbS) structure."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 7.4e-06,
+          "LocalFreq": 5.58e-06,
+          "LocalFreqHom": 1.3e-07,
+          "KFSH_AF_Strict": 7.4e-06
+        },
+        "global": {
+          "gnomAD_exome_AF": 7.1e-06,
+          "gnomAD_genome_ALL": 2.381e-05,
+          "ExAC_ALL": 1.012e-05,
+          "GME_AF": 3.77e-06,
+          "Kaviar_AF": 2.87e-06
+        },
+        "other": {
+          "1000g2015aug_all": 1.14e-06,
+          "NHLBI_ESP_AF": 3.2e-07
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, consistent with a pathogenic variant, despite its higher prevalence in certain populations due to balancing selection (e.g., malaria resistance).",
+      "in_silico": {
+        "SIFT_score": 0.453,
+        "Polyphen2_HDIV_score": 0.432,
+        "Polyphen2_HVAR_score": 0.238,
+        "CADD_phred": 22.37,
+        "qualitative_summary": "supportive of deleterious effect",
+        "comment": "SIFT predicts 'D' (damaging), PolyPhen-2 HDIV predicts 'B' (benign), and PolyPhen-2 HVAR predicts 'P' (possibly damaging). CADD phred score of 22.37 strongly supports pathogenicity. Overall, the evidence leans deleterious."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "high",
+        "phenotype_match_score": 0.95,
+        "comment": "The HBB gene is definitively associated with Sickle cell anemia. The homozygous presence of this known pathogenic variant is directly concordant with the expected genotype for this condition."
+      },
+      "literature_evidence": [],
+      "literature_summary": "This variant (HbS) is a well-established disease-causing mutation for Sickle cell anemia, as indicated by HGMD (DM) and classifications in ClinVar and InterVar.",
+      "acmg": {
+        "final_classification": "Pathogenic",
+        "evidence_codes": [
+          "PS3",
+          "PS4",
+          "PM2",
+          "PP3",
+          "PP5"
+        ],
+        "rationale": "This variant is classified as Pathogenic based on strong evidence: PS3 (well-established functional studies, given it's the classic sickle cell mutation), PS4 (prevalence in affected individuals is significantly increased, as it is a common cause of sickle cell anemia), PM2 (absent or extremely low allele frequency in population databases for general controls), PP3 (in silico prediction tools, including a CADD score of 22.37, strongly support a deleterious effect), and PP5 (reported as Pathogenic by ClinVar and InterVar automated classification, considered reputable sources). HGMD also classifies it as a disease-causing mutation (DM)."
+      },
+      "validation": {
+        "passed": true,
+        "issues": [],
+        "requires_manual_review": false
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A homozygous missense variant, c.20A>T (p.Glu7Val), was identified in the HBB gene. This variant is a well-known Pathogenic mutation (HbS) unequivocally associated with Sickle cell anemia. Population frequencies are extremely low in global databases, though it is prevalent in specific populations due to historical factors. Functional studies confirm its damaging effect on hemoglobin structure. The homozygous state is consistent with an affected individual for this autosomal recessive condition.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط متماثل (c.20A>T (p.Glu7Val في جين HBB. هذا التباين هو طفرة ممرضة معروفة (HbS) ومرتبطة بشكل لا لبس فيه بمرض فقر الدم المنجلي. تكراراته في قواعد البيانات العالمية منخفضة للغاية، على الرغم من انتشاره في مجتمعات معينة لأسباب تاريخية. تؤكد الدراسات الوظيفية تأثيره الضار على بنية الهيموجلوبين. تتوافق الحالة المتماثلة مع فرد مصاب بهذا المرض الوراثي المتنحي.",
+        "patient_summary_en": "You have a change in the HBB gene, called p.Glu7Val, which is known to cause Sickle cell anemia. Since you have two copies of this change (homozygous), it means you have the condition. Sickle cell anemia is a blood disorder where red blood cells become crescent-shaped, leading to various health issues. This finding is a definitive diagnosis for Sickle cell anemia. Your doctor will discuss the implications and treatment options with you.",
+        "patient_summary_ar": "لديك تغيير في جين HBB، يسمى p.Glu7Val، والمعروف أنه يسبب مرض فقر الدم المنجلي. بما أن لديك نسختين من هذا التغيير (متماثل)، فهذا يعني أنك مصاب بالمرض. فقر الدم المنجلي هو اضطراب في الدم حيث تتخذ خلايا الدم الحمراء شكل الهلال، مما يؤدي إلى مشاكل صحية مختلفة. هذا الاكتشاف هو تشخيص نهائي لمرض فقر الدم المنجلي. سيناقش طبيبك الآثار المترتبة وخيارات العلاج معك."
+      },
+      "confidence": {
+        "overall": 0.99,
+        "frequency_data": 0.9,
+        "in_silico": 0.8,
+        "literature": 1.0,
+        "acmg": 0.99
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "BRCA1:c.68_69delAG (p.Glu23Valfs*17)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "17",
+        "start_pos": 41276047,
+        "end_pos": 41276048,
+        "ref": "AG",
+        "alt": "-"
+      },
+      "gene": {
+        "symbol": "BRCA1",
+        "omim_mim": "113705",
+        "omim_phenotype": "Hereditary breast and ovarian cancer",
+        "gene_disease_association": "definitive"
+      },
+      "variant_properties": {
+        "variant_type": "frameshift deletion",
+        "impact_level": "high",
+        "zygosity": "het",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This frameshift deletion removes two nucleotides (AG) at positions c.68_69, leading to an altered protein sequence starting at amino acid 23 and a premature stop codon 17 amino acids downstream (p.Glu23Valfs*17), likely resulting in a truncated and non-functional protein."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 4.12e-06,
+          "LocalFreq": 2.863e-05,
+          "LocalFreqHom": 1.95e-06,
+          "KFSH_AF_Strict": 4.12e-06
+        },
+        "global": {
+          "gnomAD_exome_AF": 3.282e-05,
+          "gnomAD_genome_ALL": 2.9e-06,
+          "ExAC_ALL": 4.52e-06,
+          "GME_AF": 3.568e-05,
+          "Kaviar_AF": 6.88e-06
+        },
+        "other": {
+          "1000g2015aug_all": 7.31e-06,
+          "NHLBI_ESP_AF": 1.214e-05
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases (overall allele frequencies well below 0.001), consistent with a pathogenic variant allele frequency for an autosomal dominant condition.",
+      "in_silico": {
+        "SIFT_score": 0.643,
+        "Polyphen2_HDIV_score": 0.329,
+        "Polyphen2_HVAR_score": 0.727,
+        "CADD_phred": 17.06,
+        "qualitative_summary": "less relevant due to frameshift",
+        "comment": "In silico missense predictors (SIFT, PolyPhen) are less relevant for frameshift variants, which typically have a high impact. CADD phred score of 17.06 provides weak support for pathogenicity, but the variant type itself is strongly indicative of pathogenicity."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "high",
+        "phenotype_match_score": 0.9,
+        "comment": "The BRCA1 gene is definitively associated with Hereditary breast and ovarian cancer, a highly relevant condition. As this is an autosomal dominant condition, the heterozygous variant is directly consistent with an affected individual."
+      },
+      "literature_evidence": [],
+      "literature_summary": "Clinical records (ClinVar, InterVar) classify this variant as pathogenic, indicating established evidence in literature.",
+      "acmg": {
+        "final_classification": "Pathogenic",
+        "evidence_codes": [
+          "PVS1",
+          "PS4",
+          "PM2",
+          "PP5"
+        ],
+        "rationale": "This variant is classified as Pathogenic based on strong evidence: PVS1 (null variant - frameshift deletion - in a gene where loss-of-function is a known mechanism of disease, BRCA1 is a tumor suppressor), PS4 (prevalence in affected individuals is significantly increased), PM2 (absent or extremely low allele frequency in population databases with good coverage), and PP5 (reported as Pathogenic by ClinVar and InterVar automated classification, considered reputable sources)."
+      },
+      "validation": {
+        "passed": true,
+        "issues": [],
+        "requires_manual_review": false
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A heterozygous frameshift deletion, c.68_69delAG (p.Glu23Valfs*17), was identified in the BRCA1 gene. This variant is classified as Pathogenic and is associated with Hereditary breast and ovarian cancer. Frameshift variants typically lead to truncated, non-functional proteins. Population frequencies are very low, and this variant is consistently reported as Pathogenic in clinical databases, strongly supporting its role in disease etiology. The heterozygous state is consistent with an autosomal dominant inheritance pattern.",
+        "clinical_summary_ar": "تم تحديد حذف إطار قراءة غير متماثل، c.68_69delAG (p.Glu23Valfs*17)، في جين BRCA1. يصنف هذا التباين على أنه ممرض ويرتبط بسرطان الثدي والمبيض الوراثي. تؤدي تباينات إطار القراءة عادةً إلى بروتينات مقطوعة وغير وظيفية. تكراراته في المجموعات السكانية منخفضة جدًا، ويتم الإبلاغ عن هذا التباين باستمرار على أنه ممرض في قواعد البيانات السريرية، مما يدعم بقوة دوره في مسببات المرض. تتوافق الحالة غير المتماثلة مع نمط وراثة سائد.",
+        "patient_summary_en": "You have a genetic change in the BRCA1 gene, a deletion known as p.Glu23Valfs*17. This change is classified as 'Pathogenic,' meaning it is known to cause disease. The BRCA1 gene is important for repairing damaged DNA, and changes in this gene significantly increase the risk of developing certain cancers, particularly breast and ovarian cancer. Since you have one copy of this change (heterozygous), you have an increased risk for these hereditary cancers. This finding has important implications for your health management and family planning. Your doctor will provide personalized advice.",
+        "patient_summary_ar": "لديك تغيير جيني في جين BRCA1، وهو حذف يعرف باسم p.Glu23Valfs*17. يصنف هذا التغيير على أنه 'ممرض'، مما يعني أنه معروف بأنه يسبب المرض. جين BRCA1 مهم لإصلاح الحمض النووي التالف، والتغيرات في هذا الجين تزيد بشكل كبير من خطر الإصابة ببعض أنواع السرطان، خاصة سرطان الثدي والمبيض. بما أن لديك نسخة واحدة من هذا التغيير (غير متماثل)، فإن لديك خطر متزايد للإصابة بهذه السرطانات الوراثية. لهذا الاكتشاف آثار مهمة على إدارة صحتك وتخطيط الأسرة. سيقدم طبيبك نصائح شخصية."
+      },
+      "confidence": {
+        "overall": 0.99,
+        "frequency_data": 0.9,
+        "in_silico": 0.9,
+        "literature": 0.99,
+        "acmg": 0.99
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "CFTR:c.3846G>A (p.Trp1282Ter)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "7",
+        "start_pos": 117546761,
+        "end_pos": 117546761,
+        "ref": "G",
+        "alt": "A"
+      },
+      "gene": {
+        "symbol": "CFTR",
+        "omim_mim": "602421",
+        "omim_phenotype": "Cystic fibrosis",
+        "gene_disease_association": "definitive"
+      },
+      "variant_properties": {
+        "variant_type": "stopgain",
+        "impact_level": "high",
+        "zygosity": "het",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This stopgain variant introduces a premature termination codon at amino acid position 1282 (p.Trp1282Ter) in the CFTR protein, likely leading to nonsense-mediated mRNA decay and a severely truncated or absent protein."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 4.66e-06,
+          "LocalFreq": 2.816e-05,
+          "LocalFreqHom": 1.818e-05,
+          "KFSH_AF_Strict": 4.66e-06
+        },
+        "global": {
+          "gnomAD_exome_AF": 5.195e-05,
+          "gnomAD_genome_ALL": 1.93e-06,
+          "ExAC_ALL": 6.65e-06,
+          "GME_AF": 5.95e-06,
+          "Kaviar_AF": 1.8e-07
+        },
+        "other": {
+          "1000g2015aug_all": 3.34e-06,
+          "NHLBI_ESP_AF": 3.64e-06
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, consistent with a pathogenic variant allele frequency for an autosomal recessive condition.",
+      "in_silico": {
+        "SIFT_score": 0.396,
+        "Polyphen2_HDIV_score": 0.152,
+        "Polyphen2_HVAR_score": 0.302,
+        "CADD_phred": 27.72,
+        "qualitative_summary": "supportive of deleterious effect",
+        "comment": "In silico missense predictors (SIFT, PolyPhen) are less relevant for stopgain variants, which typically have a high impact. CADD phred score of 27.72 strongly supports pathogenicity, aligning with the expected severe impact of a stopgain."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "high",
+        "phenotype_match_score": 0.8,
+        "comment": "The CFTR gene is definitively associated with Cystic fibrosis. Given the patient's male sex, a heterozygous variant is consistent with carrier status for this autosomal recessive condition, or a milder CFTR-related phenotype."
+      },
+      "literature_evidence": [],
+      "literature_summary": "This variant is a known disease-causing mutation for Cystic fibrosis, as indicated by HGMD (DM) and classifications in ClinVar and InterVar.",
+      "acmg": {
+        "final_classification": "Pathogenic",
+        "evidence_codes": [
+          "PVS1",
+          "PS4",
+          "PM2",
+          "PP5"
+        ],
+        "rationale": "This variant is classified as Pathogenic based on strong evidence: PVS1 (null variant - stopgain - in a gene where loss-of-function is a known mechanism of disease, CFTR), PS4 (prevalence in affected individuals is significantly increased, as it is a common CF mutation), PM2 (absent or extremely low allele frequency in population databases with good coverage), and PP5 (reported as Pathogenic by ClinVar and InterVar automated classification, considered reputable sources). HGMD also classifies it as a disease-causing mutation (DM)."
+      },
+      "validation": {
+        "passed": true,
+        "issues": [],
+        "requires_manual_review": false
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A heterozygous stopgain variant, c.3846G>A (p.Trp1282Ter), was identified in the CFTR gene. This variant is classified as Pathogenic and is a well-known cause of Cystic fibrosis. Stopgain variants typically lead to absent or non-functional proteins. Population frequencies are very low, and this variant is consistently reported as Pathogenic in clinical databases, strongly supporting its role in disease etiology. The heterozygous state is consistent with carrier status for this autosomal recessive condition.",
+        "clinical_summary_ar": "تم تحديد تباين توقف غير متماثل، c.3846G>A (p.Trp1282Ter)، في جين CFTR. يصنف هذا التباين على أنه ممرض وهو سبب معروف للتليف الكيسي. تؤدي تباينات التوقف عادةً إلى بروتينات غائبة أو غير وظيفية. تكراراته في المجموعات السكانية منخفضة جدًا، ويتم الإبلاغ عن هذا التباين باستمرار على أنه ممرض في قواعد البيانات السريرية، مما يدعم بقوة دوره في مسببات المرض. تتوافق الحالة غير المتماثلة مع حالة حامل لهذا المرض الوراثي المتنحي.",
+        "patient_summary_en": "You have a genetic change in the CFTR gene, a stopgain variant known as p.Trp1282Ter. This change is classified as 'Pathogenic,' meaning it is known to cause disease. It causes your body to stop making a part of the CFTR protein, which is important for preventing Cystic Fibrosis. Since you have one copy of this change (heterozygous) and Cystic Fibrosis typically requires two copies to fully develop, you are likely a carrier. This means you may not have the full disease, but could have milder symptoms or pass the gene to your children. Your doctor will discuss what this means for you.",
+        "patient_summary_ar": "لديك تغيير جيني في جين CFTR، وهو تباين توقف يعرف باسم p.Trp1282Ter. يصنف هذا التغيير على أنه 'ممرض'، مما يعني أنه معروف بأنه يسبب المرض. يتسبب في توقف جسمك عن صنع جزء من بروتين CFTR، وهو مهم للوقاية من التليف الكيسي. بما أن لديك نسخة واحدة من هذا التغيير (غير متماثل) والتليف الكيسي يتطلب عادةً نسختين لتطوره الكامل، فمن المرجح أنك حامل للجين. هذا يعني أنك قد لا تكون مصابًا بالمرض الكامل، ولكن قد تظهر عليك أعراض أخف أو قد تنقل الجين لأطفالك. سيناقش طبيبك ما يعنيه هذا لك."
+      },
+      "confidence": {
+        "overall": 0.99,
+        "frequency_data": 0.9,
+        "in_silico": 0.9,
+        "literature": 0.99,
+        "acmg": 0.99
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "CFTR:c.1657C>T (p.Arg553Ter)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "7",
+        "start_pos": 117230454,
+        "end_pos": 117230454,
+        "ref": "C",
+        "alt": "T"
+      },
+      "gene": {
+        "symbol": "CFTR",
+        "omim_mim": "602421",
+        "omim_phenotype": "Cystic fibrosis",
+        "gene_disease_association": "definitive"
+      },
+      "variant_properties": {
+        "variant_type": "stopgain",
+        "impact_level": "high",
+        "zygosity": "het",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This stopgain variant introduces a premature termination codon at amino acid position 553 (p.Arg553Ter) in the CFTR protein, likely leading to nonsense-mediated mRNA decay and a severely truncated or absent protein."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 2.15e-05,
+          "LocalFreq": 1.377e-05,
+          "LocalFreqHom": 1.53e-05,
+          "KFSH_AF_Strict": 2.15e-05
+        },
+        "global": {
+          "gnomAD_exome_AF": 7.8e-07,
+          "gnomAD_genome_ALL": 3.65e-06,
+          "ExAC_ALL": 8.49e-06,
+          "GME_AF": 3.929e-05,
+          "Kaviar_AF": 2.12e-06
+        },
+        "other": {
+          "1000g2015aug_all": 4.02e-06,
+          "NHLBI_ESP_AF": 8.05e-06
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, consistent with a pathogenic variant allele frequency for an autosomal recessive condition.",
+      "in_silico": {
+        "SIFT_score": 0.793,
+        "Polyphen2_HDIV_score": 0.326,
+        "Polyphen2_HVAR_score": 0.519,
+        "CADD_phred": 21.33,
+        "qualitative_summary": "supportive of deleterious effect",
+        "comment": "In silico missense predictors (SIFT, PolyPhen) are less relevant for stopgain variants, which typically have a high impact. CADD phred score of 21.33 strongly supports pathogenicity, aligning with the expected severe impact of a stopgain."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "high",
+        "phenotype_match_score": 0.8,
+        "comment": "The CFTR gene is definitively associated with Cystic fibrosis. Given the patient's male sex, a heterozygous variant is consistent with carrier status for this autosomal recessive condition, or a milder CFTR-related phenotype."
+      },
+      "literature_evidence": [],
+      "literature_summary": "This variant is a known disease-causing mutation for Cystic fibrosis, as indicated by HGMD (DM?) and classifications in ClinVar and InterVar.",
+      "acmg": {
+        "final_classification": "Pathogenic",
+        "evidence_codes": [
+          "PVS1",
+          "PM2",
+          "PP3",
+          "PP5"
+        ],
+        "rationale": "This variant is classified as Pathogenic based on strong evidence: PVS1 (null variant - stopgain - in a gene where loss-of-function is a known mechanism of disease, CFTR), PM2 (absent or extremely low allele frequency in population databases with good coverage), PP3 (in silico prediction tools, including a CADD score of 21.33, strongly support a deleterious effect), and PP5 (reported as Pathogenic by ClinVar and InterVar automated classification, considered reputable sources). HGMD also suggests it as a disease-causing mutation (DM?)."
+      },
+      "validation": {
+        "passed": true,
+        "issues": [],
+        "requires_manual_review": false
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A heterozygous stopgain variant, c.1657C>T (p.Arg553Ter), was identified in the CFTR gene. This variant is classified as Pathogenic and is a well-known cause of Cystic fibrosis. Stopgain variants typically lead to absent or non-functional proteins. Population frequencies are very low, and this variant is consistently reported as Pathogenic in clinical databases, strongly supporting its role in disease etiology. The heterozygous state is consistent with carrier status for this autosomal recessive condition.",
+        "clinical_summary_ar": "تم تحديد تباين توقف غير متماثل، c.1657C>T (p.Arg553Ter)، في جين CFTR. يصنف هذا التباين على أنه ممرض وهو سبب معروف للتليف الكيسي. تؤدي تباينات التوقف عادةً إلى بروتينات غائبة أو غير وظيفية. تكراراته في المجموعات السكانية منخفضة جدًا، ويتم الإبلاغ عن هذا التباين باستمرار على أنه ممرض في قواعد البيانات السريرية، مما يدعم بقوة دوره في مسببات المرض. تتوافق الحالة غير المتماثلة مع حالة حامل لهذا المرض الوراثي المتنحي.",
+        "patient_summary_en": "You have a genetic change in the CFTR gene, a stopgain variant known as p.Arg553Ter. This change is classified as 'Pathogenic,' meaning it is known to cause disease. It causes your body to stop making a part of the CFTR protein, which is important for preventing Cystic Fibrosis. Since you have one copy of this change (heterozygous) and Cystic Fibrosis typically requires two copies to fully develop, you are likely a carrier. This means you may not have the full disease, but could have milder symptoms or pass the gene to your children. Your doctor will discuss what this means for you.",
+        "patient_summary_ar": "لديك تغيير جيني في جين CFTR، وهو تباين توقف يعرف باسم p.Arg553Ter. يصنف هذا التغيير على أنه 'ممرض'، مما يعني أنه معروف بأنه يسبب المرض. يتسبب في توقف جسمك عن صنع جزء من بروتين CFTR، وهو مهم للوقاية من التليف الكيسي. بما أن لديك نسخة واحدة من هذا التغيير (غير متماثل) والتليف الكيسي يتطلب عادةً نسختين لتطوره الكامل، فمن المرجح أنك حامل للجين. هذا يعني أنك قد لا تكون مصابًا بالمرض الكامل، ولكن قد تظهر عليك أعراض أخف أو قد تنقل الجين لأطفالك. سيناقش طبيبك ما يعنيه هذا لك."
+      },
+      "confidence": {
+        "overall": 0.95,
+        "frequency_data": 0.9,
+        "in_silico": 0.9,
+        "literature": 0.95,
+        "acmg": 0.95
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "GCK:c.803G>T (p.Asp1308Phe)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "20",
+        "start_pos": 154472722,
+        "end_pos": 154472722,
+        "ref": "C",
+        "alt": "T"
+      },
+      "gene": {
+        "symbol": "GCK",
+        "omim_mim": "138079",
+        "omim_phenotype": "MODY-related diabetes",
+        "gene_disease_association": "definitive"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "hom",
+        "inheritance_model_consistency": "inconsistent",
+        "functional_effect_summary": "This missense variant causes an amino acid change from Aspartate to Phenylalanine at position 1308 in the GCK protein, with uncertain functional consequences."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 4.24e-06,
+          "LocalFreq": 2e-06,
+          "LocalFreqHom": 1.195e-05,
+          "KFSH_AF_Strict": 4.24e-06
+        },
+        "global": {
+          "gnomAD_exome_AF": 1.66e-06,
+          "gnomAD_genome_ALL": 8.82e-06,
+          "ExAC_ALL": 6.2e-06,
+          "GME_AF": 2.943e-05,
+          "Kaviar_AF": 7.05e-06
+        },
+        "other": {
+          "1000g2015aug_all": 8.76e-06,
+          "NHLBI_ESP_AF": 5.12e-06
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, consistent with a potentially pathogenic variant allele frequency.",
+      "in_silico": {
+        "SIFT_score": 0.278,
+        "Polyphen2_HDIV_score": 0.249,
+        "Polyphen2_HVAR_score": 0.59,
+        "CADD_phred": 16.68,
+        "qualitative_summary": "mixed/uncertain",
+        "comment": "SIFT predicts 'D' (damaging), PolyPhen-2 HDIV predicts 'B' (benign), and PolyPhen-2 HVAR predicts 'D' (damaging). CADD phred score of 16.68 provides weak support for pathogenicity. Overall, the in silico evidence is mixed."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "moderate",
+        "phenotype_match_score": 0.6,
+        "comment": "The GCK gene is definitively associated with MODY-related diabetes. Without patient-specific clinical indication, the relevance is moderate, but warrants consideration if diabetes is present."
+      },
+      "literature_evidence": [],
+      "literature_summary": "HGMD lists this variant as 'DM?' (possible disease-causing mutation). ClinVar and InterVar classify it as a VUS, indicating limited or conflicting literature to establish clear pathogenicity.",
+      "acmg": {
+        "final_classification": "VUS",
+        "evidence_codes": [
+          "PM2",
+          "PP3",
+          "BP4"
+        ],
+        "rationale": "This variant is classified as a Variant of Uncertain Significance (VUS). It meets PM2 (low allele frequency) and PP3 (some in silico predictions, specifically SIFT and PolyPhen HVAR, suggest a deleterious effect, though CADD is weak and PolyPhen HDIV is benign, leading to mixed overall in silico support). The homozygous state for a gene typically associated with autosomal dominant MODY-related diabetes is unusual and complicates interpretation, suggesting a potential inconsistency with the common inheritance model for GCK-MODY or a different manifestation not typically associated with homozygosity. ClinVar and InterVar also classify it as VUS, reflecting the uncertainty."
+      },
+      "validation": {
+        "passed": false,
+        "issues": [
+          "Zygosity (homozygous) is inconsistent with the typical autosomal dominant inheritance pattern for MODY-related diabetes caused by GCK mutations, which would usually present as heterozygous. This raises questions about the variant's role or the phenotype.",
+          "Genomic reference/observed allele (C>T) conflicts with cDNA change (c.803G>T), which can introduce ambiguity if not clarified by the pipeline.",
+          "In silico predictions are mixed (SIFT D, PolyPhen HDIV B, PolyPhen HVAR D, CADD weak), yet InterVar cites PP3. There is also potential for BP4 given some benign prediction tools."
+        ],
+        "requires_manual_review": true
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A homozygous missense variant, c.803G>T (p.Asp1308Phe), was identified in the GCK gene. This variant is classified as a Variant of Uncertain Significance (VUS) and is associated with MODY-related diabetes. While population frequencies are low, in silico prediction results are mixed. The homozygous presence of this variant in a gene typically associated with autosomal dominant inheritance (MODY) requires careful clinical correlation and further investigation, as it may indicate an unusual presentation or a different mode of inheritance in this specific context.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط متماثل، c.803G>T (p.Asp1308Phe)، في جين GCK. يصنف هذا التباين على أنه 'تباين ذو دلالة غير مؤكدة' (VUS) ويرتبط بالسكري من نوع MODY. بينما تكراراته في المجموعات السكانية منخفضة، فإن نتائج التنبؤات الحاسوبية مختلطة. يتطلب الوجود المتماثل لهذا التباين في جين يرتبط عادة بالوراثة السائدة (MODY) تقارناً سريرياً دقيقاً ومزيداً من التحقيق، حيث قد يشير إلى عرض غير عادي أو نمط وراثة مختلف في هذا السياق المحدد.",
+        "patient_summary_en": "You have a change in the GCK gene, called p.Asp1308Phe. This change is currently classified as a 'Variant of Uncertain Significance' (VUS), meaning we don't yet fully understand if it causes health problems. The GCK gene is linked to a type of diabetes called MODY. Because you have two copies of this change (homozygous) in a gene usually associated with a condition that appears with only one copy, it's important for your doctor to carefully consider your medical history to understand what this means for you. More tests might be needed.",
+        "patient_summary_ar": "لديك تغيير في جين GCK، يسمى p.Asp1308Phe. يصنف هذا التغيير حاليًا على أنه 'تباين ذو دلالة غير مؤكدة' (VUS)، مما يعني أننا لا نفهم تمامًا حتى الآن ما إذا كان يسبب مشاكل صحية. يرتبط جين GCK بنوع من مرض السكري يسمى MODY. ولأن لديك نسختين من هذا التغيير (متماثل) في جين يرتبط عادةً بحالة تظهر مع نسخة واحدة فقط، فمن المهم لطبيبك أن يأخذ تاريخك الطبي بعين الاعتبار لفهم ما يعنيه هذا لك. قد تكون هناك حاجة لمزيد من الفحوصات."
+      },
+      "confidence": {
+        "overall": 0.4,
+        "frequency_data": 0.8,
+        "in_silico": 0.5,
+        "literature": 0.4,
+        "acmg": 0.4
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "FTO:c.3365C>G (p.Thr716Gly)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "7",
+        "start_pos": 13235871,
+        "end_pos": 13235871,
+        "ref": "T",
+        "alt": "A"
+      },
+      "gene": {
+        "symbol": "FTO",
+        "omim_mim": "-",
+        "omim_phenotype": "-",
+        "gene_disease_association": "none/unknown"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "het",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This missense variant leads to an amino acid change from Threonine to Glycine at position 716 in the FTO protein, with uncertain functional consequences."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 6.84e-06,
+          "LocalFreq": 4.88e-06,
+          "LocalFreqHom": 2.99e-06,
+          "KFSH_AF_Strict": 6.84e-06
+        },
+        "global": {
+          "gnomAD_exome_AF": 1.12e-06,
+          "gnomAD_genome_ALL": 4.446e-05,
+          "ExAC_ALL": 5.99e-06,
+          "GME_AF": 2.141e-05,
+          "Kaviar_AF": 5.86e-06
+        },
+        "other": {
+          "1000g2015aug_all": 2.57e-06,
+          "NHLBI_ESP_AF": 2.202e-05
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, which is typically insufficient evidence alone to classify as benign given the low prevalence of many pathogenic variants.",
+      "in_silico": {
+        "SIFT_score": 0.269,
+        "Polyphen2_HDIV_score": 0.553,
+        "Polyphen2_HVAR_score": 0.323,
+        "CADD_phred": 17.34,
+        "qualitative_summary": "mixed/uncertain",
+        "comment": "SIFT predicts 'D' (damaging), PolyPhen-2 HDIV predicts 'B' (benign), and PolyPhen-2 HVAR predicts 'B' (benign). CADD phred score of 17.34 provides weak support for pathogenicity. The in silico evidence is mixed, but leans towards benign for two of three PolyPhen predictions."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "none",
+        "phenotype_match_score": 0.0,
+        "comment": "The FTO gene is not currently associated with a definitive monogenic disease in OMIM, primarily known for its role in common obesity predisposition. Therefore, there is no direct gene-phenotype match for a monogenic disorder."
+      },
+      "literature_evidence": [],
+      "literature_summary": "HGMD lists this variant as 'DP' (disease-associated polymorphism). ClinVar and InterVar classify it as Likely Benign, indicating some evidence for a non-pathogenic role.",
+      "acmg": {
+        "final_classification": "Likely_benign",
+        "evidence_codes": [
+          "BS1",
+          "BP4",
+          "BP5"
+        ],
+        "rationale": "This variant is classified as Likely Benign based on BS1 (allele frequency greater than expected for a monogenic disorder, if one were to exist), BP4 (in silico predictive programs suggest a benign effect, notably PolyPhen-2 HDIV and HVAR, despite SIFT predicting damaging and CADD being weak), and BP5 (reported as Likely Benign by ClinVar and InterVar automated classification, considered reputable sources). HGMD also classifies it as a disease-associated polymorphism (DP), not a disease-causing mutation."
+      },
+      "validation": {
+        "passed": false,
+        "issues": [
+          "Genomic reference/observed allele (T>A) conflicts with cDNA change (c.3365C>G), which can introduce ambiguity if not clarified by the pipeline.",
+          "BS1 (allele frequency greater than expected for disorder) is cited by InterVar, which is less straightforward given the very low raw allele frequencies; this criterion may be applied in the context of specific disease models or if considered a benign population variant, rather than a true frequency threshold exceeding 5%.",
+          "In silico predictions are mixed (SIFT D, PolyPhen HDIV B, PolyPhen HVAR B, CADD weak), which weakens the BP4 evidence."
+        ],
+        "requires_manual_review": true
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A heterozygous missense variant, c.3365C>G (p.Thr716Gly), was identified in the FTO gene. This variant is classified as Likely Benign. While population frequencies are low, FTO is primarily associated with complex traits like obesity rather than monogenic disease. In silico predictions are mixed, but clinical databases suggest a likely benign interpretation, and it is reported as a disease-associated polymorphism in HGMD. Clinical correlation regarding its significance is uncertain.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط غير متماثل، c.3365C>G (p.Thr716Gly)، في جين FTO. يصنف هذا التباين على أنه 'محتمل حميد'. بينما تكراراته في المجموعات السكانية منخفضة، يرتبط جين FTO بشكل أساسي بالسمات المعقدة مثل السمنة بدلاً من الأمراض الوراثية أحادية الجين. التنبؤات الحاسوبية مختلطة، لكن قواعد البيانات السريرية تشير إلى تفسير محتمل للحميد، ويتم الإبلاغ عنه على أنه تعدد أشكال مرتبط بالمرض في HGMD. الارتباط السريري بشأن أهميته غير مؤكد.",
+        "patient_summary_en": "You have a change in the FTO gene, called p.Thr716Gly. This change is considered 'Likely Benign,' meaning it probably does not cause significant health problems. The FTO gene is mainly involved in traits like obesity, not typically in single-gene diseases. While we found this change, it's not expected to be a major cause for concern. Your doctor can discuss this further if you have any questions.",
+        "patient_summary_ar": "لديك تغيير في جين FTO، يسمى p.Thr716Gly. يعتبر هذا التغيير 'محتمل حميد'، مما يعني أنه على الأرجح لا يسبب مشاكل صحية كبيرة. يشارك جين FTO بشكل رئيسي في سمات مثل السمنة، وليس عادةً في أمراض الجينات الواحدة. على الرغم من أننا وجدنا هذا التغيير، فمن غير المتوقع أن يكون سببًا رئيسيًا للقلق. يمكن لطبيبك مناقشة هذا الأمر بشكل أكبر إذا كان لديك أي أسئلة."
+      },
+      "confidence": {
+        "overall": 0.6,
+        "frequency_data": 0.7,
+        "in_silico": 0.5,
+        "literature": 0.6,
+        "acmg": 0.6
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "MMP14:c.387T>G (p.His120Phe)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "17",
+        "start_pos": 105901293,
+        "end_pos": 105901293,
+        "ref": "T",
+        "alt": "C"
+      },
+      "gene": {
+        "symbol": "MMP14",
+        "omim_mim": "600754",
+        "omim_phenotype": "Connective tissue / bone",
+        "gene_disease_association": "strong"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "het",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This missense variant results in an amino acid change from Histidine to Phenylalanine at position 120 in the MMP14 protein, with uncertain functional consequences."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 4.3e-07,
+          "LocalFreq": 3.457e-05,
+          "LocalFreqHom": 8.02e-06,
+          "KFSH_AF_Strict": 4.3e-07
+        },
+        "global": {
+          "gnomAD_exome_AF": 1.379e-05,
+          "gnomAD_genome_ALL": 1.67e-05,
+          "ExAC_ALL": 9.21e-06,
+          "GME_AF": 8.73e-06,
+          "Kaviar_AF": 1.069e-05
+        },
+        "other": {
+          "1000g2015aug_all": 3.46e-06,
+          "NHLBI_ESP_AF": 3.911e-05
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, which is insufficient evidence alone to classify as benign.",
+      "in_silico": {
+        "SIFT_score": 0.207,
+        "Polyphen2_HDIV_score": 0.409,
+        "Polyphen2_HVAR_score": 0.337,
+        "CADD_phred": 18.24,
+        "qualitative_summary": "mixed/uncertain",
+        "comment": "SIFT predicts 'L' (tolerated), PolyPhen-2 HDIV predicts 'B' (benign), and PolyPhen-2 HVAR predicts 'P' (possibly damaging). CADD phred score of 18.24 provides weak support for pathogenicity. The in silico evidence is mixed."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "low",
+        "phenotype_match_score": 0.3,
+        "comment": "The MMP14 gene is associated with connective tissue and bone disorders. Without specific patient HPO terms or clinical indication, the phenotype match is considered low, though the gene-disease association is strong."
+      },
+      "literature_evidence": [],
+      "literature_summary": "HGMD lists this variant as 'DP' (disease-associated polymorphism). However, ClinVar and InterVar classify it as Benign, citing BA1 and BS1 criteria. This presents conflicting evidence for pathogenicity.",
+      "acmg": {
+        "final_classification": "VUS",
+        "evidence_codes": [
+          "PM2",
+          "PP3",
+          "BA1",
+          "BS1"
+        ],
+        "rationale": "This variant is classified as a Variant of Uncertain Significance (VUS) due to conflicting evidence. While InterVar and ClinVar classify it as Benign with BA1 (high allele frequency, though observed frequencies are low) and BS1 (allele frequency greater than expected for disorder), HGMD lists it as a Disease-associated Polymorphism (DP), which is not definitively benign. Furthermore, in silico predictions are mixed (SIFT L, PolyPhen HDIV B, PolyPhen HVAR P; CADD weak). The discrepancy in population frequency interpretation (BA1 cited despite low AF) and conflicting classifications from reputable sources warrant a VUS classification and manual review."
+      },
+      "validation": {
+        "passed": false,
+        "issues": [
+          "Genomic reference/observed allele (T>C) conflicts with cDNA change (c.387T>G), which can introduce ambiguity if not clarified by the pipeline.",
+          "Strong contradiction: HGMD 'DP' vs. ClinVar/InterVar 'Benign'.",
+          "The InterVar criterion BA1 (allele frequency > 5%) is cited despite global population allele frequencies being extremely low (all < 0.001), indicating an inconsistency in the application of this criterion or a reliance on internal thresholds not reflected in the raw data.",
+          "In silico predictions are mixed, with one PolyPhen prediction suggesting damaging effect."
+        ],
+        "requires_manual_review": true
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A heterozygous missense variant, c.387T>G (p.His120Phe), was identified in the MMP14 gene. This variant is classified as a Variant of Uncertain Significance (VUS). While ClinVar and InterVar indicate a benign classification with criteria relating to allele frequency, HGMD lists it as a disease-associated polymorphism. In silico predictions are mixed. This conflicting evidence, along with the discrepancy in population frequency criteria, necessitates further clinical correlation to determine its true significance, particularly in the context of the patient's phenotype related to connective tissue or bone disorders.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط غير متماثل، c.387T>G (p.His120Phe)، في جين MMP14. يصنف هذا التباين على أنه 'تباين ذو دلالة غير مؤكدة' (VUS). بينما تشير ClinVar و InterVar إلى تصنيف حميد مع معايير تتعلق بتكرار الأليل، تصنفه HGMD على أنه تعدد أشكال مرتبط بالمرض. التنبؤات الحاسوبية مختلطة. تتطلب هذه الأدلة المتضاربة، بالإضافة إلى التناقض في معايير تكرار الأليل في السكان، مزيدًا من الارتباط السريري لتحديد أهميته الحقيقية، خاصة في سياق النمط الظاهري للمريض المتعلق بأمراض النسيج الضام أو العظام.",
+        "patient_summary_en": "You have a change in the MMP14 gene, called p.His120Phe. This change is currently classified as a 'Variant of Uncertain Significance' (VUS), meaning we don't yet fully understand if it causes health problems. The MMP14 gene is involved in connective tissue and bone health. While some databases suggest it might be harmless, others indicate it could be linked to disease. Because of this conflicting information, your doctor will need to consider all your health details to determine what this change means for you. More tests might be needed.",
+        "patient_summary_ar": "لديك تغيير في جين MMP14، يسمى p.His120Phe. يصنف هذا التغيير حاليًا على أنه 'تباين ذو دلالة غير مؤكدة' (VUS)، مما يعني أننا لا نفهم تمامًا حتى الآن ما إذا كان يسبب مشاكل صحية. يشارك جين MMP14 في صحة النسيج الضام والعظام. بينما تشير بعض قواعد البيانات إلى أنه قد يكون غير ضار، تشير أخرى إلى أنه يمكن أن يكون مرتبطًا بالمرض. بسبب هذه المعلومات المتضاربة، سيحتاج طبيبك إلى أخذ جميع تفاصيل صحتك بعين الاعتبار لتحديد ما يعنيه هذا التغيير لك. قد تكون هناك حاجة لمزيد من الفحوصات."
+      },
+      "confidence": {
+        "overall": 0.3,
+        "frequency_data": 0.5,
+        "in_silico": 0.4,
+        "literature": 0.3,
+        "acmg": 0.3
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "ABCA1:c.3376T>G (p.Tyr1011Pro)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "4",
+        "start_pos": 26602745,
+        "end_pos": 26602745,
+        "ref": "T",
+        "alt": "A"
+      },
+      "gene": {
+        "symbol": "ABCA1",
+        "omim_mim": "-",
+        "omim_phenotype": "-",
+        "gene_disease_association": "strong"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "het",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This missense variant causes an amino acid change from Tyrosine to Proline at position 1011 in the ABCA1 protein, with uncertain functional consequences."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 2.401e-05,
+          "LocalFreq": 1.515e-05,
+          "LocalFreqHom": 4e-08,
+          "KFSH_AF_Strict": 2.401e-05
+        },
+        "global": {
+          "gnomAD_exome_AF": 2.559e-05,
+          "gnomAD_genome_ALL": 6.39e-06,
+          "ExAC_ALL": 1.41e-06,
+          "GME_AF": 5.09e-06,
+          "Kaviar_AF": 1.3e-07
+        },
+        "other": {
+          "1000g2015aug_all": 5.9e-07,
+          "NHLBI_ESP_AF": 2.55e-06
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, which is insufficient evidence alone to classify as benign.",
+      "in_silico": {
+        "SIFT_score": 0.149,
+        "Polyphen2_HDIV_score": 0.759,
+        "Polyphen2_HVAR_score": 0.137,
+        "CADD_phred": 19.28,
+        "qualitative_summary": "mixed/uncertain",
+        "comment": "SIFT predicts 'L' (tolerated), PolyPhen-2 HDIV predicts 'D' (damaging), and PolyPhen-2 HVAR predicts 'D' (damaging). CADD phred score of 19.28 provides weak support for pathogenicity. The in silico evidence is mixed, but leans deleterious."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "low",
+        "phenotype_match_score": 0.3,
+        "comment": "The ABCA1 gene is associated with conditions like Tangier disease and HDL deficiency. Without specific patient HPO terms or clinical indication, the phenotype match is considered low, though the gene-disease association is strong."
+      },
+      "literature_evidence": [],
+      "literature_summary": "HGMD lists this variant as 'DM' (disease-causing mutation). However, ClinVar and InterVar classify it as Benign, citing BA1 and BS1 criteria. This presents a strong conflict in evidence for pathogenicity.",
+      "acmg": {
+        "final_classification": "VUS",
+        "evidence_codes": [
+          "PS3",
+          "PM2",
+          "PP3",
+          "BA1",
+          "BS1"
+        ],
+        "rationale": "This variant is classified as a Variant of Uncertain Significance (VUS) due to strong conflicting evidence. HGMD classifies it as a 'Disease-causing Mutation' (DM), which typically supports PS3 (functional studies) or PS4 (prevalence). However, ClinVar and InterVar classify it as 'Benign' based on BA1 (high allele frequency, despite observed low frequencies) and BS1 (allele frequency greater than expected for disorder). The in silico predictions are also mixed, with SIFT L, PolyPhen HDIV D, HVAR D, and CADD weak. The significant discrepancy between HGMD's assessment and the benign classifications, coupled with the inconsistent application of population frequency criteria, necessitates a VUS classification and manual review."
+      },
+      "validation": {
+        "passed": false,
+        "issues": [
+          "Genomic reference/observed allele (T>A) conflicts with cDNA change (c.3376T>G), which can introduce ambiguity if not clarified by the pipeline.",
+          "Strong contradiction: HGMD 'DM' vs. ClinVar/InterVar 'Benign'.",
+          "The InterVar criterion BA1 (allele frequency > 5%) is cited despite global population allele frequencies being extremely low (all < 0.001), indicating an inconsistency in the application of this criterion or a reliance on internal thresholds not reflected in the raw data.",
+          "In silico predictions are mixed, with two PolyPhen predictions suggesting damaging effect and CADD providing weak support for pathogenicity."
+        ],
+        "requires_manual_review": true
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A heterozygous missense variant, c.3376T>G (p.Tyr1011Pro), was identified in the ABCA1 gene. This variant is classified as a Variant of Uncertain Significance (VUS) due to strong conflicting evidence. While HGMD reports it as a disease-causing mutation, ClinVar and InterVar classify it as benign, citing population frequency criteria that appear inconsistent with the observed ultra-low allele frequencies. In silico predictions also provide mixed results. Given this substantial contradiction, further investigation and clinical correlation are required to establish its true clinical significance.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط غير متماثل، c.3376T>G (p.Tyr1011Pro)، في جين ABCA1. يصنف هذا التباين على أنه 'تباين ذو دلالة غير مؤكدة' (VUS) بسبب الأدلة المتضاربة بقوة. بينما تُبلّغ HGMD عنه على أنه طفرة مسببة للمرض، تصنفه ClinVar و InterVar على أنه حميد، مستشهدين بمعايير تكرار الأليل في السكان التي تبدو غير متسقة مع تكرارات الأليل المنخفضة للغاية المرصودة. تقدم التنبؤات الحاسوبية أيضًا نتائج مختلطة. نظرًا لهذا التناقض الكبير، يلزم إجراء مزيد من التحقيق والارتباط السريري لتحديد أهميته السريرية الحقيقية.",
+        "patient_summary_en": "You have a change in the ABCA1 gene, called p.Tyr1011Pro. This change is currently classified as a 'Variant of Uncertain Significance' (VUS), meaning we don't yet fully understand if it causes health problems. The ABCA1 gene is involved in cholesterol transport. Some information suggests this change might cause disease, while other information suggests it is harmless. Because of these strong contradictions, your doctor will need to review all your health information carefully to understand what this means for you. Further tests might be necessary.",
+        "patient_summary_ar": "لديك تغيير في جين ABCA1، يسمى p.Tyr1011Pro. يصنف هذا التغيير حاليًا على أنه 'تباين ذو دلالة غير مؤكدة' (VUS)، مما يعني أننا لا نفهم تمامًا حتى الآن ما إذا كان يسبب مشاكل صحية. يشارك جين ABCA1 في نقل الكوليسترول. تشير بعض المعلومات إلى أن هذا التغيير قد يسبب المرض، بينما تشير معلومات أخرى إلى أنه غير ضار. بسبب هذه التناقضات القوية، سيحتاج طبيبك إلى مراجعة جميع معلوماتك الصحية بعناية لفهم ما يعنيه هذا لك. قد تكون هناك حاجة لمزيد من الفحوصات."
+      },
+      "confidence": {
+        "overall": 0.25,
+        "frequency_data": 0.5,
+        "in_silico": 0.4,
+        "literature": 0.2,
+        "acmg": 0.25
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "BRCA1:c.2334T>A (p.Gln533Val)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "13",
+        "start_pos": 155913694,
+        "end_pos": 155913694,
+        "ref": "T",
+        "alt": "C"
+      },
+      "gene": {
+        "symbol": "BRCA1",
+        "omim_mim": "113705",
+        "omim_phenotype": "Hereditary breast and ovarian cancer",
+        "gene_disease_association": "definitive"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "hom",
+        "inheritance_model_consistency": "inconsistent",
+        "functional_effect_summary": "This missense variant causes an amino acid change from Glutamine to Valine at position 533 in the BRCA1 protein, with uncertain functional consequences."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 7.87e-06,
+          "LocalFreq": 1.421e-05,
+          "LocalFreqHom": 7.01e-06,
+          "KFSH_AF_Strict": 7.87e-06
+        },
+        "global": {
+          "gnomAD_exome_AF": 2.95e-06,
+          "gnomAD_genome_ALL": 2.931e-05,
+          "ExAC_ALL": 1.078e-05,
+          "GME_AF": 1.76e-06,
+          "Kaviar_AF": 8.21e-06
+        },
+        "other": {
+          "1000g2015aug_all": 1.8e-07,
+          "NHLBI_ESP_AF": 1.35e-06
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, which is insufficient evidence alone to classify as likely benign.",
+      "in_silico": {
+        "SIFT_score": 0.4,
+        "Polyphen2_HDIV_score": 0.487,
+        "Polyphen2_HVAR_score": 0.743,
+        "CADD_phred": 29.62,
+        "qualitative_summary": "mixed/uncertain",
+        "comment": "SIFT predicts 'T' (tolerated), PolyPhen-2 HDIV predicts 'P' (possibly damaging), and PolyPhen-2 HVAR predicts 'B' (benign). CADD phred score of 29.62 strongly supports pathogenicity. The in silico evidence is mixed, but CADD is very high."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "moderate",
+        "phenotype_match_score": 0.6,
+        "comment": "The BRCA1 gene is definitively associated with Hereditary breast and ovarian cancer. Without specific patient HPO terms or clinical indication, the phenotype match is considered moderate."
+      },
+      "literature_evidence": [],
+      "literature_summary": "HGMD lists this variant as 'DM?' (possible disease-causing mutation). However, ClinVar and InterVar classify it as Likely Benign, citing BS1 and BP4 criteria. This presents conflicting evidence for pathogenicity.",
+      "acmg": {
+        "final_classification": "VUS",
+        "evidence_codes": [
+          "PM2",
+          "PP3",
+          "BS1",
+          "BP4"
+        ],
+        "rationale": "This variant is classified as a Variant of Uncertain Significance (VUS) due to strong conflicting evidence. While ClinVar and InterVar classify it as 'Likely Benign' based on BS1 (allele frequency greater than expected) and BP4 (in silico benign prediction), HGMD lists it as a 'possible Disease-causing Mutation' (DM?). Furthermore, the CADD score (29.62) is very high, and one PolyPhen prediction is 'possibly damaging', which contradicts a benign interpretation. The homozygous state of a missense variant in an autosomal dominant gene (BRCA1) typically associated with severe phenotypes or lethality, further complicates a 'Likely Benign' classification and raises significant questions. This substantial contradiction necessitates a VUS classification and manual review."
+      },
+      "validation": {
+        "passed": false,
+        "issues": [
+          "Genomic reference/observed allele (T>C) conflicts with cDNA change (c.2334T>A), which can introduce ambiguity if not clarified by the pipeline.",
+          "Strong contradiction: HGMD 'DM?' vs. ClinVar/InterVar 'Likely Benign'.",
+          "Zygosity (homozygous) is highly inconsistent with the typical autosomal dominant inheritance pattern for BRCA1-related Hereditary breast and ovarian cancer, which usually presents as heterozygous and would be lethal or very severe if homozygous.",
+          "In silico predictions are conflicting, with a very high CADD score strongly suggesting pathogenicity, contradicting the BP4 (benign in silico) criterion cited for 'Likely Benign' classification."
+        ],
+        "requires_manual_review": true
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A homozygous missense variant, c.2334T>A (p.Gln533Val), was identified in the BRCA1 gene. This variant is classified as a Variant of Uncertain Significance (VUS) due to strong conflicting evidence. While ClinVar and InterVar indicate a likely benign classification, HGMD suggests it as a possible disease-causing mutation, and in silico tools provide mixed but often deleterious predictions, including a very high CADD score. Furthermore, the homozygous state in an autosomal dominant cancer predisposition gene is highly unusual and problematic. These significant contradictions warrant extensive clinical correlation and further investigation.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط متماثل، c.2334T>A (p.Gln533Val)، في جين BRCA1. يصنف هذا التباين على أنه 'تباين ذو دلالة غير مؤكدة' (VUS) بسبب الأدلة المتضاربة بقوة. بينما تشير ClinVar و InterVar إلى تصنيف محتمل حميد، تقترح HGMD أنه طفرة محتملة مسببة للمرض، وتقدم الأدوات الحاسوبية تنبؤات مختلطة ولكن غالبًا ما تكون ضارة، بما في ذلك درجة CADD عالية جدًا. علاوة على ذلك، فإن الحالة المتماثلة في جين استعداد للسرطان الوراثي السائد أمر غير عادي للغاية ومثير للمشاكل. تتطلب هذه التناقضات الكبيرة ارتباطًا سريريًا واسعًا ومزيدًا من التحقيق.",
+        "patient_summary_en": "You have a change in the BRCA1 gene, called p.Gln533Val. This change is currently classified as a 'Variant of Uncertain Significance' (VUS), meaning we don't yet fully understand if it causes health problems. The BRCA1 gene is linked to hereditary breast and ovarian cancer. We found contradictory information about this change: some sources suggest it might be harmless, while others, along with strong computer predictions, suggest it could be harmful. Also, having two copies of this change (homozygous) in a gene usually associated with risk from just one copy is very unusual and raises serious questions. Your doctor will need to carefully consider all your health information and possibly recommend more tests to understand its meaning.",
+        "patient_summary_ar": "لديك تغيير في جين BRCA1، يسمى p.Gln533Val. يصنف هذا التغيير حاليًا على أنه 'تباين ذو دلالة غير مؤكدة' (VUS)، مما يعني أننا لا نفهم تمامًا حتى الآن ما إذا كان يسبب مشاكل صحية. يرتبط جين BRCA1 بسرطان الثدي والمبيض الوراثي. وجدنا معلومات متناقضة حول هذا التغيير: بعض المصادر تشير إلى أنه قد يكون غير ضار، بينما تشير مصادر أخرى، بالإضافة إلى تنبؤات حاسوبية قوية، إلى أنه قد يكون ضارًا. كما أن وجود نسختين من هذا التغيير (متماثل) في جين يرتبط عادةً بخطر من نسخة واحدة فقط أمر غير عادي للغاية ويثير تساؤلات جدية. سيحتاج طبيبك إلى أخذ جميع معلوماتك الصحية بعين الاعتبار وقد يوصي بمزيد من الفحوصات لفهم مغزاه."
+      },
+      "confidence": {
+        "overall": 0.2,
+        "frequency_data": 0.5,
+        "in_silico": 0.3,
+        "literature": 0.2,
+        "acmg": 0.2
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "SLC30A8:c.1659T>A (p.Thr41Glu)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "19",
+        "start_pos": 191995938,
+        "end_pos": 191995938,
+        "ref": "G",
+        "alt": "A"
+      },
+      "gene": {
+        "symbol": "SLC30A8",
+        "omim_mim": "-",
+        "omim_phenotype": "-",
+        "gene_disease_association": "none/unknown"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "het",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This missense variant leads to an amino acid change from Threonine to Glutamic acid at position 41 in the SLC30A8 protein, with uncertain functional consequences."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 7.07e-06,
+          "LocalFreq": 9.12e-06,
+          "LocalFreqHom": 1.7e-07,
+          "KFSH_AF_Strict": 7.07e-06
+        },
+        "global": {
+          "gnomAD_exome_AF": 1.602e-05,
+          "gnomAD_genome_ALL": 3.434e-05,
+          "ExAC_ALL": 1.717e-05,
+          "GME_AF": 3.76e-06,
+          "Kaviar_AF": 1.944e-05
+        },
+        "other": {
+          "1000g2015aug_all": 4.52e-06,
+          "NHLBI_ESP_AF": 1.319e-05
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, which is insufficient evidence alone to classify as benign.",
+      "in_silico": {
+        "SIFT_score": 0.261,
+        "Polyphen2_HDIV_score": 0.496,
+        "Polyphen2_HVAR_score": 0.273,
+        "CADD_phred": 7.19,
+        "qualitative_summary": "mixed/uncertain",
+        "comment": "SIFT predicts 'L' (tolerated), PolyPhen-2 HDIV predicts 'P' (possibly damaging), and PolyPhen-2 HVAR predicts 'D' (damaging). CADD phred score of 7.19 suggests a benign effect. The in silico evidence is mixed, with some predictions leaning deleterious and CADD leaning benign."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "none",
+        "phenotype_match_score": 0.0,
+        "comment": "The SLC30A8 gene is not currently associated with a definitive monogenic disease in OMIM, primarily known for its role in Type 2 diabetes risk (complex trait). Therefore, there is no direct gene-phenotype match for a monogenic disorder."
+      },
+      "literature_evidence": [],
+      "literature_summary": "HGMD lists this variant as 'DP' (disease-associated polymorphism). ClinVar and InterVar classify it as a VUS, indicating limited or conflicting literature to establish clear pathogenicity.",
+      "acmg": {
+        "final_classification": "VUS",
+        "evidence_codes": [
+          "PM2",
+          "PP3",
+          "BP4"
+        ],
+        "rationale": "This variant is classified as a Variant of Uncertain Significance (VUS). It meets PM2 (low allele frequency). In silico predictions are mixed (PolyPhen HDIV P, HVAR D; SIFT L; CADD < 10 suggestive of benign). The 'LowQual' filter indicates reduced confidence in the variant call itself. Given the lack of a definitive gene-disease association for a monogenic disorder, and the conflicting in silico evidence, a VUS classification is appropriate. ClinVar and InterVar also classify it as VUS."
+      },
+      "validation": {
+        "passed": false,
+        "issues": [
+          "Genomic reference/observed allele (G>A) conflicts with cDNA change (c.1659T>A), which can introduce ambiguity if not clarified by the pipeline.",
+          "The variant has a 'LowQual' filter, suggesting reduced confidence in the variant call itself.",
+          "In silico predictions are mixed, with some suggesting deleterious effect and CADD suggesting benign, complicating the application of PP3 or BP4.",
+          "Lack of established monogenic gene-disease association in OMIM."
+        ],
+        "requires_manual_review": true
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A heterozygous missense variant, c.1659T>A (p.Thr41Glu), was identified in the SLC30A8 gene. This variant is classified as a Variant of Uncertain Significance (VUS). It has a 'LowQual' filter, indicating potential issues with the variant call. Population frequencies are low, but in silico predictions are mixed, with some tools suggesting deleteriousness and others suggesting benign effects. SLC30A8 is primarily associated with complex traits, and its role in monogenic disease is not established. Clinical correlation is uncertain and further investigation may be warranted if a related phenotype is suspected.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط غير متماثل، c.1659T>A (p.Thr41Glu)، في جين SLC30A8. يصنف هذا التباين على أنه 'تباين ذو دلالة غير مؤكدة' (VUS). لديه عامل تصفية 'جودة منخفضة' (LowQual)، مما يشير إلى مشاكل محتملة في استدعاء التباين نفسه. تكراراته في المجموعات السكانية منخفضة، لكن التنبؤات الحاسوبية مختلطة، حيث تشير بعض الأدوات إلى ضرر والبعض الآخر يشير إلى آثار حميدة. يرتبط SLC30A8 بشكل أساسي بالسمات المعقدة، ودوره في الأمراض أحادية الجين غير مؤكد. الارتباط السريري غير مؤكد وقد يكون هناك ما يبرر إجراء مزيد من التحقيق إذا اشتبه في وجود نمط ظاهري ذي صلة.",
+        "patient_summary_en": "You have a change in the SLC30A8 gene, called p.Thr41Glu. This change is currently classified as a 'Variant of Uncertain Significance' (VUS), meaning we don't yet fully understand if it causes health problems. The quality of the test result for this specific change was also lower, which means we are less certain about it. The SLC30A8 gene is mainly involved in common conditions like type 2 diabetes risk, not typically single-gene diseases. Due to the uncertainty and mixed information, your doctor will need to consider your overall health to understand what this means for you.",
+        "patient_summary_ar": "لديك تغيير في جين SLC30A8، يسمى p.Thr41Glu. يصنف هذا التغيير حاليًا على أنه 'تباين ذو دلالة غير مؤكدة' (VUS)، مما يعني أننا لا نفهم تمامًا حتى الآن ما إذا كان يسبب مشاكل صحية. كانت جودة نتيجة الاختبار لهذا التغيير المحدد منخفضة أيضًا، مما يعني أننا أقل يقينًا بشأنه. يشارك جين SLC30A8 بشكل رئيسي في الحالات الشائعة مثل خطر الإصابة بالسكري من النوع الثاني، وليس عادةً أمراض الجينات الواحدة. بسبب عدم اليقين والمعلومات المختلطة، سيحتاج طبيبك إلى أخذ صحتك العامة بعين الاعتبار لفهم ما يعنيه هذا لك."
+      },
+      "confidence": {
+        "overall": 0.3,
+        "frequency_data": 0.6,
+        "in_silico": 0.4,
+        "literature": 0.3,
+        "acmg": 0.3
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "BRCA1:c.3632G>T (p.Asn772Phe)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "11",
+        "start_pos": 59676882,
+        "end_pos": 59676882,
+        "ref": "T",
+        "alt": "A"
+      },
+      "gene": {
+        "symbol": "BRCA1",
+        "omim_mim": "113705",
+        "omim_phenotype": "Hereditary breast and ovarian cancer",
+        "gene_disease_association": "definitive"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "het",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This missense variant causes an amino acid change from Asparagine to Phenylalanine at position 772 in the BRCA1 protein, with uncertain functional consequences."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 1.287e-05,
+          "LocalFreq": 1.28e-06,
+          "LocalFreqHom": 1.164e-05,
+          "KFSH_AF_Strict": 1.287e-05
+        },
+        "global": {
+          "gnomAD_exome_AF": 5.48e-06,
+          "gnomAD_genome_ALL": 3.5e-06,
+          "ExAC_ALL": 1.53e-06,
+          "GME_AF": 1.2e-07,
+          "Kaviar_AF": 6.66e-06
+        },
+        "other": {
+          "1000g2015aug_all": 6.9e-07,
+          "NHLBI_ESP_AF": 7.63e-06
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, which is insufficient evidence alone to classify as benign.",
+      "in_silico": {
+        "SIFT_score": 0.297,
+        "Polyphen2_HDIV_score": 0.282,
+        "Polyphen2_HVAR_score": 0.828,
+        "CADD_phred": 20.39,
+        "qualitative_summary": "mixed/uncertain",
+        "comment": "SIFT predicts 'T' (tolerated), PolyPhen-2 HDIV predicts 'D' (damaging), and PolyPhen-2 HVAR predicts 'D' (damaging). CADD phred score of 20.39 strongly supports pathogenicity. The in silico evidence is mixed, but leans deleterious with strong CADD and two PolyPhen predictions."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "moderate",
+        "phenotype_match_score": 0.6,
+        "comment": "The BRCA1 gene is definitively associated with Hereditary breast and ovarian cancer. Without specific patient HPO terms or clinical indication, the phenotype match is considered moderate."
+      },
+      "literature_evidence": [],
+      "literature_summary": "HGMD lists this variant as 'DP' (disease-associated polymorphism). However, ClinVar and InterVar classify it as Benign, citing BA1 and BS1 criteria. This presents a strong conflict in evidence for pathogenicity.",
+      "acmg": {
+        "final_classification": "VUS",
+        "evidence_codes": [
+          "PM2",
+          "PP3",
+          "BA1",
+          "BS1"
+        ],
+        "rationale": "This variant is classified as a Variant of Uncertain Significance (VUS) due to strong conflicting evidence. HGMD classifies it as a 'Disease-associated Polymorphism' (DP). However, ClinVar and InterVar classify it as 'Benign' based on BA1 (high allele frequency, despite observed low frequencies) and BS1 (allele frequency greater than expected for disorder). Furthermore, the in silico predictions are mixed, with a high CADD score (20.39) and two PolyPhen predictions indicating damaging effects, which contradicts a benign interpretation. The significant discrepancy between HGMD's assessment and the benign classifications, coupled with the inconsistent application of population frequency criteria and deleterious in silico predictions, necessitates a VUS classification and manual review."
+      },
+      "validation": {
+        "passed": false,
+        "issues": [
+          "Genomic reference/observed allele (T>A) conflicts with cDNA change (c.3632G>T), which can introduce ambiguity if not clarified by the pipeline.",
+          "Strong contradiction: HGMD 'DP' vs. ClinVar/InterVar 'Benign'.",
+          "The InterVar criterion BA1 (allele frequency > 5%) is cited despite global population allele frequencies being extremely low (all < 0.001), indicating an inconsistency in the application of this criterion or a reliance on internal thresholds not reflected in the raw data.",
+          "In silico predictions are conflicting, with a high CADD score and two PolyPhen predictions suggesting damaging effect, contradicting a benign classification."
+        ],
+        "requires_manual_review": true
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A heterozygous missense variant, c.3632G>T (p.Asn772Phe), was identified in the BRCA1 gene. This variant is classified as a Variant of Uncertain Significance (VUS) due to strong conflicting evidence. While HGMD reports it as a disease-associated polymorphism, ClinVar and InterVar classify it as benign, citing population frequency criteria that appear inconsistent with the observed ultra-low allele frequencies. In silico predictions are mixed but include strong deleterious signals (CADD score > 20, two PolyPhen 'damaging'). This substantial contradiction warrants further clinical correlation and investigation to establish its true clinical significance.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط غير متماثل، c.3632G>T (p.Asn772Phe)، في جين BRCA1. يصنف هذا التباين على أنه 'تباين ذو دلالة غير مؤكدة' (VUS) بسبب الأدلة المتضاربة بقوة. بينما تُبلّغ HGMD عنه على أنه تعدد أشكال مرتبط بالمرض، تصنفه ClinVar و InterVar على أنه حميد، مستشهدين بمعايير تكرار الأليل في السكان التي تبدو غير متسقة مع تكرارات الأليل المنخفضة للغاية المرصودة. التنبؤات الحاسوبية مختلطة ولكنها تتضمن إشارات ضارة قوية (درجة CADD > 20، وتنبؤان من PolyPhen 'ضاران'). يتطلب هذا التناقض الكبير ارتباطًا سريريًا ومزيدًا من التحقيق لتحديد أهميته السريرية الحقيقية.",
+        "patient_summary_en": "You have a change in the BRCA1 gene, called p.Asn772Phe. This change is currently classified as a 'Variant of Uncertain Significance' (VUS), meaning we don't yet fully understand if it causes health problems. The BRCA1 gene is linked to hereditary breast and ovarian cancer. We found strong contradictory information: some sources suggest it's harmless, but other strong computer predictions and databases suggest it could be harmful. Because of these significant contradictions, your doctor will need to review all your health information carefully and possibly recommend more tests to understand its meaning.",
+        "patient_summary_ar": "لديك تغيير في جين BRCA1، يسمى p.Asn772Phe. يصنف هذا التغيير حاليًا على أنه 'تباين ذو دلالة غير مؤكدة' (VUS)، مما يعني أننا لا نفهم تمامًا حتى الآن ما إذا كان يسبب مشاكل صحية. يرتبط جين BRCA1 بسرطان الثدي والمبيض الوراثي. وجدنا معلومات متناقضة بقوة: تشير بعض المصادر إلى أنه غير ضار، لكن تنبؤات حاسوبية قوية أخرى وقواعد بيانات تشير إلى أنه قد يكون ضارًا. بسبب هذه التناقضات الكبيرة، سيحتاج طبيبك إلى مراجعة جميع معلوماتك الصحية بعناية وقد يوصي بمزيد من الفحوصات لفهم مغزاه."
+      },
+      "confidence": {
+        "overall": 0.25,
+        "frequency_data": 0.5,
+        "in_silico": 0.3,
+        "literature": 0.2,
+        "acmg": 0.25
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "HNF1A:c.2497T>A (p.Phe934Cys)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "Y",
+        "start_pos": 3987008,
+        "end_pos": 3987008,
+        "ref": "T",
+        "alt": "G"
+      },
+      "gene": {
+        "symbol": "HNF1A",
+        "omim_mim": "142410",
+        "omim_phenotype": "MODY-related diabetes",
+        "gene_disease_association": "definitive"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "hom",
+        "inheritance_model_consistency": "inconsistent",
+        "functional_effect_summary": "This missense variant causes an amino acid change from Phenylalanine to Cysteine at position 934 in the HNF1A protein, with uncertain functional consequences."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 1.038e-05,
+          "LocalFreq": 4.6e-07,
+          "LocalFreqHom": 7.18e-06,
+          "KFSH_AF_Strict": 1.038e-05
+        },
+        "global": {
+          "gnomAD_exome_AF": 7e-08,
+          "gnomAD_genome_ALL": 4.88e-06,
+          "ExAC_ALL": 7.28e-06,
+          "GME_AF": 4.76e-06,
+          "Kaviar_AF": 1.569e-05
+        },
+        "other": {
+          "1000g2015aug_all": 2.931e-05,
+          "NHLBI_ESP_AF": 4.15e-06
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, which is insufficient evidence alone to classify as benign.",
+      "in_silico": {
+        "SIFT_score": 0.457,
+        "Polyphen2_HDIV_score": 0.447,
+        "Polyphen2_HVAR_score": 0.173,
+        "CADD_phred": 31.1,
+        "qualitative_summary": "mixed/uncertain",
+        "comment": "SIFT predicts 'T' (tolerated), PolyPhen-2 HDIV predicts 'D' (damaging), and PolyPhen-2 HVAR predicts 'D' (damaging). CADD phred score of 31.1 strongly supports pathogenicity. The in silico evidence is mixed, but leans deleterious with strong CADD and two PolyPhen predictions."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "moderate",
+        "phenotype_match_score": 0.6,
+        "comment": "The HNF1A gene is definitively associated with MODY-related diabetes. Without patient-specific clinical indication, the relevance is moderate, but warrants consideration if diabetes is present. (Note: The chromosomal location provided for HNF1A is incorrect, as HNF1A is located on chromosome 12, not Y. This critical data error affects the reliability of the variant call.)"
+      },
+      "literature_evidence": [],
+      "literature_summary": "HGMD lists this variant as 'DM' (disease-causing mutation). However, ClinVar and InterVar classify it as Benign, citing BA1 and BS1 criteria. This presents a strong conflict in evidence for pathogenicity.",
+      "acmg": {
+        "final_classification": "VUS",
+        "evidence_codes": [
+          "PS3",
+          "PM2",
+          "PP3",
+          "BA1",
+          "BS1"
+        ],
+        "rationale": "This variant is classified as a Variant of Uncertain Significance (VUS) due to strong conflicting evidence and a critical data error. HGMD classifies it as a 'Disease-causing Mutation' (DM), typically supporting PS3 (functional studies). However, ClinVar and InterVar classify it as 'Benign' based on BA1 (high allele frequency, despite observed low frequencies) and BS1 (allele frequency greater than expected for disorder). Furthermore, the in silico predictions are mixed, with a very high CADD score (31.1) and two PolyPhen predictions indicating damaging effects, which contradicts a benign interpretation. Crucially, the HNF1A gene is located on chromosome 12, but the variant is reported on chromosome Y. This is a critical data inconsistency that invalidates the variant's assignment to this gene/locus or the chromosomal coordinates, necessitating a VUS classification and immediate manual review."
+      },
+      "validation": {
+        "passed": false,
+        "issues": [
+          "Genomic reference/observed allele (T>G) conflicts with cDNA change (c.2497T>A), which can introduce ambiguity if not clarified by the pipeline.",
+          "CRITICAL DATA ERROR: The HNF1A gene (OMIM 142410) is located on chromosome 12, but the variant is reported on chromosome Y. This makes the variant's association with HNF1A (and its phenotype) highly questionable or erroneous, potentially indicating a mis-mapping or a paralogous variant.",
+          "Strong contradiction: HGMD 'DM' vs. ClinVar/InterVar 'Benign'.",
+          "The InterVar criterion BA1 (allele frequency > 5%) is cited despite global population allele frequencies being extremely low (all < 0.001), indicating an inconsistency in the application of this criterion or a reliance on internal thresholds not reflected in the raw data.",
+          "In silico predictions are conflicting, with a very high CADD score and two PolyPhen predictions suggesting damaging effect, contradicting a benign classification."
+        ],
+        "requires_manual_review": true
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A homozygous missense variant, c.2497T>A (p.Phe934Cys), was identified and attributed to the HNF1A gene. This variant is classified as a Variant of Uncertain Significance (VUS) due to critical data inconsistencies and conflicting evidence. Notably, the HNF1A gene is located on chromosome 12, not Y, as indicated by the variant coordinates, raising significant concerns about the accuracy of this variant call. Additionally, while HGMD reports it as a disease-causing mutation, ClinVar and InterVar classify it as benign, and in silico predictions are mixed but include strong deleterious signals. These profound contradictions warrant immediate manual review and re-evaluation of the variant's assignment and potential clinical relevance.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط متماثل، c.2497T>A (p.Phe934Cys)، ونسب إلى جين HNF1A. يصنف هذا التباين على أنه 'تباين ذو دلالة غير مؤكدة' (VUS) بسبب تناقضات البيانات الحرجة والأدلة المتضاربة. تجدر الإشارة إلى أن جين HNF1A يقع على الكروموسوم 12، وليس Y، كما هو مشار إليه بإحداثيات التباين، مما يثير مخاوف كبيرة بشأن دقة استدعاء هذا التباين. بالإضافة إلى ذلك، بينما تُبلّغ HGMD عنه على أنه طفرة مسببة للمرض، تصنفه ClinVar و InterVar على أنه حميد، وتنبؤات الحاسوب مختلطة ولكنها تتضمن إشارات ضارة قوية. تتطلب هذه التناقضات العميقة مراجعة يدوية فورية وإعادة تقييم لتعيين التباين وأهميته السريرية المحتملة.",
+        "patient_summary_en": "You have a change in the HNF1A gene, called p.Phe934Cys. This change is currently classified as a 'Variant of Uncertain Significance' (VUS), meaning we don't yet fully understand if it causes health problems. There is a very important error in the test result: this gene is normally on chromosome 12, but the change was found on chromosome Y. This means the result for this specific change is highly questionable and needs to be re-checked. Also, some information suggests it could cause a type of diabetes (MODY), while other information suggests it's harmless. Because of these major issues and conflicting information, your doctor will need to review all your health information very carefully, and this specific finding will require further investigation to understand its meaning.",
+        "patient_summary_ar": "لديك تغيير في جين HNF1A، يسمى p.Phe934Cys. يصنف هذا التغيير حاليًا على أنه 'تباين ذو دلالة غير مؤكدة' (VUS)، مما يعني أننا لا نفهم تمامًا حتى الآن ما إذا كان يسبب مشاكل صحية. هناك خطأ مهم جدًا في نتيجة الاختبار: هذا الجين يوجد عادةً على الكروموسوم 12، ولكن التغيير وُجد على الكروموسوم Y. هذا يعني أن نتيجة هذا التغيير المحدد مشكوك فيها للغاية وتحتاج إلى إعادة الفحص. أيضًا، تشير بعض المعلومات إلى أنه قد يسبب نوعًا من السكري (MODY)، بينما تشير معلومات أخرى إلى أنه غير ضار. بسبب هذه المشكلات الكبيرة والمعلومات المتضاربة، سيحتاج طبيبك إلى مراجعة جميع معلوماتك الصحية بعناية فائقة، وسيتطلب هذا الاكتشاف المحدد مزيدًا من التحقيق لفهم مغزاه."
+      },
+      "confidence": {
+        "overall": 0.1,
+        "frequency_data": 0.5,
+        "in_silico": 0.3,
+        "literature": 0.1,
+        "acmg": 0.1
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "BRCA2:c.3817T>G (p.Tyr1009Glu)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "20",
+        "start_pos": 114278685,
+        "end_pos": 114278685,
+        "ref": "G",
+        "alt": "T"
+      },
+      "gene": {
+        "symbol": "BRCA2",
+        "omim_mim": "600185",
+        "omim_phenotype": "Hereditary breast and ovarian cancer",
+        "gene_disease_association": "definitive"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "het",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This missense variant causes an amino acid change from Tyrosine to Glutamic acid at position 1009 in the BRCA2 protein, with uncertain functional consequences."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 1.485e-05,
+          "LocalFreq": 3.917e-05,
+          "LocalFreqHom": 3.25e-06,
+          "KFSH_AF_Strict": 1.485e-05
+        },
+        "global": {
+          "gnomAD_exome_AF": 4.4e-06,
+          "gnomAD_genome_ALL": 1.753e-05,
+          "ExAC_ALL": 2.84e-06,
+          "GME_AF": 1.824e-05,
+          "Kaviar_AF": 1.234e-05
+        },
+        "other": {
+          "1000g2015aug_all": 7.6e-06,
+          "NHLBI_ESP_AF": 1.84e-06
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, which is insufficient evidence alone to classify as benign.",
+      "in_silico": {
+        "SIFT_score": 0.335,
+        "Polyphen2_HDIV_score": 0.233,
+        "Polyphen2_HVAR_score": 0.49,
+        "CADD_phred": 20.66,
+        "qualitative_summary": "mixed/uncertain",
+        "comment": "SIFT predicts 'T' (tolerated), PolyPhen-2 HDIV predicts 'B' (benign), and PolyPhen-2 HVAR predicts 'D' (damaging). CADD phred score of 20.66 strongly supports pathogenicity. The in silico evidence is mixed, but leans deleterious with strong CADD and one PolyPhen prediction."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "moderate",
+        "phenotype_match_score": 0.6,
+        "comment": "The BRCA2 gene is definitively associated with Hereditary breast and ovarian cancer. Without specific patient HPO terms or clinical indication, the phenotype match is considered moderate."
+      },
+      "literature_evidence": [],
+      "literature_summary": "HGMD lists this variant as 'DP' (disease-associated polymorphism). ClinVar and InterVar classify it as a VUS, indicating limited or conflicting literature to establish clear pathogenicity.",
+      "acmg": {
+        "final_classification": "VUS",
+        "evidence_codes": [
+          "PM2",
+          "PP3"
+        ],
+        "rationale": "This variant is classified as a Variant of Uncertain Significance (VUS). It meets PM2 (low allele frequency). PP3 (in silico prediction tools, including a CADD score of 20.66 and one PolyPhen prediction, suggest a deleterious effect) is also met, though other in silico tools are mixed. These criteria (PM2+PP3) are insufficient to classify as Likely Pathogenic or Pathogenic. HGMD also classifies it as a 'Disease-associated Polymorphism' (DP), which does not definitively support pathogenicity. ClinVar and InterVar also classify it as VUS, reflecting the uncertainty."
+      },
+      "validation": {
+        "passed": false,
+        "issues": [
+          "Genomic reference/observed allele (G>T) conflicts with cDNA change (c.3817T>G), which can introduce ambiguity if not clarified by the pipeline.",
+          "HGMD 'DP' (disease-associated polymorphism) provides some evidence but is not as strong as 'DM' (disease-causing mutation) to push beyond VUS, especially with mixed in silico and VUS classifications from ClinVar/InterVar."
+        ],
+        "requires_manual_review": true
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A heterozygous missense variant, c.3817T>G (p.Tyr1009Glu), was identified in the BRCA2 gene. This variant is classified as a Variant of Uncertain Significance (VUS). Population frequencies are low, and in silico predictions are mixed, with a high CADD score but inconsistent PolyPhen/SIFT results. HGMD reports it as a disease-associated polymorphism, which is not definitive for pathogenicity. Without further evidence or clinical correlation, its contribution to disease risk remains unclear.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط غير متماثل، c.3817T>G (p.Tyr1009Glu)، في جين BRCA2. يصنف هذا التباين على أنه 'تباين ذو دلالة غير مؤكدة' (VUS). تكراراته في المجموعات السكانية منخفضة، والتنبؤات الحاسوبية مختلطة، مع درجة CADD عالية ولكن نتائج PolyPhen/SIFT غير متسقة. تُبلّغ HGMD عنه على أنه تعدد أشكال مرتبط بالمرض، وهو ليس دليلاً قاطعاً على المسببات المرضية. بدون مزيد من الأدلة أو الارتباط السريري، لا يزال مساهمته في خطر الإصابة بالمرض غير واضحة.",
+        "patient_summary_en": "You have a change in the BRCA2 gene, called p.Tyr1009Glu. This change is currently classified as a 'Variant of Uncertain Significance' (VUS), meaning we don't yet fully understand if it causes health problems. The BRCA2 gene is linked to hereditary breast and ovarian cancer. While computer predictions are mixed, and some suggest it could be harmful, there isn't enough clear information to say for sure. Your doctor will need to consider your overall health and family history to understand what this means for you.",
+        "patient_summary_ar": "لديك تغيير في جين BRCA2، يسمى p.Tyr1009Glu. يصنف هذا التغيير حاليًا على أنه 'تباين ذو دلالة غير مؤكدة' (VUS)، مما يعني أننا لا نفهم تمامًا حتى الآن ما إذا كان يسبب مشاكل صحية. يرتبط جين BRCA2 بسرطان الثدي والمبيض الوراثي. بينما التنبؤات الحاسوبية مختلطة، وبعضها يشير إلى أنه قد يكون ضارًا، لا توجد معلومات كافية وواضحة لتأكيد ذلك. سيحتاج طبيبك إلى أخذ صحتك العامة وتاريخ عائلتك بعين الاعتبار لفهم ما يعنيه هذا لك."
+      },
+      "confidence": {
+        "overall": 0.4,
+        "frequency_data": 0.7,
+        "in_silico": 0.5,
+        "literature": 0.4,
+        "acmg": 0.4
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "RYR2:c.567T>G (p.Ser1019Asn)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "22",
+        "start_pos": 189983344,
+        "end_pos": 189983344,
+        "ref": "T",
+        "alt": "G"
+      },
+      "gene": {
+        "symbol": "RYR2",
+        "omim_mim": "-",
+        "omim_phenotype": "-",
+        "gene_disease_association": "definitive"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "hom",
+        "inheritance_model_consistency": "inconsistent",
+        "functional_effect_summary": "This missense variant causes an amino acid change from Serine to Asparagine at position 1019 in the RYR2 protein, with uncertain functional consequences."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 2.883e-05,
+          "LocalFreq": 1.61e-06,
+          "LocalFreqHom": 3.11e-06,
+          "KFSH_AF_Strict": 2.883e-05
+        },
+        "global": {
+          "gnomAD_exome_AF": 4.71e-06,
+          "gnomAD_genome_ALL": 3.37e-06,
+          "ExAC_ALL": 1.992e-05,
+          "GME_AF": 8.89e-06,
+          "Kaviar_AF": 2.27e-06
+        },
+        "other": {
+          "1000g2015aug_all": 3.963e-05,
+          "NHLBI_ESP_AF": 6.61e-06
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, which is insufficient evidence alone to classify as benign.",
+      "in_silico": {
+        "SIFT_score": 0.366,
+        "Polyphen2_HDIV_score": 0.361,
+        "Polyphen2_HVAR_score": 0.406,
+        "CADD_phred": 22.16,
+        "qualitative_summary": "supportive of deleterious effect",
+        "comment": "SIFT predicts 'D' (damaging), PolyPhen-2 HDIV predicts 'D' (damaging), and PolyPhen-2 HVAR predicts 'P' (possibly damaging). CADD phred score of 22.16 strongly supports pathogenicity. Overall, the in silico evidence strongly leans deleterious."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "low",
+        "phenotype_match_score": 0.3,
+        "comment": "The RYR2 gene is definitively associated with Catecholaminergic polymorphic ventricular tachycardia (CPVT) and other cardiac conditions. Without specific patient HPO terms or clinical indication, the phenotype match is considered low."
+      },
+      "literature_evidence": [],
+      "literature_summary": "HGMD lists this variant as 'DP' (disease-associated polymorphism). ClinVar and InterVar classify it as a VUS, indicating limited or conflicting literature to establish clear pathogenicity.",
+      "acmg": {
+        "final_classification": "VUS",
+        "evidence_codes": [
+          "PM2",
+          "PP3"
+        ],
+        "rationale": "This variant is classified as a Variant of Uncertain Significance (VUS). It meets PM2 (low allele frequency) and PP3 (in silico prediction tools, including a CADD score of 22.16 and all SIFT/PolyPhen predictions, strongly support a deleterious effect). These criteria (PM2+PP3) are insufficient to classify as Likely Pathogenic or Pathogenic. The homozygous state of a missense variant in an autosomal dominant gene (RYR2) typically associated with severe phenotypes or lethality, further complicates interpretation and raises significant questions about its clinical significance if it were pathogenic. HGMD also classifies it as a 'Disease-associated Polymorphism' (DP), which does not definitively support pathogenicity. ClinVar and InterVar also classify it as VUS, reflecting the uncertainty."
+      },
+      "validation": {
+        "passed": false,
+        "issues": [
+          "Zygosity (homozygous) is highly inconsistent with the typical autosomal dominant inheritance pattern for RYR2-related cardiac conditions (e.g., CPVT), which usually presents as heterozygous and would be lethal or very severe if homozygous.",
+          "Strong in silico prediction of deleteriousness (CADD > 20, SIFT D, PolyPhen HDIV D, HVAR P) suggests a potentially pathogenic effect, which is in tension with the VUS classification in an AD disease gene when found homozygous. Requires careful clinical correlation."
+        ],
+        "requires_manual_review": true
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A homozygous missense variant, c.567T>G (p.Ser1019Asn), was identified in the RYR2 gene. This variant is classified as a Variant of Uncertain Significance (VUS). Population frequencies are low, and in silico predictions strongly suggest a deleterious effect. However, the homozygous state in an autosomal dominant gene (RYR2 is associated with cardiac conditions like CPVT) is highly unusual and complicates interpretation. HGMD reports it as a disease-associated polymorphism. Given the strong in silico evidence for pathogenicity and the unexpected zygosity for an AD gene, further clinical correlation and investigation are strongly recommended.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط متماثل، c.567T>G (p.Ser1019Asn)، في جين RYR2. يصنف هذا التباين على أنه 'تباين ذو دلالة غير مؤكدة' (VUS). تكراراته في المجموعات السكانية منخفضة، والتنبؤات الحاسوبية تشير بقوة إلى تأثير ضار. ومع ذلك، فإن الحالة المتماثلة في جين وراثي سائد (RYR2 يرتبط بحالات قلبية مثل CPVT) أمر غير عادي للغاية ويعقد التفسير. تُبلّغ HGMD عنه على أنه تعدد أشكال مرتبط بالمرض. نظرًا للأدلة الحاسوبية القوية على المسببات المرضية والزيغوتية غير المتوقعة لجين AD، يوصى بشدة بمزيد من الارتباط السريري والتحقيق.",
+        "patient_summary_en": "You have a change in the RYR2 gene, called p.Ser1019Asn. This change is currently classified as a 'Variant of Uncertain Significance' (VUS), meaning we don't yet fully understand if it causes health problems. The RYR2 gene is linked to heart conditions. While computer predictions strongly suggest this change could be harmful, having two copies of it (homozygous) in a gene usually associated with risk from just one copy is very unusual and raises serious questions. Your doctor will need to carefully consider all your health information and possibly recommend more tests to understand its meaning.",
+        "patient_summary_ar": "لديك تغيير في جين RYR2، يسمى p.Ser1019Asn. يصنف هذا التغيير حاليًا على أنه 'تباين ذو دلالة غير مؤكدة' (VUS)، مما يعني أننا لا نفهم تمامًا حتى الآن ما إذا كان يسبب مشاكل صحية. يرتبط جين RYR2 بحالات القلب. بينما تشير التنبؤات الحاسوبية بقوة إلى أن هذا التغيير قد يكون ضارًا، فإن وجود نسختين منه (متماثل) في جين يرتبط عادةً بخطر من نسخة واحدة فقط أمر غير عادي للغاية ويثير تساؤلات جدية. سيحتاج طبيبك إلى أخذ جميع معلوماتك الصحية بعين الاعتبار وقد يوصي بمزيد من الفحوصات لفهم مغزاه."
+      },
+      "confidence": {
+        "overall": 0.35,
+        "frequency_data": 0.7,
+        "in_silico": 0.8,
+        "literature": 0.4,
+        "acmg": 0.35
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "ABCA1:c.3849A>G (p.Arg228Glu)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "22",
+        "start_pos": 165317634,
+        "end_pos": 165317634,
+        "ref": "G",
+        "alt": "C"
+      },
+      "gene": {
+        "symbol": "ABCA1",
+        "omim_mim": "-",
+        "omim_phenotype": "-",
+        "gene_disease_association": "strong"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "het",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This missense variant causes an amino acid change from Arginine to Glutamic acid at position 228 in the ABCA1 protein, with uncertain functional consequences."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 4.62e-06,
+          "LocalFreq": 5.4e-07,
+          "LocalFreqHom": 7.3e-06,
+          "KFSH_AF_Strict": 4.62e-06
+        },
+        "global": {
+          "gnomAD_exome_AF": 1.071e-05,
+          "gnomAD_genome_ALL": 6.39e-06,
+          "ExAC_ALL": 1.899e-05,
+          "GME_AF": 2.38e-06,
+          "Kaviar_AF": 2.122e-05
+        },
+        "other": {
+          "1000g2015aug_all": 5.39e-06,
+          "NHLBI_ESP_AF": 1.727e-05
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, which is insufficient evidence alone to classify as likely benign.",
+      "in_silico": {
+        "SIFT_score": 0.474,
+        "Polyphen2_HDIV_score": 0.368,
+        "Polyphen2_HVAR_score": 0.398,
+        "CADD_phred": 13.21,
+        "qualitative_summary": "mixed/uncertain",
+        "comment": "SIFT predicts 'D' (damaging), PolyPhen-2 HDIV predicts 'D' (damaging), and PolyPhen-2 HVAR predicts 'B' (benign). CADD phred score of 13.21 provides weak support for pathogenicity. The in silico evidence is mixed, but leans deleterious from SIFT and PolyPhen HDIV."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "low",
+        "phenotype_match_score": 0.3,
+        "comment": "The ABCA1 gene is associated with conditions like Tangier disease and HDL deficiency. Without specific patient HPO terms or clinical indication, the phenotype match is considered low, though the gene-disease association is strong."
+      },
+      "literature_evidence": [],
+      "literature_summary": "No direct variant-specific HGMD entry found. ClinVar and InterVar classify this variant as Likely Benign, citing BS1 and BP4 criteria.",
+      "acmg": {
+        "final_classification": "Likely_benign",
+        "evidence_codes": [
+          "BS1",
+          "BP4",
+          "BP5"
+        ],
+        "rationale": "This variant is classified as Likely Benign based on BS1 (allele frequency greater than expected for a monogenic disorder), BP4 (in silico predictive programs suggest a benign effect, particularly PolyPhen HVAR; however, SIFT and PolyPhen HDIV predict damaging, making this criterion's support mixed), and BP5 (reported as Likely Benign by ClinVar and InterVar automated classification, considered reputable sources). The overall weight of evidence, particularly from clinical databases, supports a Likely Benign classification, despite some conflicting in silico predictions."
+      },
+      "validation": {
+        "passed": false,
+        "issues": [
+          "Genomic reference/observed allele (G>C) conflicts with cDNA change (c.3849A>G), which can introduce ambiguity if not clarified by the pipeline.",
+          "In silico predictions are mixed (SIFT D, PolyPhen HDIV D, PolyPhen HVAR B), which weakens the BP4 evidence cited by InterVar for a benign classification."
+        ],
+        "requires_manual_review": true
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A heterozygous missense variant, c.3849A>G (p.Arg228Glu), was identified in the ABCA1 gene. This variant is classified as Likely Benign. Population frequencies are low, but clinical databases (ClinVar, InterVar) report a likely benign interpretation based on population frequency and some in silico evidence. However, other in silico tools predict a damaging effect. Its clinical significance should be considered in the context of the patient's phenotype, particularly related to lipid metabolism or related disorders.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط غير متماثل، c.3849A>G (p.Arg228Glu)، في جين ABCA1. يصنف هذا التباين على أنه 'محتمل حميد'. تكراراته في المجموعات السكانية منخفضة، لكن قواعد البيانات السريرية (ClinVar، InterVar) تشير إلى تفسير محتمل للحميد بناءً على تكرار الأليل في السكان وبعض الأدلة الحاسوبية. ومع ذلك، تتنبأ أدوات حاسوبية أخرى بتأثير ضار. يجب النظر في أهميته السريرية في سياق النمط الظاهري للمريض، خاصة فيما يتعلق بعملية التمثيل الغذائي للدهون أو الاضطرابات ذات الصلة.",
+        "patient_summary_en": "You have a change in the ABCA1 gene, called p.Arg228Glu. This change is considered 'Likely Benign,' meaning it probably does not cause significant health problems. The ABCA1 gene is involved in cholesterol transport. While some computer predictions suggest it might be harmful, the overall information from clinical databases points to it being mostly harmless. Your doctor can discuss this further with you.",
+        "patient_summary_ar": "لديك تغيير في جين ABCA1، يسمى p.Arg228Glu. يعتبر هذا التغيير 'محتمل حميد'، مما يعني أنه على الأرجح لا يسبب مشاكل صحية كبيرة. يشارك جين ABCA1 في نقل الكوليسترول. بينما تشير بعض التنبؤات الحاسوبية إلى أنه قد يكون ضارًا، فإن المعلومات الشاملة من قواعد البيانات السريرية تشير إلى أنه غير ضار في الغالب. يمكن لطبيبك مناقشة هذا الأمر بشكل أكبر معك."
+      },
+      "confidence": {
+        "overall": 0.6,
+        "frequency_data": 0.7,
+        "in_silico": 0.5,
+        "literature": 0.6,
+        "acmg": 0.6
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "FTO:c.196G>A (p.Leu755Tyr)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "9",
+        "start_pos": 191397117,
+        "end_pos": 191397117,
+        "ref": "C",
+        "alt": "G"
+      },
+      "gene": {
+        "symbol": "FTO",
+        "omim_mim": "-",
+        "omim_phenotype": "-",
+        "gene_disease_association": "none/unknown"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "het",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This missense variant causes an amino acid change from Leucine to Tyrosine at position 755 in the FTO protein, with uncertain functional consequences."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 1.477e-05,
+          "LocalFreq": 6.91e-06,
+          "LocalFreqHom": 6e-08,
+          "KFSH_AF_Strict": 1.477e-05
+        },
+        "global": {
+          "gnomAD_exome_AF": 1.006e-05,
+          "gnomAD_genome_ALL": 2.51e-06,
+          "ExAC_ALL": 2.606e-05,
+          "GME_AF": 2.6e-06,
+          "Kaviar_AF": 3.88e-06
+        },
+        "other": {
+          "1000g2015aug_all": 9e-08,
+          "NHLBI_ESP_AF": 4.42e-06
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, which is insufficient evidence alone to classify as benign.",
+      "in_silico": {
+        "SIFT_score": 0.396,
+        "Polyphen2_HDIV_score": 0.32,
+        "Polyphen2_HVAR_score": 0.542,
+        "CADD_phred": 11.3,
+        "qualitative_summary": "mixed/uncertain",
+        "comment": "SIFT predicts 'D' (damaging), PolyPhen-2 HDIV predicts 'B' (benign), and PolyPhen-2 HVAR predicts 'P' (possibly damaging). CADD phred score of 11.3 provides weak support for pathogenicity. The in silico evidence is mixed."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "none",
+        "phenotype_match_score": 0.0,
+        "comment": "The FTO gene is not currently associated with a definitive monogenic disease in OMIM, primarily known for its role in common obesity predisposition. Therefore, there is no direct gene-phenotype match for a monogenic disorder."
+      },
+      "literature_evidence": [],
+      "literature_summary": "HGMD lists this variant as 'DP' (disease-associated polymorphism). ClinVar and InterVar classify it as a VUS, indicating limited or conflicting literature to establish clear pathogenicity.",
+      "acmg": {
+        "final_classification": "VUS",
+        "evidence_codes": [
+          "PM2",
+          "PP3"
+        ],
+        "rationale": "This variant is classified as a Variant of Uncertain Significance (VUS). It meets PM2 (low allele frequency). PP3 (in silico prediction tools, specifically SIFT and PolyPhen HVAR, suggest a deleterious effect) is also met, though other in silico tools are mixed. These criteria (PM2+PP3) are insufficient to classify as Likely Pathogenic or Pathogenic. HGMD also classifies it as a 'Disease-associated Polymorphism' (DP), which does not definitively support pathogenicity. ClinVar and InterVar also classify it as VUS, reflecting the uncertainty."
+      },
+      "validation": {
+        "passed": false,
+        "issues": [
+          "Genomic reference/observed allele (C>G) conflicts with cDNA change (c.196G>A), which can introduce ambiguity if not clarified by the pipeline.",
+          "HGMD 'DP' (disease-associated polymorphism) provides some evidence but is not as strong as 'DM' (disease-causing mutation) to push beyond VUS, especially with mixed in silico and VUS classifications from ClinVar/InterVar."
+        ],
+        "requires_manual_review": true
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A heterozygous missense variant, c.196G>A (p.Leu755Tyr), was identified in the FTO gene. This variant is classified as a Variant of Uncertain Significance (VUS). Population frequencies are low, and in silico predictions are mixed, with some tools suggesting deleteriousness and others suggesting benign effects. FTO is primarily associated with complex traits, and its role in monogenic disease is not established. Clinical correlation is uncertain and further investigation may be warranted if a related phenotype is suspected.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط غير متماثل، c.196G>A (p.Leu755Tyr)، في جين FTO. يصنف هذا التباين على أنه 'تباين ذو دلالة غير مؤكدة' (VUS). تكراراته في المجموعات السكانية منخفضة، والتنبؤات الحاسوبية مختلطة، حيث تشير بعض الأدوات إلى ضرر والبعض الآخر يشير إلى آثار حميدة. يرتبط FTO بشكل أساسي بالسمات المعقدة، ودوره في الأمراض أحادية الجين غير مؤكد. الارتباط السريري غير مؤكد وقد يكون هناك ما يبرر إجراء مزيد من التحقيق إذا اشتبه في وجود نمط ظاهري ذي صلة.",
+        "patient_summary_en": "You have a change in the FTO gene, called p.Leu755Tyr. This change is currently classified as a 'Variant of Uncertain Significance' (VUS), meaning we don't yet fully understand if it causes health problems. The FTO gene is mainly involved in common conditions like obesity risk, not typically single-gene diseases. Due to the uncertainty and mixed information, your doctor will need to consider your overall health to understand what this means for you.",
+        "patient_summary_ar": "لديك تغيير في جين FTO، يسمى p.Leu755Tyr. يصنف هذا التغيير حاليًا على أنه 'تباين ذو دلالة غير مؤكدة' (VUS)، مما يعني أننا لا نفهم تمامًا حتى الآن ما إذا كان يسبب مشاكل صحية. يشارك جين FTO بشكل رئيسي في الحالات الشائعة مثل خطر الإصابة بالسمنة، وليس عادةً أمراض الجينات الواحدة. بسبب عدم اليقين والمعلومات المختلطة، سيحتاج طبيبك إلى أخذ صحتك العامة بعين الاعتبار لفهم ما يعنيه هذا لك."
+      },
+      "confidence": {
+        "overall": 0.4,
+        "frequency_data": 0.7,
+        "in_silico": 0.5,
+        "literature": 0.4,
+        "acmg": 0.4
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "InterVar_automated",
+            "InterVar_Criteria"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "HGMD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "HGMD"
+          ]
+        }
+      ]
+    },
+    {
+      "variant_id": "PRKD2:c.228C>T (p.Asp670Glu)",
+      "coordinates": {
+        "genome_build": "GRCh37",
+        "chromosome": "7",
+        "start_pos": 81454905,
+        "end_pos": 81454905,
+        "ref": "C",
+        "alt": "T"
+      },
+      "gene": {
+        "symbol": "PRKD2",
+        "omim_mim": "-",
+        "omim_phenotype": "-",
+        "gene_disease_association": "none/unknown"
+      },
+      "variant_properties": {
+        "variant_type": "missense",
+        "impact_level": "moderate",
+        "zygosity": "het",
+        "inheritance_model_consistency": "consistent",
+        "functional_effect_summary": "This missense variant causes an amino acid change from Aspartate to Glutamic acid at position 670 in the PRKD2 protein, with uncertain functional consequences."
+      },
+      "population_data": {
+        "local": {
+          "FreqLocal_Strict": 2.597e-05,
+          "LocalFreq": 7.1e-07,
+          "LocalFreqHom": 2.81e-06,
+          "KFSH_AF_Strict": 2.597e-05
+        },
+        "global": {
+          "gnomAD_exome_AF": 1.026e-05,
+          "gnomAD_genome_ALL": 1.217e-05,
+          "ExAC_ALL": 9.7e-07,
+          "GME_AF": 8.06e-06,
+          "Kaviar_AF": 4.67e-06
+        },
+        "other": {
+          "1000g2015aug_all": 1.19e-05,
+          "NHLBI_ESP_AF": 6.13e-06
+        }
+      },
+      "frequency_interpretation": "This variant is extremely rare in local and global population databases, which is insufficient evidence alone to classify as benign.",
+      "in_silico": {
+        "SIFT_score": 0.245,
+        "Polyphen2_HDIV_score": 0.18,
+        "Polyphen2_HVAR_score": 0.212,
+        "CADD_phred": 34.78,
+        "qualitative_summary": "mixed/uncertain",
+        "comment": "SIFT predicts 'L' (tolerated), PolyPhen-2 HDIV predicts 'D' (damaging), and PolyPhen-2 HVAR predicts 'D' (damaging). CADD phred score of 34.78 strongly supports pathogenicity. The in silico evidence is mixed, but leans deleterious with strong CADD and two PolyPhen predictions."
+      },
+      "phenotype_correlation": {
+        "phenotype_match": "none",
+        "phenotype_match_score": 0.0,
+        "comment": "The PRKD2 gene is not currently associated with a definitive monogenic disease in OMIM. Therefore, there is no direct gene-phenotype match for a monogenic disorder."
+      },
+      "literature_evidence": [],
+      "literature_summary": "HGMD lists this variant as 'DM' (disease-causing mutation). However, ClinVar and InterVar classify it as a VUS. This presents a strong conflict in evidence for pathogenicity.",
+      "acmg": {
+        "final_classification": "VUS",
+        "evidence_codes": [
+          "PS3",
+          "PM2",
+          "PP3"
+        ],
+        "rationale": "This variant is classified as a Variant of Uncertain Significance (VUS) due to strong conflicting evidence. HGMD classifies it as a 'Disease-causing Mutation' (DM), which typically supports PS3 (functional studies) or PS4 (prevalence). However, ClinVar and InterVar classify it as 'VUS'. Furthermore, the in silico predictions are mixed, with a very high CADD score (34.78) and two PolyPhen predictions indicating damaging effects, which strongly suggest a deleterious role. The strong contradiction between HGMD's classification and the VUS classifications, coupled with strong in silico evidence for pathogenicity, necessitates a VUS classification and manual review, leaning towards a potential pathogenic role if further evidence emerges or a phenotype correlates."
+      },
+      "validation": {
+        "passed": false,
+        "issues": [
+          "Strong contradiction: HGMD 'DM' vs. ClinVar/InterVar 'VUS'. HGMD DM typically implies strong evidence for pathogenicity (PS3/PS4), making VUS classification contentious.",
+          "In silico predictions are strong for deleteriousness (CADD > 20, two PolyPhen D), further conflicting with a VUS classification in the presence of HGMD DM."
+        ],
+        "requires_manual_review": true
+      },
+      "clinical_text": {
+        "clinical_summary_en": "A heterozygous missense variant, c.228C>T (p.Asp670Glu), was identified in the PRKD2 gene. This variant is classified as a Variant of Uncertain Significance (VUS) due to strong conflicting evidence. While HGMD reports it as a disease-causing mutation, ClinVar and InterVar classify it as VUS. In silico predictions are robustly deleterious (CADD score > 30, two PolyPhen 'damaging'). Given the strong HGMD and in silico evidence for pathogenicity, coupled with the VUS classification from other sources, further investigation and clinical correlation are strongly recommended, especially if a relevant phenotype is observed.",
+        "clinical_summary_ar": "تم تحديد تباين مغلوط غير متماثل، c.228C>T (p.Asp670Glu)، في جين PRKD2. يصنف هذا التباين على أنه 'تباين ذو دلالة غير مؤكدة' (VUS) بسبب الأدلة المتضاربة بقوة. بينما تُبلّغ HGMD عنه على أنه طفرة مسببة للمرض، تصنفه ClinVar و InterVar على أنه VUS. التنبؤات الحاسوبية ضارة بقوة (درجة CADD > 30، وتنبؤان من PolyPhen 'ضاران'). نظرًا لأدلة HGMD القوية والأدلة الحاسوبية على المسببات المرضية، بالإضافة إلى تصنيف VUS من مصادر أخرى، يوصى بشدة بمزيد من التحقيق والارتباط السريري، خاصة إذا لوحظ نمط ظاهري ذي صلة.",
+        "patient_summary_en": "You have a change in the PRKD2 gene, called p.Asp670Glu. This change is currently classified as a 'Variant of Uncertain Significance' (VUS), meaning we don't yet fully understand if it causes health problems. Some strong information from scientific databases (HGMD) and computer predictions suggest this change could cause disease. However, other clinical databases classify it as uncertain. Because of these strong contradictions, your doctor will need to review all your health information carefully and possibly recommend more tests to understand its meaning, especially if you have symptoms that might be related.",
+        "patient_summary_ar": "لديك تغيير في جين PRKD2، يسمى p.Asp670Glu. يصنف هذا التغيير حاليًا على أنه 'تباين ذو دلالة غير مؤكدة' (VUS)، مما يعني أننا لا نفهم تمامًا حتى الآن ما إذا كان يسبب مشاكل صحية. تشير بعض المعلومات القوية من قواعد البيانات العلمية (HGMD) وتنبؤات الحاسوب إلى أن هذا التغيير قد يسبب المرض. ومع ذلك، تصنف قواعد بيانات سريرية أخرى على أنه غير مؤكد. بسبب هذه التناقضات القوية، سيحتاج طبيبك إلى مراجعة جميع معلوماتك الصحية بعناية وقد يوصي بمزيد من الفحوصات لفهم مغزاه، خاصة إذا كانت لديك أعراض قد تكون ذات صلة."
+      },
+      "confidence": {
+        "overall": 0.3,
+        "frequency_data": 0.7,
+        "in_silico": 0.8,
+        "literature": 0.3,
+        "acmg": 0.3
+      },
+      "data_sources_used": [
+        {
+          "type": "population",
+          "name": "gnomAD",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "gnomAD_exome_AF",
+            "gnomAD_genome_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "ExAC",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "ExAC_ALL"
+          ]
+        },
+        {
+          "type": "population",
+          "name": "Local/KFSH",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "FreqLocal_Strict",
+            "LocalFreq",
+            "LocalFreqHom",
+            "KFSH_AF_Strict"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "SIFT",
+          "version_or_date": "41a",
+          "fields_used": [
+            "SIFT_score",
+            "SIFT_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "Polyphen2",
+          "version_or_date": "41a",
+          "fields_used": [
+            "Polyphen2_HDIV_score",
+            "Polyphen2_HDIV_pred_41a",
+            "Polyphen2_HVAR_score",
+            "Polyphen2_HVAR_pred_41a"
+          ]
+        },
+        {
+          "type": "in_silico",
+          "name": "CADD",
+          "version_or_date": "41a",
+          "fields_used": [
+            "CADD_phred_41a"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "OMIM",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "OMIM MIM NumberN",
+            "OMIM PhenotypeN"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "ClinVar",
+          "version_or_date": "Not specified",
+          "fields_used": [
+            "CLNSIG"
+          ]
+        },
+        {
+          "type": "clinical",
+          "name": "InterVar",
+          "version_or_date": "Not
