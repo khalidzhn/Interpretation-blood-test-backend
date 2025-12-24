@@ -26,13 +26,14 @@ from fastapi import Body
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from enum import Enum
-from sqlalchemy import Boolean
+from sqlalchemy import Boolean, DateTime
+from sqlalchemy.sql import func
 from typing import Optional, List
-from fastapi import Request
+from fastapi import Request, Path
 
 import asyncio
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://dev:Aa%4012345@database-1.c5mswemmu8to.us-west-2.rds.amazonaws.com:5432/database-1")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://user:password@localhost:5432/mydatabase")
 port = int(os.getenv("PORT", 8080))
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -226,6 +227,9 @@ class AnalysisResult(Base):
     patient_id = Column(String(10),  index=True, nullable=False)  # 10-digit patient ID
     status = Column(String(20), default="in_progress", nullable=False)
     analysis_type = Column(String(20), default="general", nullable=False)
+    is_processed = Column(Boolean, default=False, nullable=False, server_default='false')
+    processed_by = Column(String(255), nullable=True)
+    processed_at = Column(DateTime(timezone=True), nullable=True)
        #assigned_doctor_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     #assigned_doctor = relationship("User")
     
@@ -265,7 +269,7 @@ def get_all_analysis_results(current_user: User = Depends(get_current_user)):
         
         results_list.append({
             "uuid": str(r.uuid),
-            "patient_id": None,
+            "patient_id": r.patient_id,
             "assigned_doctor_email": None,  # Temporarily None
             "pdf_filename": r.pdf_filename,
             "patient_name": patient_name,
@@ -273,6 +277,8 @@ def get_all_analysis_results(current_user: User = Depends(get_current_user)):
             "AutoReferralBlock": analysis.get("AutoReferralBlock"),
             "IntelligenceHubCard": analysis.get("IntelligenceHubCard"),
             "keyFindings": key_findings,
+            "is_processed": r.is_processed,
+            "analysis_type": r.analysis_type,
         })
     db.close()
     return JSONResponse(content=results_list)
@@ -389,22 +395,110 @@ CONFIG_YML = {}
 
 
 # ...existing code...
-@app.post("/upload-pdf/")
-@app.post("/upload-pdf/")
-@app.post("/upload-pdf/")
-async def upload_pdf(
+def save_analysis_to_db(
+    filename: str,
+    raw_data: str,
+    analysis: any,
+    patient_id: str,
+    analysis_type: str = "routine",
+    db=None
+) -> dict:
+    """
+    Helper function to save analysis results to the database.
+    
+    Args:
+        filename: Name of the file (PDF or Excel)
+        raw_data: Raw data from the file (text from PDF or JSON string from Excel filtering)
+        analysis: Analysis result (dict or string that can be parsed to dict)
+        patient_id: Patient identifier
+        analysis_type: Type of analysis ("routine" or "genomics")
+        db: Database session (if None, creates a new one)
+    
+    Returns:
+        dict with "id" and "message" on success, or raises HTTPException on error
+    """
+    should_close_db = False
+    if db is None:
+        db = SessionLocal()
+        should_close_db = True
+    
+    try:
+        # Parse analysis if it's a string
+        if isinstance(analysis, str):
+            try:
+                while isinstance(analysis, str):
+                    analysis = json.loads(analysis)
+            except Exception:
+                if should_close_db:
+                    db.close()
+                raise HTTPException(
+                    status_code=400,
+                    detail="Analysis could not be parsed as JSON."
+                )
+        
+        # Validate analysis is a dict
+        if not analysis or not isinstance(analysis, dict):
+            if should_close_db:
+                db.close()
+            raise HTTPException(
+                status_code=400,
+                detail="Analysis is empty or not a valid JSON object."
+            )
+        
+        # Convert raw_data to string if it's not already
+        if not isinstance(raw_data, str):
+            raw_data = json.dumps(raw_data) if raw_data else ""
+        
+        # Create and save database record
+        db_result = AnalysisResult(
+            pdf_filename=filename,
+            raw_data=raw_data,
+            analysis=analysis,
+            patient_id=patient_id,
+            analysis_type=analysis_type,
+        )
+        db.add(db_result)
+        db.commit()
+        db.refresh(db_result)
+        print(f"Saved to DB, id: {db_result.id}, type: {analysis_type}")
+        return {"message": f"Analysis processed and data stored ({analysis_type}).", "id": db_result.id}
+    
+    except HTTPException:
+        if should_close_db:
+            db.close()
+        raise
+    except Exception as e:
+        print(f"Error saving analysis to DB: {e}")
+        if should_close_db:
+            db.close()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Internal server error while saving to database: {str(e)}"
+        )
+    finally:
+        if should_close_db:
+            try:
+                db.close()
+            except Exception:
+                pass
+
+
+@app.post("/routine-interpretation/")
+@app.post("/routine-interpretation")
+async def routineInterpretation(
     request: Request,
     file: UploadFile = File(...),
     patient_id: str = Form(...),
     assigned_doctor_id: str = Form(...),
 ):
+    """Process a PDF lab result file, extract data, build prompt, and generate routine interpretation."""
     # Debug: log headers and form keys
     try:
-        print("=== /upload-pdf request headers ===")
+        print("=== /routine-interpretation request headers ===")
         for k, v in request.headers.items():
             print(f"{k}: {v}")
         form = await request.form()
-        print("=== /upload-pdf form keys ===", list(form.keys()))
+        print("=== /routine-interpretation form keys ===", list(form.keys()))
     except Exception as e:
         print("Failed to read request.form():", e)
 
@@ -432,7 +526,7 @@ async def upload_pdf(
         if not doctor:
             print(f"Warning: assigned doctor {assigned_doctor_id_int} not found — proceeding without doctor assignment")
             doctor = None
-        print("UPLOAD ENDPOINT CALLED")
+        print("ROUTINE INTERPRETATION ENDPOINT CALLED")
         print("Received file:", file.filename)
         pdf_dir = "uploaded_pdfs"
         os.makedirs(pdf_dir, exist_ok=True)
@@ -470,37 +564,24 @@ async def upload_pdf(
             print("Analysis call failed:", e)
             analysis = None
 
-        print("Raw analysis result (truncated):", str(analysis)[:200])
+        print("Raw analysis result (truncated):", str(analysis)[:200] if analysis else None)
 
-        if isinstance(analysis, str):
-            try:
-                while isinstance(analysis, str):
-                    analysis = json.loads(analysis)
-            except Exception:
-                db.close()
-                return JSONResponse(status_code=400, content={"error": "Analysis could not be parsed as JSON."})
-
-        if not analysis or not isinstance(analysis, dict):
-            db.close()
-            return JSONResponse(status_code=400, content={"error": "Analysis is empty or not a valid JSON object."})
-
-        db_result = AnalysisResult(
-            pdf_filename=pdf_name,
+        # Save to database using helper function
+        result = save_analysis_to_db(
+            filename=pdf_name,
             raw_data=raw_data,
             analysis=analysis,
             patient_id=patient_id,
+            analysis_type="routine",
+            db=db
         )
-        db.add(db_result)
-        db.commit()
-        db.refresh(db_result)
-        print("Saved to DB, id:", db_result.id)
-        return {"message": "PDF processed and data stored.", "id": db_result.id}
+        return result
 
     except HTTPException:
         db.close()
         raise
     except Exception as e:
-        print("Error in upload processing:", e)
+        print("Error in routine interpretation processing:", e)
         db.close()
         raise HTTPException(status_code=500, detail="Internal server error while processing upload")
     finally:
@@ -510,11 +591,15 @@ async def upload_pdf(
             pass
 
 
-
-@app.post("/filter-excel/")
-async def filter_excel(file: UploadFile = File(...)):
-    """Accept an Excel file, apply column filters, and write filtered-in and filtered-out records
-    into the `.result` directory as an Excel workbook with multiple sheets. Returns counts and file path.
+@app.post("/genomics-interpretation/")
+@app.post("/genomics-interpretation")
+async def genomicsInterpretation(
+    file: UploadFile = File(...),
+    patient_id: str = Form(...),
+    assigned_doctor_id: Optional[str] = Form(None),
+):
+    """Accept an Excel file, apply column filters, generate genomics interpretation, and save to database.
+    Returns counts, file path, and database record ID.
     """
     import pandas as pd
     from pathlib import Path
@@ -522,15 +607,33 @@ async def filter_excel(file: UploadFile = File(...)):
     # Ensure result directory
     result_dir = Path(".result")
     result_dir.mkdir(parents=True, exist_ok=True)
-
-    # Read uploaded file into a DataFrame
-    contents = await file.read()
+    # Robust reading: prefer Excel for .xlsx/.xls, fall back to CSV/text
+    from io import BytesIO, StringIO
+    filename = (getattr(file, "filename", "") or "").lower()
     try:
-        df = pd.read_excel(contents, engine="openpyxl")
-    except Exception:
-        # fallback: try reading from bytes via BytesIO
-        from io import BytesIO
-        df = pd.read_excel(BytesIO(contents), engine="openpyxl")
+        if filename.endswith((".xlsx", ".xls", ".xlsm")):
+            df = pd.read_excel(BytesIO(contents), engine="openpyxl")
+        elif filename.endswith((".csv", ".txt")) or getattr(file, "content_type", "") in ("text/csv", "text/plain"):
+            # CSV/text file
+            try:
+                text = contents.decode("utf-8")
+            except Exception:
+                text = contents.decode("latin-1")
+            df = pd.read_csv(StringIO(text))
+        else:
+            # unknown extension: try excel first then csv
+            try:
+                df = pd.read_excel(BytesIO(contents), engine="openpyxl")
+            except Exception:
+                try:
+                    text = contents.decode("utf-8")
+                except Exception:
+                    text = contents.decode("latin-1")
+                df = pd.read_csv(StringIO(text))
+    except Exception as e:
+        print("Failed to parse uploaded file as Excel or CSV:", e)
+        raise HTTPException(status_code=400, detail="Uploaded file is not a valid Excel (.xlsx/.xls) or CSV file")
+
 
     # Columns and filter logic (unchanged)
     group1 = [
@@ -712,6 +815,10 @@ async def filter_excel(file: UploadFile = File(...)):
     df_in_clean = df_in.drop(columns=[col for col in columns_to_exclude if col in df_in.columns])
     filteredDataJson = df_in_clean.to_dict(orient='records')
     print("Filtered data JSON:", filteredDataJson)
+    
+    # Prepare raw_data as JSON string for database storage
+    raw_data_json = json.dumps(filteredDataJson)
+    
     # Write results into an Excel workbook with two sheets
     stem = Path(file.filename).stem
     excel_path = result_dir / f"{stem}_filtered.xlsx"
@@ -760,37 +867,84 @@ async def filter_excel(file: UploadFile = File(...)):
         out_path = result_dir / f"{stem}_filtered_out.txt"
         in_path.write_text(df_in.to_csv(sep="\t", index=False), encoding="utf-8")
         out_path.write_text(df_out.to_csv(sep="\t", index=False), encoding="utf-8")
+    
+    # Build prompt and generate analysis
     prompt = None
     if filteredDataJson:
         prompt = information.build_prompt_from_genomics(filteredDataJson)
         print("Prompt built (truncated):", prompt[:100])
     else:
         print("No filtered data, skipping prompt generation")
+        return {
+            "filtered_in_count": len(df_in),
+            "result": None,
+            "filtered_out_count": len(df_out),
+            "excel_path": str(excel_path),
+            "error": "No filtered data to analyze",
+        }
     
-    key = None
-    try:
-        key = "AIzaSyDKqgmiosCLxiOa56jsdpFsfiHvUoa2R5Y"
-    except Exception as e:
-        print("Warning: could not load gemini key from config:",key, e)
-        return
+    # Get API key
+    key = information.get_api_key("GEMINI_API_KEY", "gemini.key")
+    if not key:
+        # Fallback to hardcoded key (should be removed in production)
+        key = ""
+        print("Warning: GEMINI_API_KEY not found, using fallback key")
 
+    # Generate analysis
     analysis = None
     if prompt:
         try:
             analysis = information.RESULTـOFـWHITEـBLOODـCELLS(key, prompt)
-            #analysis = "test"
         except Exception as e:
             print("Analysis call failed:", e)
             analysis = None
 
     print("Raw analysis result (truncated):", str(analysis)[:200] if analysis else None)
 
-    return {
-        "filtered_in_count": len(df_in),
-        "result":  str(analysis),
-        "filtered_out_count": len(df_out),
-        "excel_path": str(excel_path),
-    }
+    # Save analysis to file
+    if analysis:
+        analysis_path = result_dir / "analysis.txt"
+        try:
+            analysis_path.write_text(str(analysis), encoding="utf-8")
+            print(f"Analysis saved to: {analysis_path}")
+        except Exception as e:
+            print(f"Failed to save analysis to file: {e}")
+
+    # Save to database using helper function
+    db = SessionLocal()
+    try:
+        db_result = save_analysis_to_db(
+            filename=file.filename,
+            raw_data=raw_data_json,
+            analysis=analysis,
+            patient_id=patient_id,
+            analysis_type="genomics",
+            db=db
+        )
+        
+        return {
+            "filtered_in_count": len(df_in),
+            "result": str(analysis) if analysis else None,
+            "filtered_out_count": len(df_out),
+            "excel_path": str(excel_path),
+            "db_id": db_result.get("id"),
+            "message": db_result.get("message"),
+        }
+    except HTTPException:
+        db.close()
+        raise
+    except Exception as e:
+        print(f"Error in genomics interpretation: {e}")
+        db.close()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Internal server error while processing genomics interpretation: {str(e)}"
+        )
+    finally:
+        try:
+            db.close()
+        except Exception:
+            pass
 
 
 @app.get("/lab-result/{labResultId}")
@@ -811,7 +965,83 @@ def get_lab_report_json(labResultId: uuid.UUID):
             raise HTTPException(status_code=500, detail="Analysis could not be parsed as JSON")
     if not analysis:
         raise HTTPException(status_code=404, detail="Analysis not found")
-    return analysis
+    return {
+        "analysis": analysis,
+        "is_processed": result.is_processed
+        }
+
+
+@app.put("/process/{report_id}", dependencies=[Depends(get_current_user)])
+def update_process_status(
+    report_id: uuid.UUID = Path(...),
+    payload: dict = Body(...),
+    current_user: User = Depends(get_current_user)
+):
+    db = SessionLocal()
+    try:
+        if not isinstance(payload, dict) or "is_processed" not in payload:
+            db.close()
+            raise HTTPException(status_code=400, detail="Request body must include 'is_processed' boolean")
+
+        is_processed = bool(payload.get("is_processed"))
+        referral = payload.get("referral")
+
+        # Debug/log the incoming id and current user
+        print(f"[process] report_id={report_id} (type={type(report_id)}), user={getattr(current_user,'email',None) or getattr(current_user,'id',None)}")
+
+        # Find the report by UUID
+        result = db.query(AnalysisResult).filter(AnalysisResult.uuid == report_id).first()
+        print(f"[process] db query returned: {result!r}")
+
+        if not result:
+            # helpful log for debugging: show a small sample of existing uuids
+            try:
+                sample = [r.uuid for r in db.query(AnalysisResult.uuid).limit(10).all()]
+                print(f"[process] sample uuids in DB (limit 10): {sample}")
+            except Exception as _:
+                print("[process] unable to fetch sample uuids")
+            db.close()
+            raise HTTPException(status_code=404, detail="Report not found")
+
+        # Update the processed status
+        result.is_processed = is_processed
+        if is_processed:
+            result.processed_by = current_user.email or str(current_user.id)
+            result.processed_at = datetime.utcnow()
+        else:
+            result.processed_by = None
+            result.processed_at = None
+
+        db.commit()
+        db.refresh(result)
+
+        if referral is not None:
+            try:
+                print(f"Referral payload for report {report_id}: {json.dumps(referral)}")
+            except Exception:
+                print(f"Referral payload for report {report_id}: {referral}")
+
+        return {
+            "message": "Process status updated successfully",
+            "uuid": str(result.uuid),
+            "is_processed": result.is_processed,
+            "processed_by": result.processed_by,
+            "processed_at": result.processed_at.isoformat() if result.processed_at else None,
+        }
+    except HTTPException:
+        db.rollback()
+        db.close()
+        raise
+    except Exception as e:
+        db.rollback()
+        db.close()
+        print(f"Error updating process status: {e}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+    finally:
+        try:
+            db.close()
+        except Exception:
+            pass
 
 @app.delete("/analysis-results/")
 def delete_all_analysis_results():
@@ -1019,7 +1249,6 @@ def list_users(current_user: User = Depends(get_current_user)):
         })
     db.close()
     return result
-from fastapi import Path
 
 @app.patch("/users/{user_id}", dependencies=[Depends(get_current_user)])
 def toggle_user_active(

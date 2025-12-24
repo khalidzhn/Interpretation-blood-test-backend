@@ -424,7 +424,7 @@ def build_prompt_from_genomics(raw_lab_text):
       If you highlight a variant as "key finding" in "overall_assessment", it should be one of the -
       .""highest_relevance_variant_ids
       """
-
+    print("prompt", prompt)
 
     return prompt;
 
